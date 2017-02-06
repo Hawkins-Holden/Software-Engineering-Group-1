@@ -1,0 +1,27 @@
+.root {
+	
+	-fx-background-color: #383838; 
+    -fx-font-size: 11pt;  
+}
+
+.welcomelabel {
+	-fx-font-size: 15pt;
+	-fx-text-fill: #47e354; 
+}
+
+
+.welcomeButton {
+	-fx-background-color: #1bb9cc;
+	-fx-background-radius:5; 
+	-fx-padding: 20pt;
+	 
+}
+
+
+.confirmButton {
+	-fx-background-color: #1bcc7e;
+}
+
+.backButton {
+	-fx-background-color: #f5180a;
+}
