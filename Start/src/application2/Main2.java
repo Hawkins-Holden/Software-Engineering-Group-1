@@ -12,7 +12,6 @@ import netscape.javascript.JSObject;
 
 import javax.print.DocFlavor.URL;
 
-import application.Main.JavaApplication;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
