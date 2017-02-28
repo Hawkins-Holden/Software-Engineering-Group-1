@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="874.0" prefWidth="1214.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="879.0" fitWidth="1215.0">
+         <image>
+            <Image url="@3574f899daef41d2f145eba13ff7840f.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="72.0" layoutY="101.0" text="First Name:" textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField layoutX="240.0" layoutY="88.0" opacity="0.37" prefHeight="57.0" prefWidth="263.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="517.0" layoutY="101.0" text="Middle Initial:" textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField layoutX="676.0" layoutY="88.0" opacity="0.37" prefHeight="57.0" prefWidth="77.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="772.0" layoutY="101.0" text="Last Name:" textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField layoutX="895.0" layoutY="88.0" opacity="0.37" prefHeight="57.0" prefWidth="252.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="72.0" layoutY="208.0" text="Email: " textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField layoutX="240.0" layoutY="195.0" opacity="0.37" prefHeight="57.0" prefWidth="450.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="72.0" layoutY="300.0" text="Destination: " textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField layoutX="240.0" layoutY="300.0" opacity="0.37" prefHeight="57.0" prefWidth="335.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="719.0" layoutY="300.0" text="Number in Party: " textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField layoutX="904.0" layoutY="287.0" opacity="0.37" prefHeight="57.0" prefWidth="70.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="786.0" layoutY="406.0" text="Traveling For: " textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="787.0" layoutY="450.0" opacity="0.37" prefHeight="57.0" prefWidth="303.0" />
+      <Label layoutX="72.0" layoutY="406.0" text="What brings you here?" textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="240.0" layoutY="450.0" opacity="0.37" prefHeight="57.0" prefWidth="341.0" />
+      <Label layoutX="75.0" layoutY="541.0" text="Did you stay in Monore-West Monroe hotel?" textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <RadioButton layoutX="84.0" layoutY="581.0" mnemonicParsing="false" text="Yes" textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="86.0" layoutY="633.0" mnemonicParsing="false" text="No" textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </RadioButton>
+      <CheckBox layoutX="84.0" layoutY="680.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="381.0" text="Opt-In For Montly Newspaper" textFill="#efeff8">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </CheckBox>
+      <Button layoutX="380.0" layoutY="743.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="170.0" text="Submit" textFill="#2d654e">
+         <effect>
+            <Blend mode="GREEN" opacity="0.66" />
+         </effect>
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Button>
+      <Button layoutX="734.0" layoutY="743.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="170.0" text="Exit" textFill="#c61717">
+         <effect>
+            <Blend mode="RED" />
+         </effect>
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
