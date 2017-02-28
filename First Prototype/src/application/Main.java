@@ -1,5 +1,5 @@
 
-package application;
+package src.application;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;

@@ -8,7 +8,7 @@
 <div class="container auth">
     <h1 class="text-center"><center>WELCOME!</center></h1>
     <div id="big-form" class="well auth-box">
-      <form>
+      <form action = "JSON_Creator.php" method = "post" id = "Form">
         <fieldset>
 
           <!-- Form Name -->
@@ -19,7 +19,7 @@
           <div class="form-group">
             <label class=" control-label" for="textinput">First Name:</label>  
             <div class="">
-              <input id="textinput" name="textinput" class="form-control input-md" type="text">  
+              <input id="textinput" name="firstname" class="form-control input-md" type="text">  
             </div>
           </div>
           
@@ -27,7 +27,7 @@
           <div class="form-group">
             <label class=" control-label" for="textinput">Middle Initial:</label>  
             <div class="">
-              <input id="textinput" name="textinput" class="form-control input-md" type="text">  
+              <input id="textinput" name="middleinit" class="form-control input-md" type="text">  
             </div>
           </div>
           
@@ -35,7 +35,7 @@
           <div class="form-group">
             <label class=" control-label" for="textinput">Last Name:</label>
             <div class="">
-              <input id="textinput" name="textinput" class="form-control input-md" type="text">
+              <input id="textinput" name="lastname" class="form-control input-md" type="text">
             </div>
           </div>
           
@@ -60,7 +60,7 @@
           <div class="form-group">
             <label class=" control-label" for="textinput">Destination:</label>
             <div class="">
-              <input id="textinput" name="textinput"  class="form-control input-md" type="text">
+              <input id="textinput" name="destinput"  class="form-control input-md" type="text">
             </div>
           </div>
 
@@ -69,7 +69,7 @@
           <div class="form-group">
             <label class=" control-label" for="selectbasic">Traveling For:</label>
             <div class="">
-              <select id="selectbasic" name="selectbasic" class="form-control">
+              <select id="selectbasic" name="reason" class="form-control">
                 <option value="1">Business</option>
                 <option value="2">Pleasure</option>
                 <option value="1">Convention</option>
@@ -83,7 +83,7 @@
           <div class="form-group">
             <label class=" control-label" for="selectbasic">What brings you here?</label>
             <div class="">
-              <select id="selectbasic" name="selectbasic" class="form-control">
+              <select id="selectbasic" name="heardfrom" class="form-control">
                 <option value="1">Billboard</option>
                 <option value="2">Interstate Signs</option>
                 <option value="2">Other</option>
