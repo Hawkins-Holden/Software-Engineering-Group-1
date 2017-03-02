@@ -48,7 +48,7 @@ import javafx.scene.web.WebView;
 public class GuestBook extends Application {
 	
 	public static void setLatLong(String nums){
-		System.out.println(GeoCode.setLatLong(nums));
+		System.out.println(GeoCode.reverseGeoCode(nums));
 	}
 	
 	@Override
