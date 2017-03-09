@@ -1,2 +1,4 @@
-/application/
-/backEnd/
+/.idea
+*.project
+*.classpath
+*.class
