@@ -1,7 +1,11 @@
 package application;
 
+import java.beans.EventHandler;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.json.JSONException;
 
 import com.sun.media.jfxmediaimpl.platform.Platform;
 
@@ -13,7 +17,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -109,6 +116,12 @@ public class Controller implements Initializable {
 		boolean Radio = choice;
 		boolean Check = option;
 	}
+	
+	public void openNext(){
+		
+		Stage window = (Stage) closeButton.getScene().getWindow();
+		
+	}
 
 	public void exitButton() {
 
@@ -124,6 +137,26 @@ public class Controller implements Initializable {
 		inputDestination.clear();
 		inputParty.clear();
 	}
+	
+//	public void changeScene(ActionEvent f){
+//		
+//		 Parent root;
+//	        try {
+//	        	FXMLLoader loader = new FXMLLoader(getClass().getResource("Form.fxml"));
+//	        	root = loader.load();
+//	            Stage stage = new Stage();
+//	            stage.setTitle("My New Stage Title");
+//	            stage.setScene(new Scene(root, 450, 450));
+//	            stage.show();
+//	            // Hide this current window (if this is what you want)
+//	            //((Node)(event.getSource())).getScene().getWindow().hide();
+//	        }
+//	        catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+		
+	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -156,12 +189,14 @@ public class Controller implements Initializable {
 		java.net.URL num = getClass().getResource("hello.html");
 		webEngine.load(num.toString());
 		
+		
 	}
 	
 	
+	
 	public class JavaApplication {
-		public void callFromJavascript(String coords) {
-			System.out.println(GeoCode.reverseGeoCode(coords).toString());
+		public void callFromJavascript(String coords) throws JSONException {
+			System.out.println(Serializer.getAddress(GeoCode.reverseGeoCode(coords)));
 		}
 	}
 }

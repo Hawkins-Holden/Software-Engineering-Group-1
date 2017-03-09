@@ -24,6 +24,7 @@ public class GeoCode {
 
 		String[] latlongs = getLatLong(latlong);
 		String rgc = "";
+		String rgc1 = "";
 		String lat = latlongs[0];
 		String lon = latlongs[1];
 		try {
@@ -31,14 +32,15 @@ public class GeoCode {
 					+ "&key=AIzaSyC5V3Fi15XSebqH_NsXrv0_UUZjb46vu94");
 			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			while (null != (rgc = br.readLine())) {
-				System.out.println(rgc);
+				rgc1 += rgc;
 			}
 
 		} catch (Exception ex) {
 			// cry, then
 			ex.printStackTrace();
 		}
-		return rgc;
+		//System.out.println(rgc1);
+		return rgc1;
 	}
 
 	/**
@@ -57,7 +59,7 @@ public class GeoCode {
 		latlong[0] = scan.next();
 		latlong[1] = scan.next();
 
-		System.out.println(latlong[0] + " " + latlong[1]);
+		System.out.println("This is from GeoCode: " + latlong[0] + " " + latlong[1]);
 
 		return latlong;
 	}

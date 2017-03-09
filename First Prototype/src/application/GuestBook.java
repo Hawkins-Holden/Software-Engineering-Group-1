@@ -34,6 +34,4 @@ public class GuestBook extends Application {
 		
 	}
 	
-	
-
 }
