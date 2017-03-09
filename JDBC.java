@@ -1,3 +1,8 @@
+/***********************
+JDBC just adds in some random things that I made up at the moment.   	
+*/
+ 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,7 +18,7 @@ public class JDBC
       Connection con = null;
       Statement stmt;
       
-      String url = "jdbc:mysql://localhost:3306/test";
+      String url = "jdbc:mysql://localhost:3306/test";//10.26.102.7 replaces 'localhost'
       String user = "root";
       String password = "";
    
@@ -40,8 +45,8 @@ public class JDBC
             
             //create and select db
             stmt.execute("USE VisitorDB");
-            stmt.execute("INSERT INTO visitor_info (VisitorID, Fname, MiddleInitial, Lname, Email, Country, Address, City, State, Zip, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES" + 
-                    "(" + Math.ceil((Math.random()*10000)) + ", 'Bobby'" + ", 'D'" + ", 'Williams'" + ", 'bobby@gmail.com'" + ", 'United States'" + ", '2355 Something Road'" + ", 'Pollock'" + ", 'Louisiana', " + newZip + ", " + 3 + ", 'Billboard', " + 0 + ", 'Monroe', " + 0 + ", 'Pleasure', " + " '" + ts + "'" + ")");
+            stmt.execute("INSERT INTO visitor_info (VisitorID, Fname, MiddleInitial, Lname, Email, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day, Latitude, Longitude) VALUES" + 
+                    "(" + Math.ceil((Math.random()*10000)) + ", 'Bobby'" + ", 'D'" + ", 'Williams'" + ", 'bobby@gmail.com'" + ", " + 3 + ", 'Billboard', " + 0 + ", 'Monroe', " + 0 + ", 'Pleasure', " + " '" + ts + "'" + ", '32'" + ", '-92'" + ")");
          }
       } 
       catch(Exception e) 
@@ -103,8 +108,10 @@ public class JDBC
                 System.out.println(res.getInt("VisitorID") + " " + res.getString("Email"));
                 zip = res.getInt("Zip");
             }
+            
          }
       } 
+      
       catch(Exception e) 
       {
          System.err.println("Exception: " + e.getMessage());

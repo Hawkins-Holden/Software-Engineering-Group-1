@@ -6,75 +6,37 @@ public class Visitor
 	private String midInit;
 	private String lname;
 	private String email;
-	private String country;
-	private String address;
-	private String state;
-	private String city;
-	private Integer zip;
 	private boolean hasVisited;
 	private String reasonForVisit;
+	private String latitude;
+	private String longitude;
 	
-	public Visitor (String email, Integer zip)
+	public Visitor (String email)
 	{
 		id = idCount;
 		idCount++;
 		this.email = email;
-		this.zip = zip;
 	}
 	
-	public Visitor (Integer zip)
-	{
-		id = idCount;
-		idCount++;
-		this.zip = zip;
-		email = null;
-	}
 	
-	public Visitor (int id, String email, String country, String address, String state, String city,
-			Integer zip, String fname, String midInit, String lname, boolean hasVisited, String reasonForVisit)
+	
+	public Visitor (int id, String email, String fname, String midInit, String lname, boolean hasVisited, String reasonForVisit, 
+			String latitude, String longitude)
 	{
 		this.id = id;
 		this.fname = fname;
 		this.midInit = midInit;
 		this.lname = lname;
 		this.email = email;
-		this.country = country;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
 		this.hasVisited = hasVisited;
 		this.reasonForVisit = reasonForVisit;
+		this.latitude = latitude;
+		this.longitude = longitude; 
 	}
 	
 	public int getId()
 	{
 		return id;
-	}
-	
-	public String getCountry()
-	{
-		return country;
-	}
-	
-	public String getAddress()
-	{
-		return address;
-	}
-	
-	public String getState()
-	{
-		return state;
-	}
-	
-	public String getCity()
-	{
-		return city;
-	}
-	
-	public Integer getZip()
-	{
-		return zip;
 	}
 	
 	public String getEmail()
@@ -106,4 +68,14 @@ public class Visitor
 	{
 		return reasonForVisit;
 	}
-}
+	
+	public String getLat()
+	{
+		return latitude;
+	}
+	
+	public String getLong()
+	{
+		return longitude;
+	}
+	}

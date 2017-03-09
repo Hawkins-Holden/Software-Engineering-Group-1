@@ -58,10 +58,10 @@ public class Main extends Application {
         public void handle(ActionEvent event) {
         	Integer zip = Integer.parseInt(notification.getText());
             System.out.println("testing 1...");
-            Visitor visitor = new Visitor(zip);
-            JDBC.insertIntoDB(visitor.getZip());
+            //Visitor visitor = new Visitor(zip);
+            //JDBC.insertIntoDB(visitor.getZip());
             System.out.println("testing 2...");
-            zip = JDBC.readFromDB(visitor.getZip());
+            //zip = JDBC.readFromDB(visitor.getZip());
             System.out.println(zip);
             output.setText(zip.toString());
         }
