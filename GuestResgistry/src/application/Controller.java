@@ -1,254 +1,252 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
-import org.json.JSONException;
-
-//import application2.Main2;
-//import application2.Browser.JavaApplication;
-//import application.Browser.JavaApplication;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker.State;
+import java.util.*;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.*;
-import netscape.javascript.JSObject;
 
-@SuppressWarnings("restriction")
 public class Controller implements Initializable {
 
 	@FXML
-	private WebView map;
+	private TextField flabel;
 	@FXML
-	private Button submit;
+	private TextField mlabel;
 	@FXML
-	private TextField inputFname;
+	private TextField label;
 	@FXML
-	private TextField inputMname;
+	private TextField dlabel;
 	@FXML
-	private TextField inputLname;
+	private TextField elabel;
 	@FXML
-	private TextField inputEmail;
+	private TextField plabel;
 	@FXML
-	private TextField inputDestination;
+	private ComboBox<String> purposeLabel;
 	@FXML
-	private TextField inputParty;
+	private ComboBox<String> reasonLabel;
 	@FXML
-	private Button closeButton;
+	private RadioButton rbYes;
 	@FXML
-	private ComboBox<String> reasonBox;
+	private RadioButton rbNo;
 	@FXML
-	private ComboBox<String> purposeBox;
+	private Label fnameError;
 	@FXML
-	private RadioButton yesID;
+	private Label mnameError;
 	@FXML
-	private RadioButton noID;
+	private Label lnameError;
 	@FXML
-	private CheckBox inBox;
+	private Label destinationError;
+	@FXML
+	private Label partyError;
+	@FXML
+	private Label emailError;
+	@FXML
+	private CheckBox checkLabel;
+
+	private String Reason;
+	private String Purpose;
+	private String Fname;
+	private String Mname;
+	private String Lname;
+	private String Email;
+	private String Destination;
 	private boolean choice;
-	private boolean option;
+	private String Party;
 
-	public void setData() {
+	ObservableList<String> list = FXCollections.observableArrayList("Business", "Pleasure", "Other");
+	ObservableList<String> slist = FXCollections.observableArrayList("Billboard", "Interstate Sign", "Other");
 
-		reasonBox.setStyle("-fx-font-weight:bold;");
-		purposeBox.setStyle("-fx-font-weight:bold;");
+	public void radioSelect(ActionEvent eve) {
 
-		if (reasonBox.getValue() == null) {
-			reasonBox.getItems().addAll("Billboard", "Interstate Sign", "Other");
-		}
+		if (rbYes.isSelected()) {
 
-		if (reasonBox.getValue() == null && purposeBox.getValue() == null) {
-			purposeBox.getItems().addAll("Business", "Pleasure", "Convention", "Other");
-		}
-	}
-
-	public boolean choiceButton(ActionEvent e) {
-
-		ToggleGroup group = new ToggleGroup();
-		yesID.setToggleGroup(group);
-		yesID.setSelected(true);
-		noID.setToggleGroup(group);
-
-		if (yesID.isSelected()) {
 			choice = true;
-		} else {
+		}
+
+		else if (rbNo.isSelected()) {
 			choice = false;
 		}
-
-		return choice;
 	}
 
-	public boolean checkButton(ActionEvent m) {
+	public void submitButton(ActionEvent event) throws IOException {
 
-		if (inBox.isSelected()) {
-			option = true;
+		Fname = flabel.getText();
+		Mname = mlabel.getText();
+		Lname = label.getText();
+		Email = elabel.getText();
+		Destination = dlabel.getText();
+		Party = plabel.getText();
+		Reason = reasonLabel.getValue();
+		Purpose = purposeLabel.getValue();
+
+		fnameValidate(flabel, fnameError);
+		mnameValidate(mlabel, mnameError);
+		lnameValidate(label, lnameError);
+		destinationValidate(dlabel, destinationError);
+		partyValidate(plabel, partyError);
+		emailValidate(elabel, emailError);
+		chValidate();
+
+		if (fnameError.getText().isEmpty() && mnameError.getText().isEmpty() && lnameError.getText().isEmpty()
+				&& destinationError.getText().isEmpty() && partyError.getText().isEmpty()
+				&& emailError.getText().isEmpty()) {
+			Parent closeScene = FXMLLoader.load(getClass().getResource("Confirmation.fxml"));
+			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			new_Stage.setTitle("Success!");
+			new_Stage.setScene(new Scene(closeScene, 1680, 1200));
+			new_Stage.show();
+		}
+
+		System.out.println(Fname + " " + Mname + " " + Lname + " " + Email + " " + Destination + ".");
+
+	}
+
+	public void fnameValidate(TextField flabel, Label fnameError) {
+
+		if (flabel.getText() != null && !flabel.getText().matches("[a-zA-Z]+") && !flabel.getText().isEmpty()) {
+			fnameError.setText("Please enter a valid First Name!");
 		} else {
-			option = false;
+			fnameError.setText("");
 		}
 
-		return option;
 	}
 
-	@SuppressWarnings("unused")
-	public void SubmitButton(ActionEvent event) {
-		String Fname = inputFname.getText();
-		String Mname = inputMname.getText();
-		String Lname = inputLname.getText();
-		String Email = inputEmail.getText();
-		String Destination = inputDestination.getText();
-		String Party = inputParty.getText();
-		int numPeople = Integer.parseInt(Party);
-		String Reason = reasonBox.getSelectionModel().getSelectedItem().toString();
-		String Purpose = purposeBox.getSelectionModel().getSelectedItem().toString();
-		boolean Radio = choice;
-		boolean Check = option;
-	}
+	public void mnameValidate(TextField mlabel, Label mnameError) {
 
-	@SuppressWarnings("unused")
-	public void openNext() {
-
-		Stage window = (Stage) closeButton.getScene().getWindow();
-
-	}
-
-	public void exitButton() {
-
-		Stage window = (Stage) closeButton.getScene().getWindow();
-		window.close();
-	}
-
-	public void clearButton(ActionEvent event) {
-		inputFname.clear();
-		inputMname.clear();
-		inputLname.clear();
-		inputEmail.clear();
-		inputDestination.clear();
-		inputParty.clear();
-	}
-
-	public void changeScene(ActionEvent f) {
-
-		// make a WebEngine instance for manipulation of the WebView "map".
-		WebEngine webengine = makeEngine(false);
-		
-		//System.out.println("somewhere is got, we have");
-		
-		if (webengine != null) {
-			//System.out.println("again somewhere is got, we have");
-			webengine.executeScript("setLocations(-25.363, 131.044)");
+		if (mlabel.getText() != null && !mlabel.getText().matches("[a-zA-Z]+") && !mlabel.getText().isEmpty()) {
+			mnameError.setText("Please enter a valid Middle Initial!");
+		} else {
+			mnameError.setText("");
 		}
-		
 
+	}
+
+	public void lnameValidate(TextField label, Label lnameError) {
+
+		if (label.getText() != null && !label.getText().matches("[a-zA-Z]+") && !label.getText().isEmpty()) {
+			lnameError.setText("Please enter a valid Last name!");
+		} else {
+			lnameError.setText("");
+		}
+
+	}
+
+	public void destinationValidate(TextField dlabel, Label destinationError) {
+
+		if (dlabel.getText() != null && !dlabel.getText().matches("[a-zA-Z]+") && !dlabel.getText().isEmpty()) {
+			destinationError.setText("Please enter a valid City!");
+		} else {
+			destinationError.setText("");
+		}
+
+	}
+
+	public void partyValidate(TextField plabel, Label partyError) {
+
+		if (plabel.getText() != null && !plabel.getText().matches("[0-9]+") && !plabel.getText().isEmpty()) {
+			partyError.setText("Please enter a valid number!");
+		} else {
+			partyError.setText("");
+		}
+
+	}
+
+	public void checkValidate(ActionEvent checkEvent) {
+		if (checkLabel.isSelected() && elabel.getText().isEmpty()) {
+			emailError.setText("Please enter your email if you want to opt-in.");
+		} else {
+			if (elabel.getText() != null
+					&& !elabel.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
+					&& !elabel.getText().isEmpty()) {
+				emailError.setText("Please enter a valid email address!");
+			} else {
+				emailError.setText("");
+			}
+		}
+	}
+
+	public void chValidate() {
+		if (checkLabel.isSelected() && elabel.getText().isEmpty()) {
+			emailError.setText("Please enter your email if you want to opt-in.");
+		} else {
+			if (elabel.getText() != null
+					&& !elabel.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
+					&& !elabel.getText().isEmpty()) {
+				emailError.setText("Please enter a valid email address!");
+			} else {
+				emailError.setText("");
+			}
+		}
+	}
+
+	public void emailValidate(TextField elabel, Label emailError) {
+		if (elabel.getText() != null
+				&& !elabel.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
+				&& !elabel.getText().isEmpty()) {
+			emailError.setText("Please enter a valid email address!");
+		} else {
+			emailError.setText("");
+		}
+	}
+
+	public void resetButton(ActionEvent e) {
+
+		flabel.clear();
+		mlabel.clear();
+		label.clear();
+		plabel.clear();
+		dlabel.clear();
+		elabel.clear();
+		fnameError.setText("");
+		mnameError.setText("");
+		lnameError.setText("");
+		destinationError.setText("");
+		partyError.setText("");
+		emailError.setText("");
+		checkLabel.setSelected(false);
+		rbYes.setSelected(false);
+		rbNo.setSelected(false);
+		reasonLabel.valueProperty().set(null);
+		purposeLabel.valueProperty().set(null);
+
+	}
+
+	public void exitButtonClicked() {
+
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Warning!");
+		alert.setContentText("Are you sure you want to exit?");
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == ButtonType.OK) {
+			Platform.exit();
+		}
+
+		else {
+
+			alert.close();
+		}
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
 
-		// initialize the map
-		makeEngine(true);
-
-		//populateMap(makeEngine(false));
-
+		purposeLabel.setItems(list);
+		reasonLabel.setItems(slist);
 	}
 
-	private WebEngine makeEngine(boolean trigger) {
-
-		// make a WebEngine instance for manipulation of the WebView "map".
-		WebEngine webEngine = map.getEngine();
-
-		if(trigger == true){
-		webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
-
-			@Override
-			public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
-				if (newState == State.SUCCEEDED) {
-					JSObject window = (JSObject) webEngine.executeScript("window");
-					window.setMember("app", new JavaApplication());
-				}
-				if(newState != null){
-					//working on it
-				}
-			}
-			
-		});
-
-		JSObject window = (JSObject) webEngine.executeScript("window");
-		window.setMember("app", new JavaApplication());
-		
-
-		// load appropriate file
-		java.net.URL num = getClass().getResource("Map.html");
-		webEngine.load(num.toString());
-		}
-		return webEngine;
-	}
-	
-	/**
-	 * Takes the latitude and longitude pairs stored in the database and uses them to place pins on the map
-	 * @param web The WebEngine for the current page in use.
-	 */
-	@SuppressWarnings("unused")
-	private void populateMap(WebEngine web){
-		
-		ArrayList<String> latLongs = new ArrayList<String>();
-		String temp = "";
-		int temper = 0;
-		
-		//pull from "database"
-		latLongs = getFromJDBC.getLatLongs();
-		temp = latLongs.get(0);
-		
-		/*System.out.println("getting to the communication");
-		
-		while(temper < latLongs.size()){
-			web.executeScript("addToArray(element);");
-			temper++;
-		}
-		
-		System.out.println("past the communication");*/
-		
-		
-		
-		//Tell JavaScript to place the pins
-		
-		System.out.println("getting to the communication");
-		
-		//web.executeScript("createMarker(test)");
-		web.executeScript("callJavaFX();");
-		
-		System.out.println("past the communication");
-			
-	}
-	
-	private ArrayList<String> getLocations(){
-		return getFromJDBC.getLatLongs();
-	}
-
-	public class JavaApplication {
-		public double getString(int i){
-			System.out.println("called getString()");
-			ArrayList<String> latLongArray = new ArrayList<String>();
-			latLongArray = getLocations();
-			double number = 0.1;
-			number = Double.parseDouble(latLongArray.get(i));
-			System.out.println(number);
-			return number;
-		}
-		public void callFromJavascript(String coords) throws JSONException {
-			//System.out.println(Serializer.getAddress(GeoCode.reverseGeoCode(coords)));
-			System.out.println(coords);
-		}
-		public void testCall(String sumpthang){
-			System.out.println(sumpthang);
-			//populateMap(makeEngine(false));
-			//System.out.println("called populate Map");
-		}
-	}
 }
