@@ -16,6 +16,9 @@ html, body { height: 100%; width: 100%; }
       var map = null;
       var marker = null;
       var nums = 0;
+      var latitude = 39.062214;
+      var longitude = -97.227689;
+     
 
 var infowindow = new google.maps.InfoWindow(
   { 
@@ -24,6 +27,7 @@ var infowindow = new google.maps.InfoWindow(
 
 // A function to create the marker and set up the event window function 
 function createMarker(latlng, name, html) {
+	
     var contentString = html;
     var marker = new google.maps.Marker({
         position: latlng,
@@ -31,17 +35,28 @@ function createMarker(latlng, name, html) {
         zIndex: Math.round(latlng.lat()*-100000)<<5
         });
 
-    /*google.maps.event.addListener(marker, 'click', function() {
+   /* google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(contentString); 
         infowindow.open(map,marker);
         });*/
     google.maps.event.trigger(marker, 'click');
     nums = latlng;
-    return marker;
+    //return marker;
 }
 
-function callJavaFX() {
-	app.callFromJavascript(nums);
+function callJavaFX(nums2) {
+	app.callFromJavascript(nums2);
+}
+
+function testCallJavaFX(werdz){
+	app.testCall(werdz);
+}
+
+
+function setLocations(lat, lon){
+	latitude = lat;
+	longitude = lon;
+	initialize();
 }
  
 
@@ -49,7 +64,7 @@ function initialize() {
   // create the map
   var myOptions = {
     zoom: 3,
-    center: new google.maps.LatLng(39.062214, -97.227689),
+    center: new google.maps.LatLng(latitude, longitude),
     mapTypeControl: true,
     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
     navigationControl: true,
@@ -66,11 +81,12 @@ function initialize() {
   google.maps.event.addListener(map, 'click', function(event) {
 	//call function to create marker
          if (marker) {
-            marker.setMap(null);
+            //marker.setMap(null);
             marker = null;
          }
-	 marker = createMarker(event.latLng, "name", "<b>Location</b><br>"+event.latLng);
-	 callJavaFX()
+          createMarker(event.latLng, "name", "<b>Location</b><br>"+event.latLng);
+	 //callJavaFX()
+	 testCallJavaFX(event.latLng);
   });
   
   
