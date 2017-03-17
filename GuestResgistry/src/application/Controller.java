@@ -155,7 +155,7 @@ public class Controller implements Initializable {
 
 	public void partyValidate(TextField plabel, Label partyError) {
 
-		if (plabel.getText() != null && !plabel.getText().matches("[1-9][0-9]+") && !plabel.getText().isEmpty()) {
+		if (plabel.getText() != null && !plabel.getText().matches("[1-9][0-9]*") && !plabel.getText().isEmpty()) {
 			partyError.setText("Please enter a valid number!");
 		} else {
 			partyError.setText("");
