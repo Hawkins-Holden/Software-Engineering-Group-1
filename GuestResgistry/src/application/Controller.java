@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -126,7 +125,7 @@ public class Controller implements Initializable {
 
 	public void mnameValidate(TextField mlabel, Label mnameError) {
 
-		if (mlabel.getText() != null && !mlabel.getText().matches("[a-zA-Z]+") && !mlabel.getText().isEmpty()) {
+		if (mlabel.getText() != null && !mlabel.getText().matches("[a-zA-Z]+") && !mlabel.getText().isEmpty() || mlabel.getText().length()>1) {
 			mnameError.setText("Please enter a valid Middle Initial!");
 		} else {
 			mnameError.setText("");
@@ -156,7 +155,7 @@ public class Controller implements Initializable {
 
 	public void partyValidate(TextField plabel, Label partyError) {
 
-		if (plabel.getText() != null && !plabel.getText().matches("[0-9]+") && !plabel.getText().isEmpty()) {
+		if (plabel.getText() != null && !plabel.getText().matches("[1-9][0-9]+") && !plabel.getText().isEmpty()) {
 			partyError.setText("Please enter a valid number!");
 		} else {
 			partyError.setText("");
@@ -243,7 +242,6 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 
 		purposeLabel.setItems(list);
 		reasonLabel.setItems(slist);
