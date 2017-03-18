@@ -15,27 +15,20 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="795.0"
-	prefWidth="933.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="795.0" prefWidth="933.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Circle fill="#e4e4e4" layoutX="493.0" layoutY="292.0" radius="132.0"
-			stroke="BLACK" strokeType="INSIDE" />
-		<Label layoutX="430.0" layoutY="345.0" prefHeight="27.0"
-			prefWidth="126.0" text="Thank You!">
+		<Circle fill="#e4e4e4" layoutX="493.0" layoutY="292.0" radius="132.0" stroke="BLACK" strokeType="INSIDE" />
+		<Label layoutX="430.0" layoutY="345.0" prefHeight="27.0" prefWidth="126.0" text="Thank You!">
 			<font>
 				<Font name="System Bold" size="22.0" />
 			</font>
 		</Label>
-		<Label layoutX="319.0" layoutY="434.0"
-			text="Your Submission has been received!" textFill="#303082">
+		<Label layoutX="319.0" layoutY="434.0" text="Your Submission has been received!" textFill="#303082">
 			<font>
 				<Font name="System Bold" size="22.0" />
 			</font>
 		</Label>
-		<Button fx:id="home_btn" layoutX="637.0" layoutY="568.0"
-			mnemonicParsing="false" prefHeight="72.0" prefWidth="126.0" text="HOME"
-			textFill="#74a63a">
+		<Button fx:id="home_btn" layoutX="637.0" layoutY="568.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="126.0" stylesheets="@GuestBookStyle.css" text="HOME">
 			<font>
 				<Font name="System Bold" size="20.0" />
 			</font>
@@ -43,8 +36,7 @@
 				<DropShadow color="#579e19" />
 			</effect>
 		</Button>
-		<ImageView fitHeight="157.0" fitWidth="180.0" layoutX="430.0"
-			layoutY="188.0">
+		<ImageView fitHeight="157.0" fitWidth="180.0" layoutX="430.0" layoutY="188.0">
 			<image>
 				<Image url="@tick.png" />
 			</image>

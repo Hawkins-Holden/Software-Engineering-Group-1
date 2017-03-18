@@ -55,28 +55,20 @@ public class Controller implements Initializable {
 	@FXML
 	private CheckBox checkLabel;
 
-	private String Reason;
-	private String Purpose;
 	private String Fname;
 	private String Mname;
 	private String Lname;
 	private String Email;
 	private String Destination;
-	private boolean choice;
-	private String Party;
-
 	ObservableList<String> list = FXCollections.observableArrayList("Business", "Pleasure", "Other");
 	ObservableList<String> slist = FXCollections.observableArrayList("Billboard", "Interstate Sign", "Other");
 
 	public void radioSelect(ActionEvent eve) {
 
 		if (rbYes.isSelected()) {
-
-			choice = true;
 		}
 
 		else if (rbNo.isSelected()) {
-			choice = false;
 		}
 	}
 
@@ -87,9 +79,9 @@ public class Controller implements Initializable {
 		Lname = label.getText();
 		Email = elabel.getText();
 		Destination = dlabel.getText();
-		Party = plabel.getText();
-		Reason = reasonLabel.getValue();
-		Purpose = purposeLabel.getValue();
+		plabel.getText();
+		reasonLabel.getValue();
+		purposeLabel.getValue();
 
 		fnameValidate(flabel, fnameError);
 		mnameValidate(mlabel, mnameError);
@@ -98,10 +90,16 @@ public class Controller implements Initializable {
 		partyValidate(plabel, partyError);
 		emailValidate(elabel, emailError);
 		chValidate();
+		emptyFields();
 
 		if (fnameError.getText().isEmpty() && mnameError.getText().isEmpty() && lnameError.getText().isEmpty()
 				&& destinationError.getText().isEmpty() && partyError.getText().isEmpty()
-				&& emailError.getText().isEmpty()) {
+				&& emailError.getText().isEmpty()
+				&& (!flabel.getText().isEmpty() || !mlabel.getText().isEmpty() || !label.getText().isEmpty()
+						|| !elabel.getText().isEmpty() || !dlabel.getText().isEmpty() || !plabel.getText().isEmpty()
+						|| !purposeLabel.getSelectionModel().isEmpty() || !reasonLabel.getSelectionModel().isEmpty()
+						|| rbYes.isSelected() || rbNo.isSelected())) {
+
 			Parent closeScene = FXMLLoader.load(getClass().getResource("Confirmation.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			new_Stage.setTitle("Success!");
@@ -115,7 +113,7 @@ public class Controller implements Initializable {
 
 	public void fnameValidate(TextField flabel, Label fnameError) {
 
-		if (flabel.getText() != null && !flabel.getText().matches("[a-zA-Z]+") && !flabel.getText().isEmpty()) {
+		if (flabel.getText() != null && !flabel.getText().matches("[a-zA-Z ]+") && !flabel.getText().isEmpty()) {
 			fnameError.setText("Please enter a valid First Name!");
 		} else {
 			fnameError.setText("");
@@ -125,7 +123,8 @@ public class Controller implements Initializable {
 
 	public void mnameValidate(TextField mlabel, Label mnameError) {
 
-		if (mlabel.getText() != null && !mlabel.getText().matches("[a-zA-Z]+") && !mlabel.getText().isEmpty() || mlabel.getText().length()>1) {
+		if (mlabel.getText() != null && !mlabel.getText().matches("[a-zA-Z ]+") && !mlabel.getText().isEmpty()
+				|| mlabel.getText().length() > 1) {
 			mnameError.setText("Please enter a valid Middle Initial!");
 		} else {
 			mnameError.setText("");
@@ -135,7 +134,7 @@ public class Controller implements Initializable {
 
 	public void lnameValidate(TextField label, Label lnameError) {
 
-		if (label.getText() != null && !label.getText().matches("[a-zA-Z]+") && !label.getText().isEmpty()) {
+		if (label.getText() != null && !label.getText().matches("[a-zA-Z ]+") && !label.getText().isEmpty()) {
 			lnameError.setText("Please enter a valid Last name!");
 		} else {
 			lnameError.setText("");
@@ -145,7 +144,7 @@ public class Controller implements Initializable {
 
 	public void destinationValidate(TextField dlabel, Label destinationError) {
 
-		if (dlabel.getText() != null && !dlabel.getText().matches("[a-zA-Z]+") && !dlabel.getText().isEmpty()) {
+		if (dlabel.getText() != null && !dlabel.getText().matches("[a-zA-Z ]+") && !dlabel.getText().isEmpty()) {
 			destinationError.setText("Please enter a valid City!");
 		} else {
 			destinationError.setText("");
@@ -201,6 +200,29 @@ public class Controller implements Initializable {
 		}
 	}
 
+	public void emptyFields() {
+		if (flabel.getText().isEmpty() && mlabel.getText().isEmpty() && label.getText().isEmpty()
+				&& elabel.getText().isEmpty() && dlabel.getText().isEmpty() && plabel.getText().isEmpty()
+				&& purposeLabel.getValue() == null && reasonLabel.getValue() == null && !rbYes.isSelected()
+				&& !rbNo.isSelected()) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setHeaderText("We would love to learn more about you.");
+			alert.setTitle("Warning!");
+			alert.setContentText("Are you sure you want to submit nothing?");
+			Optional<ButtonType> result = alert.showAndWait();
+
+			if (result.get() == ButtonType.OK) {
+				Platform.exit();
+			}
+
+			else {
+
+				alert.close();
+			}
+		}
+
+	}
+
 	public void resetButton(ActionEvent e) {
 
 		flabel.clear();
@@ -227,6 +249,7 @@ public class Controller implements Initializable {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Warning!");
+		alert.setHeaderText("We would love to learn more about you.");
 		alert.setContentText("Are you sure you want to exit?");
 		Optional<ButtonType> result = alert.showAndWait();
 
