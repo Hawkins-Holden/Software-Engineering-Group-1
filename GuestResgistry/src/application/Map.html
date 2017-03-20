@@ -21,6 +21,7 @@ html, body { height: 100%; width: 100%; }
       var test1 = 20.303;
       var test2 = -101.25;
       var testArray = [];
+      var temper = 0;
       var tempest = 0;
       var tester = "";
 
@@ -54,42 +55,57 @@ function createMarker(latlng) {
 	
 }*/
 
-function callJavaFX() {
-	
-	
-	tempest = 0;
-	
-	while (tempest < 4){
-	testArray[tempest] = app.getString(tempest);
-	tempest++;
+
+	function callJavaFX() {
+
+		tempest = 0;
+		temp = app.getSize();
+
+		while (tempest < temp) {
+			testArray[tempest] = app.getString(tempest);
+			tempest++;
+		}
+
+		tempest = 0;
+
+		while (tempest < temp) {
+			myLatLng = new google.maps.LatLng({
+				lat : testArray[tempest],
+				lng : testArray[tempest + 1]
+			});
+			marker = createMarker(myLatLng);
+			tempest = tempest + 2;
 	}
-	
-	myLatLng = new google.maps.LatLng({lat: testArray[0], lng: testArray[1]});
-	//myLatLng = new google.maps.LatLng({lat: test1, lng: test2});
-	
-	//app.callFromJavascript(testArray);
-	
-	marker = createMarker(myLatLng);
-}
 
-function testCallJavaFX(message2){
-	app.testCall(message2);
-}
+		tempest = 0;
 
-function pleaseWork(latLng){
-	if (marker) {
-		//marker.setMap(null);
-		marker = null;
+		//myLatLng = new google.maps.LatLng({lat: testArray[0], lng: testArray[1]});
+		//myLatLng = new google.maps.LatLng({lat: test1, lng: test2});
+
+		//app.callFromJavascript(testArray);
+
 	}
-	//marker = createMarker(test);
-	marker = createMarker(latLng);
-	//callJavaFX();
-}
 
+	function testCallJavaFX(message2) {
+		app.testCall(message2);
+	}
+
+	function pleaseWork(latLng) {
+		if (marker) {
+			//marker.setMap(null);
+			marker = null;
+		}
+		//marker = createMarker(test);
+		marker = createMarker(latLng);
+		//callJavaFX();
+	}
 
 	function placeMarkerAndPanTo(latLng, map) {
 		marker = new google.maps.Marker({
-			position : {lat: 41.9, lng: -93},
+			position : {
+				lat : 41.9,
+				lng : -93
+			},
 			map : map
 		});
 		map.panTo(latLng);
@@ -112,9 +128,9 @@ function pleaseWork(latLng){
 				myOptions);
 
 		google.maps.event.addListener(map, 'click', function(event) {
-		    //var myLatLng = event.latLng;
-		    //var lat = myLatLng.lat();
-		   // var lng = myLatLng.lng();
+			//var myLatLng = event.latLng;
+			//var lat = myLatLng.lat();
+			//var lng = myLatLng.lng();
 			//placeMarkerAndPanTo(event.latLng, map);
 			//call function to create marker
 			//pleaseWork(event.latLng);
