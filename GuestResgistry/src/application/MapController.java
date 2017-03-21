@@ -119,7 +119,7 @@ public class MapController implements Initializable {
 		}
 		public void callFromJavascript(String coords) throws JSONException {
 			String[] latLongPair = new String[2];
-			latLongPair = GeoCode.getLatLong(coords);
+			latLongPair = GeoCoding.getLatLong(coords);
 			//System.out.println(SerializeJson.getAddress(GeoCoding.reverseGeoCode(coords)));
 			
 		}

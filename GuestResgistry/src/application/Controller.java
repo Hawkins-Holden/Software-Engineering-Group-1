@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -90,7 +89,7 @@ public class Controller implements Initializable {
 		partyValidate(plabel, partyError);
 		emailValidate(elabel, emailError);
 		chValidate();
-		emptyFields();
+		emptyFields(event);
 
 		if (fnameError.getText().isEmpty() && mnameError.getText().isEmpty() && lnameError.getText().isEmpty()
 				&& destinationError.getText().isEmpty() && partyError.getText().isEmpty()
@@ -200,7 +199,7 @@ public class Controller implements Initializable {
 		}
 	}
 
-	public void emptyFields() {
+	public void emptyFields(ActionEvent event) throws IOException {
 		if (flabel.getText().isEmpty() && mlabel.getText().isEmpty() && label.getText().isEmpty()
 				&& elabel.getText().isEmpty() && dlabel.getText().isEmpty() && plabel.getText().isEmpty()
 				&& purposeLabel.getValue() == null && reasonLabel.getValue() == null && !rbYes.isSelected()
@@ -212,7 +211,12 @@ public class Controller implements Initializable {
 			Optional<ButtonType> result = alert.showAndWait();
 
 			if (result.get() == ButtonType.OK) {
-				Platform.exit();
+				
+				Parent closeScene = FXMLLoader.load(getClass().getResource("MapViewer.fxml"));
+				Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				new_Stage.setTitle("Map");
+				new_Stage.setScene(new Scene(closeScene, 1680, 1200));
+				new_Stage.show();
 			}
 
 			else {
@@ -245,7 +249,7 @@ public class Controller implements Initializable {
 
 	}
 
-	public void exitButtonClicked() {
+	public void exitButtonClicked(ActionEvent event) throws IOException {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Warning!");
@@ -254,7 +258,12 @@ public class Controller implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.get() == ButtonType.OK) {
-			Platform.exit();
+			
+			Parent closeScene = FXMLLoader.load(getClass().getResource("MapViewer.fxml"));
+			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			new_Stage.setTitle("Map");
+			new_Stage.setScene(new Scene(closeScene, 1680, 1200));
+			new_Stage.show();
 		}
 
 		else {
