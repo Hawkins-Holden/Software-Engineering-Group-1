@@ -10,6 +10,7 @@ public class Visitor
 	private String email;
 	private boolean hasVisited;
 	private String reasonForVisit;
+	private String heard;
 	private String latitude;
 	private String longitude;
 	
@@ -24,7 +25,7 @@ public class Visitor
 	  This is the 'real' constructor... for now
 	*/
 	
-	public Visitor (int id, String fname, String midInit, String lname, String email, boolean hasVisited, String reasonForVisit, 
+	public Visitor (int id, String fname, String midInit, String lname, String email, boolean hasVisited, String reasonForVisit, String heard, 
 			String latitude, String longitude)
 	{
 		this.id = id;
@@ -34,6 +35,7 @@ public class Visitor
 		this.email = email;
 		this.hasVisited = hasVisited;
 		this.reasonForVisit = reasonForVisit;
+		this.heard = heard;
 		this.latitude = latitude;
 		this.longitude = longitude; 
 	}
@@ -71,6 +73,11 @@ public class Visitor
 	public String getReason()
 	{
 		return reasonForVisit;
+	}
+	
+	public String getHeard()
+	{
+		return heard;
 	}
 	
 	public String getLat()

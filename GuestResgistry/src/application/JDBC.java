@@ -1,15 +1,21 @@
 package application;
 
+/***********************
+JDBC just adds in some random things that I made up at the moment.   	
+*/
+ 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.*;
 
+
 public class JDBC
 {
    static Integer id;
-   public static void insertIntoDB(int id) 
+   public static void insertIntoDB(Visitor visitor) 
    {
       Connection con = null;
       Statement stmt;
@@ -37,9 +43,8 @@ public class JDBC
              
            // int visitorID = (int) Math.ceil((Math.random()*10000));
             
-            Main x = new Main();
+            //Main x = new Main();
             
-            Visitor visitor = x.getVisitor();
             int v = 0;
             if (visitor.getHasVisited() == true)
             {
@@ -56,7 +61,7 @@ public class JDBC
             		"(" + visitor.getId() + ", '" + visitor.getLat() + "', " + "'" + visitor.getLong() + "')");
             
             stmt.execute("INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES" +
-            		"(" + visitor.getId() + ", '1', " + "'Billboard', " + " '1'" + ", 'Monroe', " + "'" + v + "'" 
+            		"(" + visitor.getId() + ", '1', " + "'" + visitor.getHeard() + "'" + ", '1'" + ", 'Monroe', " + "'" + v + "'" 
             		+ ", 'Pleasure', " + "'" + getCurrentTimeStamp() + "'" + ")");            
          }//end if
       } //end try
