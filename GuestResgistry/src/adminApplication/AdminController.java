@@ -32,15 +32,17 @@ public class AdminController implements Initializable {
 
 		List<List<String>> emailData = AdminJDBC.getEmails();
 		
-		mysheet.addCell(new Label(1, 0, "VisitorID"));
+		mysheet.addCell(new Label(0, 0, "This report was generated on " + getDate() + " at " + getTime() + "."));
+		
+		mysheet.addCell(new Label(0, 1, "VisitorID"));
 		mysheet.addCell(new Label(1, 1, "First"));
-		mysheet.addCell(new Label(1, 2, "MI"));
-		mysheet.addCell(new Label(1, 3, "Last"));
-		mysheet.addCell(new Label(1, 4, "Email"));
+		mysheet.addCell(new Label(2, 1, "MI"));
+		mysheet.addCell(new Label(3, 1, "Last"));
+		mysheet.addCell(new Label(4, 1, "Email"));
 		
 		for(int i = 0; i < emailData.size(); i++)
 		{
-			for (int j = 0; j < emailData.size(); j++)
+			for (int j = 0; j < emailData.get(0).size(); j++)
 			{
 				mysheet.addCell(formatData(i, j, emailData.get(i).get(j)));
 			}
@@ -51,7 +53,7 @@ public class AdminController implements Initializable {
 	
 	private Label formatData(int i, int j, String data)
 	{
-		return new Label(i, j, data);
+		return new Label(j, i+2, data);
 	}
 
 	private String getTime() {
@@ -61,7 +63,7 @@ public class AdminController implements Initializable {
 
 	private String getDate() {
 		Calendar timestamp = Calendar.getInstance();
-		return timestamp.get(Calendar.MONTH) + " " + timestamp.get(Calendar.DATE) + ", " + timestamp.get(Calendar.YEAR);
+		return timestamp.get(Calendar.MONTH) + "/" + timestamp.get(Calendar.DATE) + "/" + timestamp.get(Calendar.YEAR);
 	}
 
 }

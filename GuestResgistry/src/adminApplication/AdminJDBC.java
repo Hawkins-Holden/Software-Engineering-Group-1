@@ -9,11 +9,6 @@ import java.sql.ResultSet;
 import java.sql.*;
 
 public class AdminJDBC {
-	private static java.sql.Timestamp getCurrentTimeStamp() {
-		java.util.Date today = new java.util.Date();
-		return new java.sql.Timestamp(today.getTime());
-	}
-
 	/*
 	 * Reads from the database
 	 */
@@ -39,7 +34,7 @@ public class AdminJDBC {
 				// create and select db
 
 				stmt.execute("CREATE DATABASE IF NOT EXISTS VisitorsDB");
-				stmt.execute("USE VisitorDB");
+				stmt.execute("USE VisitorsDB");
 
 				/**
 				 * Query entries with the Zip '71467'
@@ -50,14 +45,12 @@ public class AdminJDBC {
 				/**
 				 * Iterate over the result set from the above query
 				 */
-				int i = 0;
-				int j = 0;
-				
 				while (res.next()) {
 					List<String> currentResult = new ArrayList<String>();
-					currentResult.add(((Integer) res.getInt("VisitorID")).toString());
+					Integer id = res.getInt("VisitorID");
+					currentResult.add(id.toString());
 					currentResult.add(res.getString("Fname"));
-					currentResult.add(res.getString("MiddleInitial"));
+					currentResult.add((String) res.getObject("MiddleInitial"));
 					currentResult.add(res.getString("Lname"));
 					currentResult.add(res.getString("Email"));
 					
