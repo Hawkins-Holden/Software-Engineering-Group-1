@@ -25,17 +25,43 @@ public class AdminController implements Initializable {
 	}
 
 	public void write() throws IOException, WriteException {
-		
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		URL resource = classLoader.getResource("filename.ext");
 		File file = new File("excelReport.xls");
 		
 		WritableWorkbook myexcel = Workbook.createWorkbook(file);
 		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
-		Label label = new Label(0, 0, "data1");
-		mysheet.addCell(label);
+
+		List<List<String>> emailData = AdminJDBC.getEmails();
+		
+		mysheet.addCell(new Label(1, 0, "VisitorID"));
+		mysheet.addCell(new Label(1, 1, "First"));
+		mysheet.addCell(new Label(1, 2, "MI"));
+		mysheet.addCell(new Label(1, 3, "Last"));
+		mysheet.addCell(new Label(1, 4, "Email"));
+		
+		for(int i = 0; i < emailData.size(); i++)
+		{
+			for (int j = 0; j < emailData.size(); j++)
+			{
+				mysheet.addCell(formatData(i, j, emailData.get(i).get(j)));
+			}
+		}
 		myexcel.write();
 		myexcel.close();
+	}
+	
+	private Label formatData(int i, int j, String data)
+	{
+		return new Label(i, j, data);
+	}
+
+	private String getTime() {
+		Calendar timestamp = Calendar.getInstance();
+		return timestamp.get(Calendar.HOUR) + ":" + timestamp.get(Calendar.MINUTE) + ":" + timestamp.get(Calendar.SECOND) + timestamp.get(Calendar.AM_PM);
+	}
+
+	private String getDate() {
+		Calendar timestamp = Calendar.getInstance();
+		return timestamp.get(Calendar.MONTH) + " " + timestamp.get(Calendar.DATE) + ", " + timestamp.get(Calendar.YEAR);
 	}
 
 }
