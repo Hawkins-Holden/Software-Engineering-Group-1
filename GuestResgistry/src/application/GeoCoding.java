@@ -12,7 +12,8 @@ import java.util.Scanner;
  */
 
 public class GeoCoding {
-
+private static String lat;
+private static String lon;
 	/**
 	 * With the use of a helper method converts a lat long into a detailed JSON
 	 * object with attributes that include zip code, address, and country.
@@ -59,10 +60,19 @@ public class GeoCoding {
 
 		latlong[0] = scan.next();
 		latlong[1] = scan.next();
-
+		lat = latlong[0];
+		lon = latlong[1];
 		System.out.println("This is from GeoCode: " + latlong[0] + " " + latlong[1]);
-
 		return latlong;
 	}
-
+	public static String getLat()
+	{
+		return lat;
+	}
+	public static String getLon()
+	{
+		return lon;
+	}
+	
+	
 }

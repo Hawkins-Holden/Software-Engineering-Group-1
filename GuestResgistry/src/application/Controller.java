@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -54,20 +56,28 @@ public class Controller implements Initializable {
 	@FXML
 	private CheckBox checkLabel;
 
+	private String Reason;
+	private String Heard;
 	private String Fname;
 	private String Mname;
 	private String Lname;
 	private String Email;
 	private String Destination;
+	private boolean choice;
+	private String Party;
+
 	ObservableList<String> list = FXCollections.observableArrayList("Business", "Pleasure", "Other");
 	ObservableList<String> slist = FXCollections.observableArrayList("Billboard", "Interstate Sign", "Other");
 
 	public void radioSelect(ActionEvent eve) {
 
 		if (rbYes.isSelected()) {
+
+			choice = true;
 		}
 
 		else if (rbNo.isSelected()) {
+			choice = false;
 		}
 	}
 
@@ -78,9 +88,9 @@ public class Controller implements Initializable {
 		Lname = label.getText();
 		Email = elabel.getText();
 		Destination = dlabel.getText();
-		plabel.getText();
-		reasonLabel.getValue();
-		purposeLabel.getValue();
+		Party = plabel.getText();
+		Reason = reasonLabel.getValue();
+		Heard = purposeLabel.getValue();
 
 		fnameValidate(flabel, fnameError);
 		mnameValidate(mlabel, mnameError);
@@ -89,31 +99,32 @@ public class Controller implements Initializable {
 		partyValidate(plabel, partyError);
 		emailValidate(elabel, emailError);
 		chValidate();
-		emptyFields(event);
 
 		if (fnameError.getText().isEmpty() && mnameError.getText().isEmpty() && lnameError.getText().isEmpty()
 				&& destinationError.getText().isEmpty() && partyError.getText().isEmpty()
-				&& emailError.getText().isEmpty()
-				&& (!flabel.getText().isEmpty() || !mlabel.getText().isEmpty() || !label.getText().isEmpty()
-						|| !elabel.getText().isEmpty() || !dlabel.getText().isEmpty() || !plabel.getText().isEmpty()
-						|| !purposeLabel.getSelectionModel().isEmpty() || !reasonLabel.getSelectionModel().isEmpty()
-						|| rbYes.isSelected() || rbNo.isSelected())) {
-
+				&& emailError.getText().isEmpty()) 
+		{
 			Parent closeScene = FXMLLoader.load(getClass().getResource("Confirmation.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			new_Stage.setTitle("Success!");
 			new_Stage.setScene(new Scene(closeScene, 1680, 1200));
 			new_Stage.show();
+			
+			
+			/*****************************************************************************
+			 	Adds the form data to the database  
+			*****************************************************************************/
+			
+			int visitorID = (int) Math.ceil((Math.random()*10000));
+			Visitor visit = new Visitor(visitorID,Fname,Mname,Lname,Email,true,Heard,Reason,GeoCoding.getLat(),GeoCoding.getLon(), Destination);
+			JDBC.insertIntoDB(visit);
 		}
-
-		System.out.println(Fname + " " + Mname + " " + Lname + " " + Email + " " + Destination + ".");
-
 	}
 
 	public void fnameValidate(TextField flabel, Label fnameError) {
 
-		if (flabel.getText() != null && !flabel.getText().matches("[a-zA-Z ]+") && !flabel.getText().isEmpty()) {
-			fnameError.setText("Please enter a valid First Name!");
+		if (flabel.getText() != null && !flabel.getText().matches("[a-zA-Z]+") && !flabel.getText().isEmpty()) {
+			fnameError.setText("Please enter a valid name!");
 		} else {
 			fnameError.setText("");
 		}
@@ -122,9 +133,8 @@ public class Controller implements Initializable {
 
 	public void mnameValidate(TextField mlabel, Label mnameError) {
 
-		if (mlabel.getText() != null && !mlabel.getText().matches("[a-zA-Z ]+") && !mlabel.getText().isEmpty()
-				|| mlabel.getText().length() > 1) {
-			mnameError.setText("Please enter a valid Middle Initial!");
+		if (mlabel.getText() != null && !mlabel.getText().matches("[a-zA-Z]+") && !mlabel.getText().isEmpty()) {
+			mnameError.setText("Please enter a valid name!");
 		} else {
 			mnameError.setText("");
 		}
@@ -133,8 +143,8 @@ public class Controller implements Initializable {
 
 	public void lnameValidate(TextField label, Label lnameError) {
 
-		if (label.getText() != null && !label.getText().matches("[a-zA-Z ]+") && !label.getText().isEmpty()) {
-			lnameError.setText("Please enter a valid Last name!");
+		if (label.getText() != null && !label.getText().matches("[a-zA-Z]+") && !label.getText().isEmpty()) {
+			lnameError.setText("Please enter a valid name!");
 		} else {
 			lnameError.setText("");
 		}
@@ -143,8 +153,8 @@ public class Controller implements Initializable {
 
 	public void destinationValidate(TextField dlabel, Label destinationError) {
 
-		if (dlabel.getText() != null && !dlabel.getText().matches("[a-zA-Z ]+") && !dlabel.getText().isEmpty()) {
-			destinationError.setText("Please enter a valid City!");
+		if (dlabel.getText() != null && !dlabel.getText().matches("[a-zA-Z]+") && !dlabel.getText().isEmpty()) {
+			destinationError.setText("Please enter a valid name!");
 		} else {
 			destinationError.setText("");
 		}
@@ -153,7 +163,7 @@ public class Controller implements Initializable {
 
 	public void partyValidate(TextField plabel, Label partyError) {
 
-		if (plabel.getText() != null && !plabel.getText().matches("[1-9][0-9]*") && !plabel.getText().isEmpty()) {
+		if (plabel.getText() != null && !plabel.getText().matches("[0-9]+") && !plabel.getText().isEmpty()) {
 			partyError.setText("Please enter a valid number!");
 		} else {
 			partyError.setText("");
@@ -199,34 +209,6 @@ public class Controller implements Initializable {
 		}
 	}
 
-	public void emptyFields(ActionEvent event) throws IOException {
-		if (flabel.getText().isEmpty() && mlabel.getText().isEmpty() && label.getText().isEmpty()
-				&& elabel.getText().isEmpty() && dlabel.getText().isEmpty() && plabel.getText().isEmpty()
-				&& purposeLabel.getValue() == null && reasonLabel.getValue() == null && !rbYes.isSelected()
-				&& !rbNo.isSelected()) {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setHeaderText("We would love to learn more about you.");
-			alert.setTitle("Warning!");
-			alert.setContentText("Are you sure you want to submit nothing?");
-			Optional<ButtonType> result = alert.showAndWait();
-
-			if (result.get() == ButtonType.OK) {
-				
-				Parent closeScene = FXMLLoader.load(getClass().getResource("MapViewer.fxml"));
-				Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				new_Stage.setTitle("Map");
-				new_Stage.setScene(new Scene(closeScene, 1680, 1200));
-				new_Stage.show();
-			}
-
-			else {
-
-				alert.close();
-			}
-		}
-
-	}
-
 	public void resetButton(ActionEvent e) {
 
 		flabel.clear();
@@ -249,21 +231,15 @@ public class Controller implements Initializable {
 
 	}
 
-	public void exitButtonClicked(ActionEvent event) throws IOException {
+	public void exitButtonClicked() {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Warning!");
-		alert.setHeaderText("We would love to learn more about you.");
 		alert.setContentText("Are you sure you want to exit?");
 		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.get() == ButtonType.OK) {
-			
-			Parent closeScene = FXMLLoader.load(getClass().getResource("MapViewer.fxml"));
-			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			new_Stage.setTitle("Map");
-			new_Stage.setScene(new Scene(closeScene, 1680, 1200));
-			new_Stage.show();
+			Platform.exit();
 		}
 
 		else {
@@ -274,6 +250,7 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
 
 		purposeLabel.setItems(list);
 		reasonLabel.setItems(slist);

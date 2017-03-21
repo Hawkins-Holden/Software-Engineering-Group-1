@@ -13,6 +13,7 @@ public class Visitor
 	private String heard;
 	private String latitude;
 	private String longitude;
+	private String destination;
 	
 	public Visitor (String email)
 	{
@@ -26,7 +27,7 @@ public class Visitor
 	*/
 	
 	public Visitor (int id, String fname, String midInit, String lname, String email, boolean hasVisited, String reasonForVisit, String heard, 
-			String latitude, String longitude)
+			String latitude, String longitude, String destination)
 	{
 		this.id = id;
 		this.fname = fname;
@@ -38,6 +39,7 @@ public class Visitor
 		this.heard = heard;
 		this.latitude = latitude;
 		this.longitude = longitude; 
+		this.destination = destination;
 	}
 	
 	public int getId()
@@ -88,5 +90,9 @@ public class Visitor
 	public String getLong()
 	{
 		return longitude;
+	}
+	public String getDestination()
+	{
+		return destination;
 	}
 }//end class

@@ -61,8 +61,8 @@ public class JDBC
             		"(" + visitor.getId() + ", '" + visitor.getLat() + "', " + "'" + visitor.getLong() + "')");
             
             stmt.execute("INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES" +
-            		"(" + visitor.getId() + ", '1', " + "'" + visitor.getHeard() + "'" + ", '1'" + ", 'Monroe', " + "'" + v + "'" 
-            		+ ", 'Pleasure', " + "'" + getCurrentTimeStamp() + "'" + ")");            
+            		"(" + visitor.getId() + ", '1', " + "'" + visitor.getHeard() + "'" + ", '1', " + "'" + visitor.getDestination() + "', " + 
+            		"'" + v + "'" + ", '" + visitor.getReason() + "', " + "'" + getCurrentTimeStamp() + "'" + ")");            
          }//end if
       } //end try
       
