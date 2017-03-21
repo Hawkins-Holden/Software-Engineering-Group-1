@@ -1,17 +1,10 @@
+package application;
 
-import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import org.json.JSONException;
-
-import com.sun.media.jfxmediaimpl.platform.Platform;
-
-//import application2.Main2;
-//import application2.Browser.JavaApplication;
-//import application.Browser.JavaApplication;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
@@ -19,12 +12,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.*;
+import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
 public class MapController implements Initializable {
@@ -34,41 +28,35 @@ public class MapController implements Initializable {
 	@FXML
 	private Button submit;
 	
+	/**Used to communicate with the main method that is running*/
 	static Main main;
 	
+	private String address = "";
+	
+	/**
+	 * Called from Main.java, this lets the controller know the instance of main to communicate with.
+	 * @param newMain The instance of Main that will be communicating with this controller.
+	 */
 	public static void setMain(Main newMain){
 		main = newMain;
+}
+	
+	
+	public void changeScene(ActionEvent event) throws IOException
+	{
+		
+		Parent newScene = FXMLLoader.load(getClass().getResource("GuestBook.fxml"));
+		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		new_Stage.setTitle("Success!");
+		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.show();
+		
 	}
-
-	public void changeScene(ActionEvent f) throws Exception{
-
-		
-		/*
-		// make a WebEngine instance for manipulation of the WebView "map".
-		WebEngine webengine = makeEngine(false);
-		
-		//System.out.println("somewhere is got, we have");
-		
-		if (webengine != null) {
-			//System.out.println("again somewhere is got, we have");
-			webengine.executeScript("setLocations(-25.363, 131.044)");
-		}
-		*/
-		
-		main.setTarget("Form.fxml");
-
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		// initialize the map
+	
+	public void initialize(URL location, ResourceBundle resources) {
 		makeEngine(true);
-
-		//populateMap(makeEngine(false));
-
 	}
-
+	
 	private WebEngine makeEngine(boolean trigger) {
 
 		// make a WebEngine instance for manipulation of the WebView "map".
@@ -106,30 +94,37 @@ public class MapController implements Initializable {
 	private ArrayList<String> getLocations(){
 		return GetFromJDBC.getLatLongs();
 	}
-
+	
+	/**
+	 * Required to communicate with the javascript that runs the map, contains methods to populate the map
+	 * and use the information sent back from the map (via javascript) to store lat-long pairs and addresses.
+	 *
+	 */
 	public class JavaApplication {
 		public int getSize(){
+			
 			ArrayList<String> latLongArray = new ArrayList<String>();
 			latLongArray = getLocations();
 			return latLongArray.size();
+			
 		}
 		public double getString(int i){
-			System.out.println("called getString()");
+			
 			ArrayList<String> latLongArray = new ArrayList<String>();
 			latLongArray = getLocations();
 			double number = 0.1;
 			number = Double.parseDouble(latLongArray.get(i));
-			System.out.println(number);
 			return number;
+			
 		}
 		public void callFromJavascript(String coords) throws JSONException {
-			//System.out.println(Serializer.getAddress(GeoCode.reverseGeoCode(coords)));
-			System.out.println(coords);
+			String[] latLongPair = new String[2];
+			latLongPair = GeoCoding.getLatLong(coords);
+			//System.out.println(SerializeJson.getAddress(GeoCoding.reverseGeoCode(coords)));
+			
 		}
-		public void testCall(String sumpthang){
-			System.out.println(sumpthang);
-			//populateMap(makeEngine(false));
-			//System.out.println("called populate Map");
+		public void testCall(String message1){
+			System.out.println(message1);
 		}
 	}
 }
@@ -169,3 +164,4 @@ private void populateMap(WebEngine web){
 	System.out.println("past the communication");
 		
 }*/ //Kept as a reference
+	
