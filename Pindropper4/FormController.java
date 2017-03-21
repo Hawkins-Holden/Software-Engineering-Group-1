@@ -1,33 +1,15 @@
 package Pindropper4;
 
 
-import java.beans.EventHandler;
-import java.io.IOException;
+
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import org.json.JSONException;
-
-import com.sun.media.jfxmediaimpl.platform.Platform;
-
-//import application2.Main2;
-//import application2.Browser.JavaApplication;
-//import application.Browser.JavaApplication;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.*;
-import netscape.javascript.JSObject;
+
 
 public class FormController implements Initializable {
 

@@ -20,6 +20,7 @@ html, body { height: 100%; width: 100%; }
       var longitude = -97.227689;
       var test1 = 20.303;
       var test2 = -101.25;
+      var markers = [];
       var testArray = [];
       var temper = 0;
       var tempest = 0;
@@ -37,7 +38,6 @@ function createMarker(latlng) {
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
-        //zIndex: Math.round(latlng.lat()*-100000)<<5
         zIndex: Math.round(latlng.lat()*-100000)<<5
         });
 
@@ -45,28 +45,36 @@ function createMarker(latlng) {
     google.maps.event.trigger(marker, 'click');
     nums = latlng;
     
+    markers[temper] = marker;
+    temper = temper + 1;
+    
     return marker;
 }
 
-/*function addToArray(element){
-	
-	testArray[tempest] = element;
-	tempest++;
-	
-}*/
-
-
-	function callJavaFX() {
-
+	/*Populates the map by reading from an ArrayList of Strings found in Java.
+	  This then calls the createMarker method for every lat-long pair it recieves.
+	  Note that it must create a google.LatLng object for every pin.*/
+	function populateMap() {
+		
+		testCallJavaFX("Starting method call");  
+		  
 		tempest = 0;
+		temper = 0;
 		temp = app.getSize();
-
+		
+		testCallJavaFX("About to execute first loop");
+		
 		while (tempest < temp) {
 			testArray[tempest] = app.getString(tempest);
 			tempest++;
+			
 		}
-
+		
+		testCallJavaFX("First loop execution complete");
+		
 		tempest = 0;
+		
+		testCallJavaFX("About to execute second loop");
 
 		while (tempest < temp) {
 			myLatLng = new google.maps.LatLng({
@@ -75,43 +83,34 @@ function createMarker(latlng) {
 			});
 			marker = createMarker(myLatLng);
 			tempest = tempest + 2;
-	}
+		}
+		
+		testCallJavaFX("Second loop execution complete");
 
 		tempest = 0;
+		temper = 0;
+		
+		var markerCluster = new MarkerClusterer(map, markers,
+	            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+		
+		testCallJavaFX("Ending method call");
+	}
+	
 
-		//myLatLng = new google.maps.LatLng({lat: testArray[0], lng: testArray[1]});
-		//myLatLng = new google.maps.LatLng({lat: test1, lng: test2});
-
-		//app.callFromJavascript(testArray);
-
+	/*To send information to JavaFX for processing*/
+	function callJavaFX(message) {
+		createMarker(message);
+		app.callFromJavascript(message);
 	}
 
+	/*For testing purposes*/
 	function testCallJavaFX(message2) {
 		app.testCall(message2);
 	}
 
-	function pleaseWork(latLng) {
-		if (marker) {
-			//marker.setMap(null);
-			marker = null;
-		}
-		//marker = createMarker(test);
-		marker = createMarker(latLng);
-		//callJavaFX();
-	}
-
-	function placeMarkerAndPanTo(latLng, map) {
-		marker = new google.maps.Marker({
-			position : {
-				lat : 41.9,
-				lng : -93
-			},
-			map : map
-		});
-		map.panTo(latLng);
-	}
-
 	function initialize() {
+		
+		
 		// create the map
 		var myOptions = {
 			zoom : 3,
@@ -128,16 +127,12 @@ function createMarker(latlng) {
 				myOptions);
 
 		google.maps.event.addListener(map, 'click', function(event) {
-			//var myLatLng = event.latLng;
-			//var lat = myLatLng.lat();
-			//var lng = myLatLng.lng();
-			//placeMarkerAndPanTo(event.latLng, map);
-			//call function to create marker
-			//pleaseWork(event.latLng);
-			callJavaFX();
-			//testCallJavaFX(event.latLng);
+			//createMarker(event.latLng);
+			callJavaFX(event.latLng);
+			//populateMap();
+			
 		});
-
+		
 	}
 
 	//]]>
@@ -168,6 +163,20 @@ urchinTracker();
 <script type="text/javascript"
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>   
-<input type="button" class="button" value="Push If you DARE" onclick="callJavaFX();"/>
+
+
+<input type="button" class="button" value="PopulateMap" onclick="populateMap()"/>
+ <style>
+ .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
   </body> 
 </html> 

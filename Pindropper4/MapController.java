@@ -1,31 +1,19 @@
 package Pindropper4;
 
-import java.beans.EventHandler;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import org.json.JSONException;
-
-import com.sun.media.jfxmediaimpl.platform.Platform;
-
-//import application2.Main2;
-//import application2.Browser.JavaApplication;
-//import application.Browser.JavaApplication;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.*;
 import netscape.javascript.JSObject;
 
 public class MapController implements Initializable {
@@ -35,12 +23,24 @@ public class MapController implements Initializable {
 	@FXML
 	private Button submit;
 	
+	/**Used to communicate with the main method that is running*/
 	static Main main;
 	
+	private String address = "";
+	
+	/**
+	 * Called from Main.java, this lets the controller know the instance of main to communicate with.
+	 * @param newMain The instance of Main that will be communicating with this controller.
+	 */
 	public static void setMain(Main newMain){
 		main = newMain;
 	}
 
+	/**
+	 * Most of the work for this is done inside of Main.java, this simply initiates the process for opening a new window.
+	 * @param f A simple button click (see MapViewer.fxml).
+	 * @throws Exception
+	 */
 	public void changeScene(ActionEvent f) throws Exception{
 
 		
@@ -65,8 +65,6 @@ public class MapController implements Initializable {
 
 		// initialize the map
 		makeEngine(true);
-
-		//populateMap(makeEngine(false));
 
 	}
 
@@ -107,30 +105,37 @@ public class MapController implements Initializable {
 	private ArrayList<String> getLocations(){
 		return GetFromJDBC.getLatLongs();
 	}
-
+	
+	/**
+	 * Required to communicate with the javascript that runs the map, contains methods to populate the map
+	 * and use the information sent back from the map (via javascript) to store lat-long pairs and addresses.
+	 *
+	 */
 	public class JavaApplication {
 		public int getSize(){
+			
 			ArrayList<String> latLongArray = new ArrayList<String>();
 			latLongArray = getLocations();
 			return latLongArray.size();
+			
 		}
 		public double getString(int i){
-			System.out.println("called getString()");
+			
 			ArrayList<String> latLongArray = new ArrayList<String>();
 			latLongArray = getLocations();
 			double number = 0.1;
 			number = Double.parseDouble(latLongArray.get(i));
-			System.out.println(number);
 			return number;
+			
 		}
 		public void callFromJavascript(String coords) throws JSONException {
-			//System.out.println(Serializer.getAddress(GeoCode.reverseGeoCode(coords)));
-			System.out.println(coords);
+			String[] latLongPair = new String[2];
+			latLongPair = GeoCoding.getLatLong(coords);
+			//System.out.println(SerializeJson.getAddress(GeoCoding.reverseGeoCode(coords)));
+			
 		}
-		public void testCall(String sumpthang){
-			System.out.println(sumpthang);
-			//populateMap(makeEngine(false));
-			//System.out.println("called populate Map");
+		public void testCall(String message1){
+			System.out.println(message1);
 		}
 	}
 }

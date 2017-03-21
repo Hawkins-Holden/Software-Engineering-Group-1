@@ -2,14 +2,7 @@ package Pindropper4;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.stage.*;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -31,7 +24,7 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(FxmlTarget));
 			Parent root = loader.load();
 			//MapController controls = loader.getController();
-			primaryStage.setTitle("Guest Book");
+			primaryStage.setTitle("Map");
 			primaryStage.setScene(new Scene(root, 1024, 680));
 			primaryStage.show();
 		}
@@ -48,14 +41,6 @@ public class Main extends Application {
 
 	}
 
-	/**
-	 * Intentionally private
-	 * 
-	 * @return
-	 */
-	private String getTarget() {
-		return FxmlTarget;
-	}
 
 	public void setTarget(String newTarg) throws Exception {
 		//Make a new stage so start() can be called again.
