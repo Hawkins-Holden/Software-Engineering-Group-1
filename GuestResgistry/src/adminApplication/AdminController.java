@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import jxl.Workbook;
-import jxl.WorkbookSettings;
 import jxl.write.*;
 import jxl.write.Label;
 
@@ -25,16 +24,18 @@ public class AdminController implements Initializable {
 
 	}
 
-	public void write(String filename) throws IOException, WriteException {
-		WorkbookSettings ws = new WorkbookSettings();
-		ws.setLocale(new Locale("en", "EN"));
-		WritableWorkbook workbook = Workbook.createWorkbook(new File(filename), ws);
+	public void write() throws IOException, WriteException {
 		
-		WritableSheet sheet = workbook.createSheet("Emails", 2);
-		sheet.setColumnView(0, 60);
-
-	    Label lr = new Label(0,0, "Arial Fonts");
-	    sheet.addCell(lr);
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		URL resource = classLoader.getResource("filename.ext");
+		File file = new File("excelReport.xls");
+		
+		WritableWorkbook myexcel = Workbook.createWorkbook(file);
+		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
+		Label label = new Label(0, 0, "data1");
+		mysheet.addCell(label);
+		myexcel.write();
+		myexcel.close();
 	}
 
 }
