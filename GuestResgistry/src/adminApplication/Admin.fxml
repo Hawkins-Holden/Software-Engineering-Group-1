@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="transfer_report" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.AdminController">
    <children>
-      <Button fx:id="generate_report" layoutX="115.0" layoutY="237.0" mnemonicParsing="false" onAction="#write" prefHeight="140.0" prefWidth="270.0" text="GENERATE REPORT" textFill="#0fa443">
+      <Button fx:id="generate_report" layoutX="115.0" layoutY="237.0" mnemonicParsing="false" onAction="#generateReport" prefHeight="140.0" prefWidth="270.0" text="GENERATE REPORT" textFill="#0fa443">
          <effect>
             <DropShadow color="#1f8035" spread="0.4" />
          </effect>
@@ -21,7 +21,7 @@
             <Font size="21.0" />
          </font>
       </Button>
-      <Button fx:id="transfer_email" layoutX="541.0" layoutY="237.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="254.0" text="TRANSFER EMAIL" textFill="#5e1d86">
+      <Button fx:id="transfer_email" layoutX="541.0" layoutY="237.0" mnemonicParsing="false" onAction="#generateMailingList" prefHeight="140.0" prefWidth="270.0" text="GENERATE MAILING LIST" textFill="#5e1d86">
          <effect>
             <DropShadow color="#38158a" spread="0.4" />
          </effect>
