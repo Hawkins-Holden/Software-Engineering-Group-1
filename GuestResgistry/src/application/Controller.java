@@ -63,7 +63,7 @@ public class Controller implements Initializable {
 	private String Lname;
 	private String Email;
 	private String Destination;
-	private boolean choice;
+	private String choice;
 	private String Party;
 
 	ObservableList<String> list = FXCollections.observableArrayList("Business", "Pleasure", "Other");
@@ -73,11 +73,11 @@ public class Controller implements Initializable {
 
 		if (rbYes.isSelected()) {
 
-			choice = true;
+			choice = "Yes";
 		}
 
 		else if (rbNo.isSelected()) {
-			choice = false;
+			choice = "No";
 		}
 	}
 
@@ -112,11 +112,18 @@ public class Controller implements Initializable {
 			
 			
 			/*****************************************************************************
-			 	Adds the form data to the database  
+			 	Sends the form data to JDBC to be inserted into the database.
+			 	Also ensures that the 'Party' value doesn't blow up the system.
 			*****************************************************************************/
+
+			if (Party.isEmpty())
+			{
+				Party = "0";
+			}
+			int partyNum = Integer.parseInt(Party);
 			
-			int visitorID = (int) Math.ceil((Math.random()*10000));
-			Visitor visit = new Visitor(visitorID,Fname,Mname,Lname,Email,true,Heard,Reason,GeoCoding.getLat(),GeoCoding.getLon(), Destination);
+			int visitorID = (int) Math.ceil((Math.random()*10000));//the visitor ID. Will need to make sure that it's unique at some point. 
+			Visitor visit = new Visitor(visitorID,Fname,Mname,Lname,Email,true,Heard,Reason,GeoCoding.getLat(),GeoCoding.getLon(), Destination,choice,partyNum);
 			JDBC.insertIntoDB(visit);
 		}
 	}

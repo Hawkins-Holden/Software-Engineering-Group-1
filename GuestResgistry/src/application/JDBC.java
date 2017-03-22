@@ -1,8 +1,8 @@
 package application;
 
-/***********************
-JDBC just adds in some random things that I made up at the moment.   	
-*/
+/********************************************************************************
+JDBC takes the values from the visitor object and inserts them into the database.   	
+********************************************************************************/
  
 
 import java.sql.Connection;
@@ -35,21 +35,76 @@ public class JDBC
                "MySQL server using TCP/IP...");
             stmt = con.createStatement();
                         
-            /*
-              Inserts data into database.
-              NOTE: uses temporary values for now. Will change when we 
-              can get this information using variables from the other classes.
-             */
-             
-           // int visitorID = (int) Math.ceil((Math.random()*10000));
+            /***********************************************************************
+            * The series of if statements below modifies the input values as needed
+            * to prevent the database from exploding. 
+            * *********************************************************************/
             
-            //Main x = new Main();
+            
+            /*
+             * This if statement is basically just a placeholder for when
+             * we add in the hasVisited functionality for the form. It
+             * adds in a 'true' value by default at the moment.
+             */
             
             int v = 0;
             if (visitor.getHasVisited() == true)
             {
             	v = 1;
             }
+            
+            /*
+             * This if-else statement checks to see if the value from the 'heard' drop down menu is null.
+             * It sets the value to "No Response" if it is, and leaves it alone otherwise.
+             */
+            
+            String hear = "";
+            if (!(visitor.getHeard() == "Billboard") || !(visitor.getHeard() == "Interstate Sign") || !(visitor.getHeard() == "Other"))
+            {
+            	hear = "No Response";
+            }
+            else
+            {
+            	hear = visitor.getHeard();
+            }
+            
+            /*
+             * This if-else statement is the same as above, but for the other drop down menu.
+             */
+            
+            String reason = "";
+            if (!(visitor.getReason() == "Business") || !(visitor.getReason() == "Convention") || !(visitor.getReason() == "Pleasure") || !(visitor.getReason() == "Other"))
+            {
+            	reason = "No Response";
+            }
+            else
+            {
+            	reason = visitor.getReason();
+            }
+            
+            /*
+             * This if-elseif-else block essentially does the same as the above two; it sets the proper value
+             * for the radio buttons as needed.
+             */
+            
+            String hotel = "";
+            if (visitor.getHotel() == "Yes")
+            {
+            	hotel = "Yes";
+            }
+            else if (visitor.getHotel() == "No")
+            {
+            	hotel = "No";
+            }
+            else
+            {
+            	hotel = "No Response";
+            }
+            
+            /*
+             * This series of stmt.execute methods insert the data into the database. 
+             * It's kind of ugly, but it works. 
+             */
             
             stmt.execute("USE VisitorDB");
             
@@ -61,8 +116,8 @@ public class JDBC
             		"(" + visitor.getId() + ", '" + visitor.getLat() + "', " + "'" + visitor.getLong() + "')");
             
             stmt.execute("INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES" +
-            		"(" + visitor.getId() + ", '1', " + "'" + visitor.getHeard() + "'" + ", '1', " + "'" + visitor.getDestination() + "', " + 
-            		"'" + v + "'" + ", '" + visitor.getReason() + "', " + "'" + getCurrentTimeStamp() + "'" + ")");            
+            		"(" + visitor.getId() + ", '" + visitor.getParty() + "' ," + "'" + hear + "'" + ", '" + hotel + "', " + "'" + visitor.getDestination() + "', " + 
+            		"'" + v + "'" + ", '" + reason + "', " + "'" + getCurrentTimeStamp() + "'" + ")");            
          }//end if
       } //end try
       

@@ -14,6 +14,8 @@ public class Visitor
 	private String latitude;
 	private String longitude;
 	private String destination;
+	private String hotel;
+	private int party;
 	
 	public Visitor (String email)
 	{
@@ -27,7 +29,7 @@ public class Visitor
 	*/
 	
 	public Visitor (int id, String fname, String midInit, String lname, String email, boolean hasVisited, String reasonForVisit, String heard, 
-			String latitude, String longitude, String destination)
+			String latitude, String longitude, String destination, String hotel, int party)
 	{
 		this.id = id;
 		this.fname = fname;
@@ -40,6 +42,8 @@ public class Visitor
 		this.latitude = latitude;
 		this.longitude = longitude; 
 		this.destination = destination;
+		this.hotel = hotel;
+		this.party = party;
 	}
 	
 	public int getId()
@@ -94,5 +98,13 @@ public class Visitor
 	public String getDestination()
 	{
 		return destination;
+	}
+	public String getHotel()
+	{
+		return hotel;
+	}
+	public int getParty()
+	{
+		return party;
 	}
 }//end class
