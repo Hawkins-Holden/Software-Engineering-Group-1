@@ -118,14 +118,20 @@ public class AdminJDBC {
 					currentResult.add(res.getString("Longitude"));
 					currentResult.add(((Integer) res.getInt("Party")).toString());
 					currentResult.add(res.getString("Heard"));
-					if (res.getInt("Hotel") == 1)
+					
+					if (res.getString("Hotel") == "Yes")
 					{
 						currentResult.add("Yes");
 					}
-					else
+					else if (res.getString("Hotel") == "No")
 					{
 						currentResult.add("No");
 					}
+					else
+					{
+						currentResult.add("No Response");
+					}
+					
 					currentResult.add(res.getString("Destination"));
 					if (res.getInt("RepeatVisit") == 1)
 					{
