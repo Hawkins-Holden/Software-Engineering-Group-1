@@ -10,6 +10,7 @@ public class Main extends Application {
 	/** Intentionally start with map, this will be changed later. */
 	private static String FxmlTarget = "MapViewer.fxml";
 	/**Is the form (as opposed to the map) to be loaded?*/
+	private static boolean isForm = false;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -18,13 +19,39 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
+		//Check which fxml file is to be loaded.
+		if (isForm = false) {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(FxmlTarget));
 			Parent root = loader.load();
 			//MapController controls = loader.getController();
 			primaryStage.setTitle("Map");
-			primaryStage.setScene(new Scene(root, 1680, 1200));
+			primaryStage.setScene(new Scene(root, 1024, 680));
 			primaryStage.show();
+		}
+		if (isForm = true) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(FxmlTarget));
+			Parent root = loader.load();
+			//FormController controls = loader.getController();
+			primaryStage.setTitle("Guest Form");
+			primaryStage.setScene(new Scene(root, 1024, 680));
+			primaryStage.show();
+		}
 		
+		MapController.setMain(this);
 
 	}
+
+
+	public void setTarget(String newTarg) throws Exception {
+		//Make a new stage so start() can be called again.
+		Stage stage = new Stage();
+		
+		//Set the target to the form.fxml or whatever is needed.
+		FxmlTarget = newTarg;
+		
+		//Set the flag so the correct controlle (FormController.java) is loaded.
+		isForm = true;
+		start(stage);
+	}
+
 }

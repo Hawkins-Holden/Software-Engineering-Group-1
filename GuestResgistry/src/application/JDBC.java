@@ -8,6 +8,7 @@ JDBC takes the values from the visitor object and inserts them into the database
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.sql.*;
 
@@ -59,7 +60,7 @@ public class JDBC
              */
             
             String hear = "";
-            if (!(visitor.getHeard() == "Billboard") || !(visitor.getHeard() == "Interstate Sign") || !(visitor.getHeard() == "Other"))
+            if (!(visitor.getHeard() == "Billboard") && !(visitor.getHeard() == "Interstate Sign") && !(visitor.getHeard() == "Other"))
             {
             	hear = "No Response";
             }
@@ -73,7 +74,7 @@ public class JDBC
              */
             
             String reason = "";
-            if (!(visitor.getReason() == "Business") || !(visitor.getReason() == "Convention") || !(visitor.getReason() == "Pleasure") || !(visitor.getReason() == "Other"))
+            if (!(visitor.getReason() == "Business") && !(visitor.getReason() == "Convention") && !(visitor.getReason() == "Pleasure") && !(visitor.getReason() == "Other"))
             {
             	reason = "No Response";
             }
@@ -146,12 +147,28 @@ public class JDBC
 		return new java.sql.Timestamp(today.getTime());
    }
    
+   
+   /**********************************************************************************************************************************
+    * 
+    */
+   
+  
+   
+   
+   /*
+    * 
+    ***********************************************************************************************************************************/
+   
+   
    /*
     * Reads from the database
     */
    
-   public static int readFromDB(int id) 
+   public static ArrayList<String> getLatLongs()
    {
+		
+	  ArrayList<String> latLongs = new ArrayList<String>();
+		
       Connection con = null;
       Statement stmt;
       
@@ -177,19 +194,19 @@ public class JDBC
             
             
             /**
-             * Query entries with the Zip '71467'
+             * Query entries with latlongs that are not null
              */
             
-            ResultSet res = stmt.executeQuery("SELECT * FROM visitors WHERE VisitorID = " + id);
+            ResultSet res = stmt.executeQuery("SELECT Latitude, Longitude FROM visitorlocations WHERE (Latitude <> 'null' AND Longitude <> 'null');");
             
             /**
              * Iterate over the result set from the above query
              */
-            
+    		
             while (res.next())
             {
-                System.out.println(res.getInt("VisitorID") + " " + res.getString("Email"));
-               // id = res.getInt("Zip");
+                latLongs.add(res.getString("Latitude"));
+                latLongs.add(res.getString("Longitude"));
             }
             
          }
@@ -208,7 +225,7 @@ public class JDBC
          } 
          catch(SQLException e) {}
       }
-	return id;
+	return latLongs;
    }   
    
    

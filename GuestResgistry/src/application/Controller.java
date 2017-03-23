@@ -160,7 +160,7 @@ public class Controller implements Initializable {
 
 	public void destinationValidate(TextField dlabel, Label destinationError) {
 
-		if (dlabel.getText() != null && !dlabel.getText().matches("[a-zA-Z]+") && !dlabel.getText().isEmpty()) {
+		if (dlabel.getText() != null && !dlabel.getText().matches("[a-zA-Z ]+") && !dlabel.getText().isEmpty()) {
 			destinationError.setText("Please enter a valid name!");
 		} else {
 			destinationError.setText("");

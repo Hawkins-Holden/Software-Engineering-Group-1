@@ -25,10 +25,12 @@ html, body { height: 100%; width: 100%; }
       var temper = 0;
       var tempest = 0;
       var tester = "";
+
 var infowindow = new google.maps.InfoWindow(
   { 
     size: new google.maps.Size(150,50)
   });
+
 // A function to create the marker and set up the event window function 
 function createMarker(latlng) {
 	
@@ -38,6 +40,7 @@ function createMarker(latlng) {
         map: map,
         zIndex: Math.round(latlng.lat()*-100000)<<5
         });
+
     
     google.maps.event.trigger(marker, 'click');
     nums = latlng;
@@ -47,6 +50,7 @@ function createMarker(latlng) {
     
     return marker;
 }
+
 	/*Populates the map by reading from an ArrayList of Strings found in Java.
 	  This then calls the createMarker method for every lat-long pair it recieves.
 	  Note that it must create a google.LatLng object for every pin.*/
@@ -71,6 +75,7 @@ function createMarker(latlng) {
 		tempest = 0;
 		
 		testCallJavaFX("About to execute second loop");
+
 		while (tempest < temp) {
 			myLatLng = new google.maps.LatLng({
 				lat : testArray[tempest],
@@ -81,6 +86,7 @@ function createMarker(latlng) {
 		}
 		
 		testCallJavaFX("Second loop execution complete");
+
 		tempest = 0;
 		temper = 0;
 		
@@ -90,15 +96,18 @@ function createMarker(latlng) {
 		testCallJavaFX("Ending method call");
 	}
 	
+
 	/*To send information to JavaFX for processing*/
 	function callJavaFX(message) {
 		createMarker(message);
 		app.callFromJavascript(message);
 	}
+
 	/*For testing purposes*/
 	function testCallJavaFX(message2) {
 		app.testCall(message2);
 	}
+
 	function initialize() {
 		
 		
@@ -113,8 +122,10 @@ function createMarker(latlng) {
 			navigationControl : true,
 			mapTypeId : google.maps.MapTypeId.ROADMAP
 		}
+
 		map = new google.maps.Map(document.getElementById("map_canvas"),
 				myOptions);
+
 		google.maps.event.addListener(map, 'click', function(event) {
 			//createMarker(event.latLng);
 			callJavaFX(event.latLng);
@@ -123,6 +134,7 @@ function createMarker(latlng) {
 		});
 		
 	}
+
 	//]]>
 </script> 
 
@@ -165,5 +177,6 @@ urchinTracker();
     display: inline-block;
     font-size: 16px;
 }
+
   </body> 
 </html> 

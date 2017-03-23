@@ -1,6 +1,6 @@
 package application;
 
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -10,15 +10,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
 public class MapController implements Initializable {
@@ -27,7 +22,7 @@ public class MapController implements Initializable {
 	private WebView map;
 	@FXML
 	private Button submit;
-	
+		
 	/**Used to communicate with the main method that is running*/
 	static Main main;
 	
@@ -39,24 +34,40 @@ public class MapController implements Initializable {
 	 */
 	public static void setMain(Main newMain){
 		main = newMain;
-}
-	
-	
-	public void changeScene(ActionEvent event) throws IOException
-	{
-		
-		Parent newScene = FXMLLoader.load(getClass().getResource("GuestBook.fxml"));
-		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		new_Stage.setTitle("Success!");
-		new_Stage.setScene(new Scene(newScene, 1680, 1200));
-		new_Stage.show();
-		
 	}
-	
-	public void initialize(URL location, ResourceBundle resources) {
+
+	/**
+	 * Most of the work for this is done inside of Main.java, this simply initiates the process for opening a new window.
+	 * @param f A simple button click (see MapViewer.fxml).
+	 * @throws Exception
+	 */
+	public void changeScene(ActionEvent f) throws Exception{
+
+		
+		/*
+		// make a WebEngine instance for manipulation of the WebView "map".
+		WebEngine webengine = makeEngine(false);
+		
+		//System.out.println("somewhere is got, we have");
+		
+		if (webengine != null) {
+			//System.out.println("again somewhere is got, we have");
+			webengine.executeScript("setLocations(-25.363, 131.044)");
+		}
+		*/
+		
+		main.setTarget("GuestBook.fxml");
+
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+
+		// initialize the map
 		makeEngine(true);
+
 	}
-	
+
 	private WebEngine makeEngine(boolean trigger) {
 
 		// make a WebEngine instance for manipulation of the WebView "map".
@@ -92,7 +103,7 @@ public class MapController implements Initializable {
 	
 	
 	private ArrayList<String> getLocations(){
-		return GetFromJDBC.getLatLongs();
+		return JDBC.getLatLongs();
 	}
 	
 	/**
@@ -121,7 +132,6 @@ public class MapController implements Initializable {
 			String[] latLongPair = new String[2];
 			latLongPair = GeoCoding.getLatLong(coords);
 			//System.out.println(SerializeJson.getAddress(GeoCoding.reverseGeoCode(coords)));
-			
 		}
 		public void testCall(String message1){
 			System.out.println(message1);
@@ -164,4 +174,3 @@ private void populateMap(WebEngine web){
 	System.out.println("past the communication");
 		
 }*/ //Kept as a reference
-	

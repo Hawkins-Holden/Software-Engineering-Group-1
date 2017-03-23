@@ -19,7 +19,9 @@ public class GetFromJDBC {
 		
 		/*This will be changed later, but for now it is just a static arraylist that I made up*/
 		latLongs.add("34.16181816123038");
+		
 		latLongs.add("-98.4375");
+		/*
 		latLongs.add("36.4566360115962");
 		latLongs.add("-102.83203125");
 		latLongs.add("34.88593094075317");
@@ -50,9 +52,10 @@ public class GetFromJDBC {
 		latLongs.add("-88.41796875");
 		latLongs.add("43.58039085560783");
 		latLongs.add("-85.4296875");
-		
+		*/
 		return latLongs;
 		
 	}
 	
 }
+

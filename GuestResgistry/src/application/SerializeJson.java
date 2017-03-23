@@ -1,7 +1,7 @@
 package application;
 
-import java.util.HashMap;
 
+import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
