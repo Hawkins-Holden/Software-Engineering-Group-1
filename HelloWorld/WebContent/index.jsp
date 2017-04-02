@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
 <html>
 <head>
 <title>Spring MVC Tutorial Series by Crunchify.com</title>
@@ -11,14 +12,14 @@ body {
 </head>
 <body>
 	<br>
-	<div style="text-align:center">
-		<h2>
-			Hey You..!! This is your 1st Spring MCV Tutorial..<br> <br>
-		</h2>
+	<div style="text-align: center">
 		<h3>
-			<a href="welcome.jsp">Click here to See Welcome Message... </a>(to
-			check Spring MVC Controller... @RequestMapping("/welcome"))
+			<!-- 			<a href="GuestBook.jsp">Go To Form</a> -->
+			<!-- 			<a href="welcome.jsp">Go To Welcome</a> -->
 		</h3>
+		<form method="POST" action="welcome.jsp">
+			<input type="text" name="city" placeholder="City" /> 
+			<input type="submit" value="Submit" />
+		</form>
 	</div>
 </body>
-</html>
