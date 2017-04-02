@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Marker Clustering</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 50%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script type="text/javascript" src="Chart.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script>
+    function initMap() {
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 3,
+            center: {lat: 39.203301, lng: -96.952486}
+        });
+        // Add some markers to the map.
+        // Note: The code uses the JavaScript Array.prototype.map() method to
+        // create an array of markers based on a given "locations" array.
+        // The map() method here has nothing to do with the Google Maps API.
+        var markers = locations.map(function(location, i) {
+            return new google.maps.Marker({
+                position: location
+            });
+        });
+
+        // Add a marker clusterer to manage the markers.
+        var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    }
+
+    // TODO: get SQL to populate this
+    var locations = [
+        {lat: 32.530257, lng: -92.067661},
+        {lat: 39.203301, lng: -96.952486},
+        {lat: 35.127522, lng: -106.177741},
+        {lat: 30.426083, lng: -97.741624},
+        {lat: 30.430315, lng: -97.745527},
+        {lat: 30.426083, lng: -97.741624}
+    ]
+</script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuT9VzPqnYSaB5Os0U4mkI8C7CiuFzwao&callback=initMap">
+</script>
+<span id="chartsContainer">
+<div id="someCharts"style="float:left;width:50%">
+    <canvas id="mychart"></canvas>
+</div>
+<script>
+    //TODO: get SQL to return data
+    var canvas = document.getElementById("mychart");
+
+    var data = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                label: "Sample Dataset",
+                backgroundColor: "rgba(255,99,132,0.2)",
+                borderColor: "rgba(255,99,132,1)",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [65, 59, 80, 81, 56, 55, 40],
+            }
+        ]
+    };
+
+    var myBarChart = Chart.Bar(canvas,{
+        data:data
+    });
+</script>
+<div id="morecharts" style="float:right;width:50%">
+    <canvas id="myNewChart"></canvas>
+</div>
+<script>
+    //TODO: get SQL to return data
+    var canvas = document.getElementById("myNewChart");
+
+    var data = {
+        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+        datasets: [
+            {
+                label: "My First dataset",
+                backgroundColor: "rgba(179,181,198,0.2)",
+                borderColor: "rgba(179,181,198,1)",
+                pointBackgroundColor: "rgba(179,181,198,1)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(179,181,198,1)",
+                data: [65, 59, 90, 81, 56, 55, 40]
+            },
+            {
+                label: "My Second dataset",
+                backgroundColor: "rgba(255,99,132,0.2)",
+                borderColor: "rgba(255,99,132,1)",
+                pointBackgroundColor: "rgba(255,99,132,1)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(255,99,132,1)",
+                data: [28, 48, 40, 19, 96, 27, 100]
+            }
+        ]
+    };
+
+    var myRadarChart = new Chart.Radar(canvas, {
+        data: data
+    });
+</script>
+</span>
+<div id="control">
+    SELECT Locations from
+    <select name="area">
+        <option value="United States">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="fiat">Fiat</option>
+        <option value="audi">Audi</option>
+    </select>
+    between
+    <input type="date" id="startDate"> and <input type="date" id="endDate">
+    <button type="button" onclick="alert('Hello World!')">Click Me!</button>
+</div>
+</body>
+</html>
