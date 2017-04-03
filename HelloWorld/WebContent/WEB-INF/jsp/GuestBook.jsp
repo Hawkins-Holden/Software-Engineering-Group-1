@@ -5,13 +5,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Welcome</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
  <link rel="stylesheet" href="GuestBook.css">  
 </head>
 
 <body>
   <!-- multistep form -->
-<form id="msform" name="myForm">
+<form id="msform" name="myForm" action = "welcome.jsp">
   <!-- progressbar -->
   <ul id="progressbar">
     <li class="active"></li>
@@ -21,8 +20,8 @@
   <!-- fieldsets -->
   <fieldset>
     <h2 class="fs-title">We would love to know about you.</h2>
-    <h3 class="fs-subtitle">What's Your Name?</h3>
-    <input type="text" name="fname" placeholder="First Name"/>
+    <h3 class="fs-subtitle">What's Your Name</h3>
+    <input type="text" name="fname" placeholder="First Name" value = " "/>
 	 <div id = "fname_error" class="val_error"></div>
     <input type="text" name="lname" placeholder="Last Name" />
 	 <div id = "lname_error" class="val_error"></div>
@@ -74,7 +73,7 @@
   	<h3 class="fs-subtitle">Your email address is required to keep you informed about our beautiful city and hotels.</h3>
 	<input type="text" name="email" placeholder="Email" />
   	<input type="button" name="previous" class="previous action-button" value="Previous" />
-  	<input type="submit" name="submit" class="submit action-button" value="Submit" />
+  	<input type="submit" name="submit" class="submit action-button" value="Submit"/>
   </fieldset>
 </form>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

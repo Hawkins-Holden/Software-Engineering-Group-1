@@ -17,8 +17,8 @@ body {
 			<!-- 			<a href="GuestBook.jsp">Go To Form</a> -->
 			<!-- 			<a href="welcome.jsp">Go To Welcome</a> -->
 		</h3>
-		<form method="POST" action="welcome.jsp">
-			<input type="text" name="city" placeholder="City" /> 
+		<form method="POST" action="GuestBook.jsp">
+			<input type="text" name="fname" placeholder="City" /> 
 			<input type="submit" value="Submit" />
 		</form>
 	</div>

@@ -14,17 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HelloWorld {
 	
-    @RequestMapping(value = "/Basic", method = RequestMethod.GET)
+	   /* @RequestMapping(value = "/Basic", method = RequestMethod.GET)
     public ModelAndView showForm() {
     	System.out.println("it came here");
         return new ModelAndView("employeeHome", "employee", new Basic(""));
-    }
+    }*/
  
-	@RequestMapping(value = "/welcome", method = RequestMethod.POST)
-	public ModelAndView helloWorld(@RequestParam("city") String city) {
+	@RequestMapping(value = "/GuestBook", method = RequestMethod.POST)
+	public ModelAndView helloWorld() {
 		
-		System.out.println(city);
-		String message = city;
-		return new ModelAndView("welcome", "message", message);
+		String message = "heellur";
+		return new ModelAndView("GuestBook", "message", message);
 	}
 }
