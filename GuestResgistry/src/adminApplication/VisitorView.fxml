@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.VisitorViewController">
+   <children>
+      <TableView fx:id="visitorTable" layoutX="100.0" layoutY="40.0" prefHeight="246.0" prefWidth="400.0" tableMenuButtonVisible="true">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <DatePicker fx:id="endDatePicker" layoutX="373.0" layoutY="328.0" prefHeight="25.0" prefWidth="142.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="204.0" layoutY="328.0" prefHeight="25.0" prefWidth="142.0" />
+      <Label layoutX="82.0" layoutY="332.0" text="Showing visitors from" />
+      <Button fx:id="deleteButton" layoutX="412.0" layoutY="294.0" mnemonicParsing="false" text="Delete Visitor" />
+      <Button fx:id="editButton" layoutX="246.0" layoutY="294.0" mnemonicParsing="false" text="Edit Visitor" />
+      <Button fx:id="addButton" layoutX="330.0" layoutY="294.0" mnemonicParsing="false" text="Add Visitor" />
+      <Label layoutX="356.0" layoutY="332.0" text="to" />
+      <Button fx:id="refreshButton" layoutX="100.0" layoutY="294.0" mnemonicParsing="false" text="Refresh Table" />
+   </children>
+</AnchorPane>
