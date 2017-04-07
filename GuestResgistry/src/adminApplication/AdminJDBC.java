@@ -3,8 +3,6 @@ package adminApplication;
 import java.util.ArrayList;
 import java.util.List;
 
-import application.Visitor;
-
 import java.sql.*;
 
 public class AdminJDBC {

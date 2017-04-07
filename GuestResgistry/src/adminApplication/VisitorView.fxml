@@ -4,13 +4,12 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.VisitorViewController">
    <children>
       <TableView fx:id="visitorTable" layoutX="100.0" layoutY="40.0" prefHeight="246.0" prefWidth="400.0" tableMenuButtonVisible="true">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="fnameColumn" prefWidth="75.0" text="First Name" />
+          <TableColumn fx:id="lnameColumn" prefWidth="75.0" text="Last Name" />
         </columns>
       </TableView>
       <DatePicker fx:id="endDatePicker" layoutX="373.0" layoutY="328.0" prefHeight="25.0" prefWidth="142.0" />
@@ -20,6 +19,6 @@
       <Button fx:id="editButton" layoutX="246.0" layoutY="294.0" mnemonicParsing="false" text="Edit Visitor" />
       <Button fx:id="addButton" layoutX="330.0" layoutY="294.0" mnemonicParsing="false" text="Add Visitor" />
       <Label layoutX="356.0" layoutY="332.0" text="to" />
-      <Button fx:id="refreshButton" layoutX="100.0" layoutY="294.0" mnemonicParsing="false" text="Refresh Table" />
+      <Button fx:id="refreshButton" layoutX="100.0" layoutY="294.0" mnemonicParsing="false" onAction="#refreshTable" text="Refresh Table" />
    </children>
 </AnchorPane>

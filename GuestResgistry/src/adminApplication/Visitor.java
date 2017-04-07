@@ -1,4 +1,4 @@
-package application;
+package adminApplication;
 
 public class Visitor 
 {
