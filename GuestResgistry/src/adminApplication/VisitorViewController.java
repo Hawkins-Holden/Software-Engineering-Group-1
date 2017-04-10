@@ -3,6 +3,7 @@ package adminApplication;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -38,40 +39,98 @@ public class VisitorViewController implements Initializable {
 	@FXML
 	private DatePicker endDatePicker;
 	@FXML
-	private TableView<Visitor> visitorTable;
+	private TableView<VisitorDetails> visitorTable;
+	@FXML
+	private TableColumn<VisitorDetails, String> fnameColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> lnameColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> emailColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> metroColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> cityColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> stateColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> countryColumn;
+	@FXML
+	private TableColumn<VisitorDetails, Integer> partyColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> heardColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> destinationColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> hotelColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> repeatColumn;
+	@FXML
+	private TableColumn<VisitorDetails, String> reasonColumn;
+	@FXML
+	private TableColumn<VisitorDetails, Date> dateColumn;
+
+	private ObservableList<VisitorDetails> data;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		
-		
-		List<Visitor> visitors = AdminJDBC.getVisitors();
-		
-		TableColumn<Visitor, String> fnameColumn = new TableColumn<>("First Name");
-		fnameColumn.setCellValueFactory(new PropertyValueFactory<>("fname"));
-		TableColumn<Visitor, String> lnameColumn = new TableColumn<>("Last Name");
-		lnameColumn.setCellValueFactory(new PropertyValueFactory<>("lname"));
-		
-		visitorTable = new TableView<>();
-		visitorTable.setItems(getVisitors());
-		visitorTable.getColumns().addAll(fnameColumn, lnameColumn);
-
+		refreshTable();
 	}
-	
-	private ObservableList<Visitor> getVisitors()
-	{
-		ObservableList<Visitor> visitors = FXCollections.observableArrayList();
-		for(Visitor v: getTestVisitors())
-		{
+
+	public void refreshTable() {
+		fnameColumn.setCellValueFactory(new PropertyValueFactory<>("fname"));
+		lnameColumn.setCellValueFactory(new PropertyValueFactory<>("lname"));
+		emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+		metroColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+		cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+		stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
+		countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
+		partyColumn.setCellValueFactory(new PropertyValueFactory<>("party"));
+		heardColumn.setCellValueFactory(new PropertyValueFactory<>("heard"));
+		hotelColumn.setCellValueFactory(new PropertyValueFactory<>("hotel"));
+		destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destination"));
+		repeatColumn.setCellValueFactory(new PropertyValueFactory<>("repeatVisit"));
+		reasonColumn.setCellValueFactory(new PropertyValueFactory<>("travelingFor"));
+		dateColumn.setCellValueFactory(new PropertyValueFactory<>("visitingDay"));
+
+		data = getVisitors();
+
+		visitorTable.setItems(null);
+		visitorTable.setItems(data);
+	}
+
+	public void addVisitor() {
+		// TODO: point to Form
+	}
+
+	public void editVisitor() {
+		visitorTable.getSelectionModel().getSelectedItem();
+		// TODO: point to form
+	}
+
+	public void deleteVisitor() {
+		// TODO: point at JDBC
+	}
+
+	private ObservableList<VisitorDetails> getVisitors() {
+		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
+		for (VisitorDetails v : getTestVisitors()) {
 			visitors.add(v);
 		}
 		return visitors;
 	}
-	
-	private List<Visitor> getTestVisitors()
-	{
-		List<Visitor> visitors = new ArrayList<Visitor>();
-		visitors.add(new Visitor("Connor", "Dixon", "ccd817@gmail.com", true, "Business", "Interstate Sign", "30.430410", "-97.745597", "ULM"));
+
+	private List<VisitorDetails> getTestVisitors() {
+		List<VisitorDetails> visitors = new ArrayList<VisitorDetails>();
+		/*
+		 * int id, String fname, String lname, String email, String latitude,
+		 * String longitude, String city, String state, String country, Integer
+		 * party, String heard, String hotel, String destination, Boolean
+		 * repeatVisit, String travelingFor, Date visitingDay
+		 */
+		visitors.add(new VisitorDetails(1, "Connor", "Dixon", "ccd817@gmail.com", "30.430410", "-97.745597", "Austin",
+				"TX", "United States", (Integer) 1, "Interstate Sign", "Yes", "ULM", false, "Other", new Date()));
+		visitors.add(new VisitorDetails(2, "Bonnor", "Nixon", "bcn817@gmail.com", "30.430410", "-97.745597", "Angola",
+				"LA", "United States", (Integer) 1, "Interstate Sign", "Yes", "Duck Dynasty", true, "Other", new Date()));
 		return visitors;
 	}
 

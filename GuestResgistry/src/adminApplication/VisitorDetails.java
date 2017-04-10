@@ -1,6 +1,6 @@
 package adminApplication;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class VisitorDetails {
 	private int id;
@@ -16,13 +16,13 @@ public class VisitorDetails {
 	private String heard;
 	private String hotel;
 	private String destination;
-	private Boolean repeatVisit;
+	private boolean repeatVisit;
 	private String travelingFor;
 	private Date visitingDay;
 	
 	public VisitorDetails(int id, String fname, String lname, String email, String latitude, String longitude,
 			String city, String state, String country, Integer party, String heard, String hotel, String destination,
-			Boolean repeatVisit, String travelingFor, Date visitingDay) {
+			boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(id);
 		this.setFname(fname);
 		this.setLname(lname);
