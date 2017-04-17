@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="login_body" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin.LogInAdminController">
+   <children>
+      <Label layoutX="193.0" layoutY="96.0" text="Welcome to Admin Log-In Platform" />
+      <Label layoutX="160.0" layoutY="146.0" text="Username" />
+      <TextField fx:id="user_txtbx" layoutX="242.0" layoutY="133.0" />
+      <Label layoutX="164.0" layoutY="213.0" text="Password" />
+      <PasswordField fx:id="pass_txtbx" layoutX="242.0" layoutY="192.0" />
+      <Label fx:id="error_field" layoutX="242.0" layoutY="249.0" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="submit_btn" layoutX="377.0" layoutY="296.0" mnemonicParsing="false" onAction="#onSubmit" text="SUBMIT" />
+   </children>
+</AnchorPane>
