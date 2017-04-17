@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class SerializeJson {
 
 	public static String getAddress(String jsonObject) throws JSONException{
-		
+		System.out.println(jsonObject);
 		JSONObject json = new JSONObject(jsonObject);
 		HashMap<String, Object> jsonMap = new HashMap<String, Object>();
 		String returner = "";

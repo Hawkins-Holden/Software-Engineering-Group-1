@@ -30,8 +30,9 @@ private static String lon;
 		String lat = latlongs[0];
 		String lon = latlongs[1];
 		try {
+			System.out.println("Initiatine reverse geo code");
 			URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lon
-					+ "&key=AIzaSyC5V3Fi15XSebqH_NsXrv0_UUZjb46vu94");
+					+ "&key=AIzaSyCQ0Bf0gGO7vOU90EAC8S0zpJMvYXCWJYU");
 			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 			while (null != (rgc = br.readLine())) {
 				rgc1 += rgc;

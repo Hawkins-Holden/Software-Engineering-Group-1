@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Aaron Cole
  *
  */
-public class GetFromJDBC {
+public class getFromJDBC {
 
 	/**
 	 * Takes in the latitude and longitude pairs from the database and returns them in an arraylist.
