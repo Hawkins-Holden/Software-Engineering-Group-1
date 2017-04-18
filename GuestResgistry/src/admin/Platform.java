@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  *
  * @author admin
  */
-public class Admin extends Application {
+public class Platform extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {

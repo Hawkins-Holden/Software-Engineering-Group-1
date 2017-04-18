@@ -52,7 +52,7 @@ public void onSubmit(ActionEvent event) throws IOException {
     
     if (username.equalsIgnoreCase("groupone") && password.equals("warhawks1")){
         
-        Parent newScene = FXMLLoader.load(getClass().getResource("Admin.fxml"));
+        Parent newScene = FXMLLoader.load(getClass().getResource("Platform.fxml"));
 	Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 	new_Stage.setTitle("Admin Platform");
 	new_Stage.setScene(new Scene(newScene,1000,1000));

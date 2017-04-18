@@ -1,4 +1,4 @@
-package Admin;
+package admin;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

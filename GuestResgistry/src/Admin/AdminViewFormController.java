@@ -1,4 +1,4 @@
-package Admin;
+package admin;
 
 import java.io.IOException;
 import java.net.URL;
