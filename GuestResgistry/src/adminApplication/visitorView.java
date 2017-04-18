@@ -14,11 +14,9 @@ public class visitorView extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("VisitorView.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
+    	Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("VisitorView.fxml"));
+        stage.setTitle("Admin Platform");
+        stage.setScene(new Scene(root, 1680, 1200));
         stage.show();
     }
 

@@ -73,6 +73,8 @@ public class VisitorViewController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		startDatePicker.setValue(LocalDate.now().minusYears(1));
+		endDatePicker.setValue(LocalDate.now());
 		refreshTable();
 	}
 
@@ -92,7 +94,7 @@ public class VisitorViewController implements Initializable {
 		reasonColumn.setCellValueFactory(new PropertyValueFactory<>("travelingFor"));
 		dateColumn.setCellValueFactory(new PropertyValueFactory<>("visitingDay"));
 
-		data = getVisitors();
+		data = getVisitors(startDatePicker.getValue(), endDatePicker.getValue());
 
 		visitorTable.setItems(null);
 		visitorTable.setItems(data);
@@ -103,17 +105,18 @@ public class VisitorViewController implements Initializable {
 	}
 
 	public void editVisitor() {
-		visitorTable.getSelectionModel().getSelectedItem();
+		VisitorDetails visitorToEdit = visitorTable.getSelectionModel().getSelectedItem();
 		// TODO: point to form
 	}
 
 	public void deleteVisitor() {
-		// TODO: point at JDBC
+		VisitorDetails visitorToEdit = visitorTable.getSelectionModel().getSelectedItem();
+		//todo: point to jdbc
 	}
 
-	private ObservableList<VisitorDetails> getVisitors() {
+	private ObservableList<VisitorDetails> getVisitors(LocalDate start, LocalDate end) {
 		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
-		for (VisitorDetails v : getTestVisitors()) {
+		for (VisitorDetails v : AdminJDBC.getVisitorsFromDateRange(start, end)) {
 			visitors.add(v);
 		}
 		return visitors;
@@ -127,10 +130,10 @@ public class VisitorViewController implements Initializable {
 		 * party, String heard, String hotel, String destination, Boolean
 		 * repeatVisit, String travelingFor, Date visitingDay
 		 */
-		visitors.add(new VisitorDetails(1, "Connor", "Dixon", "ccd817@gmail.com", "30.430410", "-97.745597", "Austin",
+		visitors.add(new VisitorDetails(1, "Connor", "Dixon", "ccd817@gmail.com", "30.430410", "-97.745597", "Austin", "Austin",
 				"TX", "United States", (Integer) 1, "Interstate Sign", "Yes", "ULM", false, "Other", new Date()));
 		visitors.add(new VisitorDetails(2, "Bonnor", "Nixon", "bcn817@gmail.com", "30.430410", "-97.745597", "Angola",
-				"LA", "United States", (Integer) 1, "Interstate Sign", "Yes", "Duck Dynasty", true, "Other", new Date()));
+				"Baton Rouge", "LA", "United States", (Integer) 1, "Interstate Sign", "Yes", "Duck Dynasty", true, "Other", new Date()));
 		return visitors;
 	}
 

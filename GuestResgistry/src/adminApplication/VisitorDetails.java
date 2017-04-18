@@ -10,6 +10,7 @@ public class VisitorDetails {
 	private String latitude;
 	private String longitude;
 	private String city;
+	private String metro;
 	private String state;
 	private String country;
 	private Integer party;
@@ -21,7 +22,7 @@ public class VisitorDetails {
 	private Date visitingDay;
 	
 	public VisitorDetails(int id, String fname, String lname, String email, String latitude, String longitude,
-			String city, String state, String country, Integer party, String heard, String hotel, String destination,
+			String city, String metro, String state, String country, Integer party, String heard, String hotel, String destination,
 			boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(id);
 		this.setFname(fname);
@@ -30,8 +31,31 @@ public class VisitorDetails {
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
 		this.setCity(city);
+		this.setMetro(metro);
 		this.setState(state);
 		this.setCountry(country);
+		this.setParty(party);
+		this.setHeard(heard);
+		this.setHotel(hotel);
+		this.setDestination(destination);
+		this.setRepeatVisit(repeatVisit);
+		this.setTravelingFor(travelingFor);
+		this.setVisitingDay(visitingDay);
+	}
+	
+	public VisitorDetails(int id, String fname, String lname, String email, String latitude, String longitude,
+			Integer party, String heard, String hotel, String destination,
+			boolean repeatVisit, String travelingFor, Date visitingDay) {
+		this.setId(id);
+		this.setFname(fname);
+		this.setLname(lname);
+		this.setEmail(email);
+		this.setLatitude(latitude);
+		this.setLongitude(longitude);
+		this.setCity("");
+		this.setMetro("");
+		this.setState("");
+		this.setCountry("");
 		this.setParty(party);
 		this.setHeard(heard);
 		this.setHotel(hotel);
@@ -167,6 +191,14 @@ public class VisitorDetails {
 
 	public void setVisitingDay(Date visitingDay) {
 		this.visitingDay = visitingDay;
+	}
+
+	public String getMetro() {
+		return metro;
+	}
+
+	public void setMetro(String metro) {
+		this.metro = metro;
 	}
 	
 }
