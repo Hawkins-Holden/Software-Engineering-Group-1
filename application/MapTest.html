@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head> 
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+    <title>Google Maps Javascript API v3 Example: Add Marker with open infowindow on map click</title> 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuT9VzPqnYSaB5Os0U4mkI8C7CiuFzwao"></script> 
+<!-- <script type="text/javascript" src="scripts/downloadxml.js"></script> -->
+<style type="text/css">
+html, body { height: 100%; width: 100%; } 
+</style>
+<script type="text/javascript"> 
+//<![CDATA[
+	
+     // global "map" variable
+      var map = null;
+      var marker = null;
+      var nums = 0;
+      var latitude = 39.062214;
+      var longitude = -97.227689;
+      var test1 = 20.303;
+      var test2 = -101.25;
+      //var markers = [];
+      var testArray = [];
+      var temper = 0;
+      var tempest = 0;
+      var tester = "";
+      var locationOfPin = "";
+      var markers = [];
+
+var infowindow = new google.maps.InfoWindow(
+  { 
+    size: new google.maps.Size(150,50)
+  });
+
+// A function to create the marker and set up the event window function 
+function createMarker(latlng) {
+	
+	
+	nums = latlng;
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: map,
+        icon: "ImprovedSmallNewMarker.png",
+        zIndex: Math.round(latlng.lat()*-100000)<<5
+        });
+
+    
+    google.maps.event.trigger(marker, 'click');
+    nums = latlng;
+    
+    //markers[temper] = marker;
+    //temper = temper + 1;
+    
+    return marker;
+}
+
+	/*Populates the map by reading from an ArrayList of Strings found in Java.
+	  This then calls the createMarker method for every lat-long pair it recieves.
+	  Note that it must create a google.LatLng object for every pin.*/
+	function populateJSMap() {
+		  
+		tempest = 0;
+		temper = 0;
+		temp = app.getSize();
+		/*temp = 4;
+		testArray[0] = 34.16181816123038;
+		testArray[1] = -98.4375;
+		testArray[2] = 36.4566360115962;
+		testArray[3] = -102.83203125;*/
+		
+		while (tempest < temp) {
+			testArray[tempest] = app.getString(tempest);
+			tempest++;
+		}
+		
+		tempest = 0;
+		
+		while (tempest < temp) {
+			myLatLng = new google.maps.LatLng({
+				lat : testArray[tempest],
+				lng : testArray[tempest + 1]
+			});
+			marker = createMarker(myLatLng);
+			markers[tempest] = marker;
+			tempest = tempest + 2;
+		}
+		
+
+		tempest = 0;
+		temper = 0;
+		
+     /*   var markerCluster = new MarkerClusterer(map, markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});*/
+		
+	}
+	
+
+	/*To send information to JavaFX for processing*/
+	function callJavaFX(message) {
+		createMarker(message);
+		//app.callFromJavascript(message);
+	}
+
+	/*For testing purposes*/
+	function testCallJavaFX(message2) {
+		app.testCall(message2);
+	}
+	
+	function giveInfo() {
+		app.callFromJavascript(nums);
+	}
+	
+	
+	function geocodeAddress(geocoder, resultsMap) {
+		var address = document.getElementById('address').value;
+		if (address == "" && !marker) {
+			alert('Please Enter your location');
+		} else {
+			geocoder.geocode(
+			{
+				'address' : address
+			}, function(results, status) {
+					if (status === 'OK') {
+						resultsMap.setCenter(results[0].geometry.location);
+						marker = new google.maps.Marker({
+							map : resultsMap,
+							animation : google.maps.Animation.DROP,
+							draggable : true,
+							position : results[0].geometry.location
+					});
+						testCallJavaFX(results[0].geometry.location);
+				} else {
+					alert('Geocode was not successful for the following reason: '+ status);
+				}
+			map.setZoom(9);
+			});
+		}
+	}
+
+	function initialize() {
+
+		// create the map
+		var myOptions = {
+			zoom : 5,
+			center : new google.maps.LatLng(latitude, longitude),
+			mapTypeControl : true,
+			mapTypeControlOptions : {
+				style : google.maps.MapTypeControlStyle.DROPDOWN_MENU
+			},
+			navigationControl : true,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		}
+
+		map = new google.maps.Map(document.getElementById("map_canvas"),
+				myOptions);
+
+		//Add "click on map" listener
+		google.maps.event.addListener(map, 'click', function(event) {
+			marker = null;
+			callJavaFX(event.latLng);
+		});
+		
+		//Add manual input (text box) listener
+		var geocoder = new google.maps.Geocoder;
+		document.getElementById('submit').addEventListener('click',
+				function() {
+					geocodeAddress(geocoder, map);
+				});
+
+	}
+
+	//]]>
+</script> 
+
+  </head> 
+<body style="margin:0px; padding:0px;" onload="initialize()">
+
+	<form>
+		<div id="floating-panel" style = "
+	position: absolute;
+	background-color: black;
+	top: 82px;
+	left: 30%;
+	z-index: 5;
+	padding: 7px;
+	text-align: center;
+	font-family: 'Roboto', 'sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
+	opacity: .75;">
+			<input id="address" type="textbox" value=""
+				placeholder="Enter City Or Zip-Code"> <input id="submit"
+				class="send" type="button" value="Locate">
+		</div>
+	</form>
+	<table border="1"> 
+      <tr> 
+        <td> 
+           <div id="map_canvas" style="width: 1600px; height:850px"></div> <!-- This is where you change the size of the map -->
+        </td> 
+<!--         <td valign="top" style="width:150px; text-decoration: underline; color: #4444ff;">  -->
+           <div id="side_bar"></div> 
+        </td>
+      </tr> 
+    </table>
+    <img src="BrandingImage.png" style = "position: absolute; left: 0px; top: 0px; opacity: 0.5;" ></img>
+    
+  
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"> 
+</script> 
+<script type="text/javascript"> 
+_uacct = "UA-162157-1";
+urchinTracker();
+</script> 
+
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>   
+
+
+
+  </body> 
+</html> 
