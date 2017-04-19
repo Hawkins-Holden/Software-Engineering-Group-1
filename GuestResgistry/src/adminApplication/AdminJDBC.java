@@ -1,8 +1,11 @@
 package adminApplication;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-
+import java.util.Set;
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -236,8 +239,8 @@ public class AdminJDBC {
 
 				// create and select db
 
-				stmt.execute("CREATE DATABASE IF NOT EXISTS VisitorsDB");
-				stmt.execute("USE VisitorDB");
+				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
+				stmt.execute("USE visitordb");
 
 				/**
 				 * Query entries with the Zip '71467'
@@ -255,6 +258,142 @@ public class AdminJDBC {
 					System.out.println(res.getInt("VisitorID") + " " + res.getString("Email"));
 				}
 
+			}
+		}
+
+		catch (Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+			}
+		}
+		return null;
+	}
+
+	public static List<String> getCitiesandMetros() {
+		List<String> cities = new LinkedList<String>();
+
+		Connection con = null;
+		Statement stmt;
+
+		String url = "jdbc:mysql://localhost:3306/test";
+		String user = "root";
+		String password = "";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, password);
+
+			if (!con.isClosed()) {
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+				stmt = con.createStatement();
+
+				// create and select db
+
+				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
+				stmt.execute("USE visitordb");
+
+				/**
+				 * Query entries with the Zip '71467'
+				 */
+				Set<String> fields = new HashSet<String>();
+				ResultSet res = stmt.executeQuery("SELECT DISTINCT City, State, Metro FROM visitorlocations");
+				try {
+					while (res.next()) {
+						String city = res.getString("City");
+						String state = res.getString("State");
+						String metro = res.getString("Metro");
+						if (metro != null || metro.equals("") || metro.isEmpty()) {
+							fields.add(city + ", " + state);
+						} else {
+							fields.add(metro + ", " + state);
+						}
+					}
+					res.close();
+					for (String city : fields) {
+						cities.add(city);
+					}
+					cities.sort(Comparator.naturalOrder());
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return cities;
+	}
+
+	public static List<String> getCountries() {
+		return getFieldOptions("Country", "visitorlocations");
+	}
+
+	public static List<String> getDestinations() {
+		return getFieldOptions("Destination", "visits");
+	}
+
+	public static List<String> getHotels() {
+		return getFieldOptions("Hotel", "visits");
+	}
+
+	public static List<String> getReferences() {
+		return getFieldOptions("Heard", "visits");
+	}
+
+	public static List<String> getStates() {
+		return getFieldOptions("State", "visitorlocations");
+	}
+
+	public static List<String> getReasons() {
+		return getFieldOptions("TravelingFor", "visits");
+	}
+
+	private static List<String> getFieldOptions(String field, String tableName) {
+		Connection con = null;
+		Statement stmt;
+
+		String url = "jdbc:mysql://localhost:3306/test";
+		String user = "root";
+		String password = "";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, password);
+
+			if (!con.isClosed()) {
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+				stmt = con.createStatement();
+
+				// create and select db
+
+				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
+				stmt.execute("USE visitordb");
+
+				/**
+				 * Query entries with the Zip '71467'
+				 */
+				List<String> fields = new LinkedList<String>();
+				ResultSet res = stmt.executeQuery("SELECT DISTINCT " + field + " FROM " + tableName);
+				while (res.next()) {
+					fields.add(res.getString(field));
+				}
+				fields.sort(Comparator.naturalOrder());
+				return fields;
 			}
 		}
 
