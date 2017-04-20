@@ -13,6 +13,57 @@ public class AdminJDBC {
 	/*
 	 * Reads from the database
 	 */
+	public static List<VisitorDetails> getVisitorDetailsFromQuery(String query) {
+		Connection con = null;
+		Statement stmt;
+
+		List<VisitorDetails> resultSet = new ArrayList<VisitorDetails>();
+
+		String url = "jdbc:mysql://localhost:3306/test";
+		String user = "root";
+		String password = "";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, password);
+
+			if (!con.isClosed()) {
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+				stmt = con.createStatement();
+
+				// create and select db
+
+				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
+				stmt.execute("USE visitordb");
+
+				ResultSet res = stmt.executeQuery(query);
+
+				while (res.next()) {
+					resultSet.add(new VisitorDetails(res.getInt("VisitorID"), res.getString("Fname"),
+							res.getString("Lname"), res.getString("Email"), res.getString("Latitude"),
+							res.getString("Longitude"), res.getString("City"), res.getString("Metro"),
+							res.getString("State"), res.getString("Country"), res.getInt("Party"),
+							res.getString("Heard"), res.getString("Hotel"), res.getString("Destination"),
+							(res.getString("RepeatVisit") == "true" ? true : false), res.getString("TravelingFor"),
+							(Date) res.getDate("Visiting_Day")));
+				}
+			}
+
+			return resultSet;
+		}
+
+		catch (Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+			}
+		}
+		return null;
+	}
+	
 	public static List<VisitorDetails> getVisitorsFromDateRange(LocalDate start, LocalDate end) {
 		Connection con = null;
 		Statement stmt;

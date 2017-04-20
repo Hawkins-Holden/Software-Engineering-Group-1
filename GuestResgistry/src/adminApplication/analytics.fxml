@@ -9,11 +9,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="713.0" prefWidth="1056.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.AnalyticsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="887.0" prefWidth="1373.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.AnalyticsController">
    <children>
-      <SplitPane dividerPositions="0.29797979797979796" prefHeight="713.0" prefWidth="1056.0">
+      <SplitPane dividerPositions="0.22763063707945597" prefHeight="887.0" prefWidth="1374.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="323.0" prefWidth="220.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="711.0" prefWidth="342.0">
                <children>
                   <FlowPane layoutX="6.0" layoutY="58.0" prefHeight="499.0" prefWidth="300.0">
                      <children>
@@ -114,14 +114,13 @@
                               </MenuButton>
                               <CheckBox fx:id="emailCheck" mnemonicParsing="false" text="Subscribed to Emails" GridPane.rowIndex="5" />
                               <MenuButton fx:id="emailMenuButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" text="Choice" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                 <items>
-                                    <CheckMenuItem mnemonicParsing="false" text="Business" />
-                                    <CheckMenuItem mnemonicParsing="false" text="Pleasure" />
-                                    <CheckMenuItem mnemonicParsing="false" text="Other" />
-                                 </items>
                                  <contextMenu>
                                     <ContextMenu fx:id="emailMenu" />
                                  </contextMenu>
+                                 <items>
+                                    <CheckMenuItem fx:id="providedMenuItem" mnemonicParsing="false" text="Provided" />
+                                    <CheckMenuItem fx:id="notProvidedMenuItem" mnemonicParsing="false" text="Not Provided" />
+                                 </items>
                               </MenuButton>
                            </children>
                         </GridPane>
@@ -135,7 +134,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshMenus" prefHeight="25.0" prefWidth="117.0" text="Refresh" />
+                              <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshData" prefHeight="25.0" prefWidth="117.0" text="Refresh" />
                               <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Clear" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
@@ -148,48 +147,27 @@
                   </Label>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="680.0" prefWidth="730.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="711.0" prefWidth="1055.0">
                <children>
-                  <TabPane layoutY="-2.0" prefHeight="713.0" prefWidth="737.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Graphical">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="737.0">
-                                 <children>
-                                    <WebView prefHeight="326.0" prefWidth="737.0" />
-                                    <FlowPane layoutY="342.0" prefHeight="294.0" prefWidth="737.0">
-                                       <children>
-                                          <LineChart prefHeight="267.0" prefWidth="421.0" title="Visitors over Time">
-                                            <xAxis>
-                                              <CategoryAxis side="BOTTOM" />
-                                            </xAxis>
-                                            <yAxis>
-                                              <NumberAxis side="LEFT" />
-                                            </yAxis>
-                                          </LineChart>
-                                          <PieChart prefHeight="267.0" prefWidth="284.0" title="Visitors by Area" />
-                                       </children>
-                                    </FlowPane>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Tabular">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <TableView fx:id="visitorTable" layoutX="14.0" layoutY="14.0" prefHeight="467.0" prefWidth="711.0">
-                                      <columns>
-                                        <TableColumn prefWidth="75.0" text="C1" />
-                                        <TableColumn prefWidth="75.0" text="C2" />
-                                      </columns>
-                                    </TableView>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
+                  <TableView fx:id="visitorTable" layoutX="-1.0" layoutY="386.0" prefHeight="499.0" prefWidth="1059.0" tableMenuButtonVisible="true">
+                     <columns>
+                        <TableColumn fx:id="fnameColumn" prefWidth="75.0" text="First Name" />
+                        <TableColumn fx:id="lnameColumn" prefWidth="75.0" text="Last Name" />
+                        <TableColumn fx:id="emailColumn" prefWidth="79.0" text="Email" />
+                        <TableColumn fx:id="metroColumn" prefWidth="71.0" text="Metro Area" />
+                        <TableColumn fx:id="cityColumn" prefWidth="75.0" text="City" />
+                        <TableColumn fx:id="stateColumn" prefWidth="48.0" text="State" />
+                        <TableColumn fx:id="countryColumn" prefWidth="67.0" text="Country" />
+                        <TableColumn fx:id="partyColumn" prefWidth="47.0" text="# Party" />
+                        <TableColumn fx:id="heardColumn" prefWidth="85.0" text="Refererred by" />
+                        <TableColumn fx:id="hotelColumn" prefWidth="64.0" text="Hotel" />
+                        <TableColumn fx:id="destinationColumn" prefWidth="85.0" text="Destination" />
+                        <TableColumn fx:id="repeatColumn" prefWidth="100.0" text="Repeat Visitor" />
+                        <TableColumn fx:id="reasonColumn" prefWidth="74.0" text="Reason" />
+                        <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date of Visit" />
+                     </columns>
+                  </TableView>
+                  <WebView layoutY="-4.0" prefHeight="390.0" prefWidth="1057.0" />
                </children>
             </AnchorPane>
         </items>
