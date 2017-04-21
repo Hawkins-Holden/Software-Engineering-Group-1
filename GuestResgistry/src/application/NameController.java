@@ -1,8 +1,10 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class NameController implements Initializable {
 
 	@FXML
@@ -38,10 +41,12 @@ public class NameController implements Initializable {
 			"MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN",
 			"TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY");
 
+
 	public void NextButton(ActionEvent event) throws IOException {
 
 		firstName = Fname.getText();
 		lastName = Lname.getText();
+		System.out.println("that is done");
 		fnameValidate(Fname, Fname_error);
 		lnameValidate(Lname, Lname_error);
 

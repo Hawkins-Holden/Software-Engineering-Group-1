@@ -22,7 +22,7 @@ public class TestArray {
 		latLongs.add("-98.4375");
 		latLongs.add("36.4566360115962");
 		latLongs.add("-102.83203125");
-		/*latLongs.add("34.88593094075317");
+		latLongs.add("34.88593094075317");
 		latLongs.add("-96.15234375");
 		latLongs.add("33.284619968887675");
 		latLongs.add("-104.23828125");
@@ -49,7 +49,7 @@ public class TestArray {
 		latLongs.add("44.33956524809714");
 		latLongs.add("-88.41796875");
 		latLongs.add("43.58039085560783");
-		latLongs.add("-85.4296875");*/
+		latLongs.add("-85.4296875");
 		
 		return latLongs;
 		

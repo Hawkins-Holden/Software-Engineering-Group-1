@@ -67,6 +67,7 @@ public class HotelController implements Initializable {
 	}
 	
 	
+	@SuppressWarnings("restriction")
 	public void radioSelect(ActionEvent eve) {
 
 		if (rbYes.isSelected()) {
@@ -77,8 +78,10 @@ public class HotelController implements Initializable {
 	}
 
 	
+	@SuppressWarnings("restriction")
 	public void backScene(ActionEvent e) throws Exception {
 		
+		@SuppressWarnings("restriction")
 		Parent newScene = FXMLLoader.load(getClass().getResource("Name.fxml"));
 		Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
@@ -88,6 +91,7 @@ public class HotelController implements Initializable {
 	}
 	
 	
+	@SuppressWarnings("restriction")
 	public void initialize(URL location, ResourceBundle resources) {
 		Hear.setItems(slist);
 		

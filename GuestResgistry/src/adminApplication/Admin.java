@@ -12,7 +12,7 @@ public class Admin extends Application {
    @Override
    public void start(Stage Stage) throws Exception {	
    	
-      Parent root = FXMLLoader.load(getClass().getResource("admin.fxml"));
+      Parent root = FXMLLoader.load(getClass().getResource("analytics.fxml"));
       Stage.setTitle("Admin Platform");
       Stage.setScene(new Scene(root, 1680, 1200));
       Stage.show();

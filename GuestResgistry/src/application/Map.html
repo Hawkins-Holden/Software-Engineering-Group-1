@@ -1,180 +1,190 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Welcome</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
+<head>
+<title>Welcome</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<style>
+/* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-      #map {
-        height: 90%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        background-color: #093145;
-      }
-
-      #floating-panel {
-        position: absolute;
-        background-color: black;
-        top: 82px;
-        left: 30%;
-        z-index: 5;
-        padding: 7px;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-        opacity: .75;
-      }
-
-      #address {
-        margin: 17px;
-        padding: 10px;
-        font-size: 20px;
-      }
-
-      #submit {
-        border: 1px solid;
-        background-color: green;
-        color: balck;
-        padding: 17px;
-        border-radius: 3px;
-        margin-right: 17px;
-        font-size: 20px;
-      }
-
-      #title {
-        background-color: #093145;
-        color: white;
-      }
-
-    </style>
-  </head>
-  <body>
-    <form>
-    <div id="floating-panel">
-      <input id="address" type="textbox" value="" placeholder="Enter City Or Zip-Code">
-      <input id="submit" class="send" type="button" value="Locate" onclick="goToURL()">
-    </div>
-  </form>
-      <div id = "title">
-      <center><h1 >Welcome to Monroe-West Monroe Convention and Visitors Bureau</h1></center>
-    </div>
-    <div id="map"></div>
-    <!--<div id="infowindow-content">
-      <span id="place-name"  class="title"></span><br>
-      Place ID <span id="place-id"></span><br>
-      <span id="place-address"></span>
-    </div>-->
-    <script>
-      var marker = null;
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: {lat:40, lng: -100}
-        });
-
-        var geocoder = new google.maps.Geocoder;
-        document.getElementById('submit').addEventListener('click', function() {
-            geocodeAddress(geocoder, map);
-          });
-
-          /*var marker = new google.maps.Marker({
-            map: map
-          });*/
-
-
-     map.addListener('click', function(e) {
-       placeMarker(e.latLng, map);
-     });
-
-     /*var input = document.getElementById(‘address’);
-      var autocomplete = new google.maps.places.Autocomplete(
-                  input, {placeIdOnly: true});
-      autocomplete.bindTo('bounds', map);
-      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-      //autocomplete feature for adress input
-      autocomplete.addListener('place_changed', function() {
-
-        var place = autocomplete.getPlace();
-
-        if (!place.place_id) {
-          return;
-        }
-        geocoder.geocode({'placeId': place.place_id}, function(results, status) {
-
-          if (status !== 'OK') {
-            window.alert('Geocoder failed due to: ' + status);
-            return;
-          }
-          map.setZoom(9);
-          map.setCenter(results[0].geometry.location);
-          // Set the position of the marker using the place ID and location.
-          marker.setPlace({
-            placeId: place.place_id,
-            location: results[0].geometry.location
-          });
-          marker.setVisible(true);
-
-        });
-      });*/
-
-
-      //
- function placeMarker(latlng, resultsMap) {
- geocoder.geocode({'latLng': latlng}, function(results, status) {
-         if (status == 'OK') {
-           if (marker != null)
-              marker.setMap(null);
-           if (resultsMap.getZoom() != 9)
-              resultsMap.setCenter(results[0].geometry.location);
-           marker = new google.maps.Marker({
-             position: results[0].geometry.location,
-             map: resultsMap,
-             draggable: true
-           });
-         } else {
-           alert('Please pin the marker on valid location!');
-         }
-         map.setZoom(9);
-       });
+#map {
+	height: 90%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #093145;
 }
 
-  function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        if (address == "" && !marker){
-          alert('Please Enter your location');
-        }
-        else {
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            if (marker != null)
-               marker.setMap(null);
-
-            resultsMap.setCenter(results[0].geometry.location);
-            marker = new google.maps.Marker({
-              map: resultsMap,
-              animation: google.maps.Animation.DROP,
-              draggable: true,
-              position: results[0].geometry.location
-            });
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-          map.setZoom(9);
-        });
-  }
+#floating-panel {
+	position: absolute;
+	background-color: black;
+	top: 82px;
+	left: 30%;
+	z-index: 5;
+	padding: 7px;
+	text-align: center;
+	font-family: 'Roboto', 'sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
+	opacity: .75;
 }
-  }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQ0Bf0gGO7vOU90EAC8S0zpJMvYXCWJYU&callback=initMap">
-    </script>
-  </body>
+
+#address {
+	margin: 17px;
+	padding: 10px;
+	font-size: 20px;
+}
+
+#submit {
+	border: 1px solid;
+	background-color: green;
+	color: balck;
+	padding: 17px;
+	border-radius: 3px;
+	margin-right: 17px;
+	font-size: 20px;
+}
+
+#title {
+	background-color: #093145;
+	color: white;
+}
+</style>
+</head>
+<body>
+	<form>
+		<div id="floating-panel">
+			<input id="address" type="textbox" value=""
+				placeholder="Enter City Or Zip-Code"> <input id="submit"
+				class="send" type="button" value="Locate" onclick="goToURL()">
+		</div>
+	</form>
+	<div id="title">
+		<center>
+			<h1>Welcome to Monroe-West Monroe Convention and Visitors Bureau</h1>
+		</center>
+	</div>
+	<div id="map"></div>
+
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQ0Bf0gGO7vOU90EAC8S0zpJMvYXCWJYU&callback=initMap">
+	</script>
+	<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"> 
+	</script> 
+	<script type="text/javascript">
+		var map;
+		var locationOfPin = "";
+		var marker = null;
+		var myLatLng;
+
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				zoom : 4,
+				center : {
+					lat : 40,
+					lng : -100
+				}
+			});
+			var geocoder = new google.maps.Geocoder;
+			document.getElementById('submit').addEventListener('click',
+					function() {
+						geocodeAddress(geocoder, map);
+					});
+			/*var marker = new google.maps.Marker({
+			  map: map
+			});*/
+
+			map.addListener('click', function(e) {
+				placeMarker(e.latLng, map);
+			});
+
+		}
+
+		function placeMarker(latlng, resultsMap) {
+			locationOfPin = latlng;
+			geocoder.geocode({
+				'latLng' : latlng
+			}, function(results, status) {
+				if (status == 'OK') {
+					if (marker != null)
+						marker.setMap(null);
+					if (resultsMap.getZoom() != 9)
+						resultsMap.setCenter(results[0].geometry.location);
+					marker = new google.maps.Marker({
+						position : results[0].geometry.location,
+						map : resultsMap,
+						draggable : true
+					});
+				} else {
+					alert('Please pin the marker on valid location!');
+				}
+				map.setZoom(9);
+			});
+		}
+		function geocodeAddress(geocoder, resultsMap) {
+			var address = document.getElementById('address').value;
+			if (address == "" && !marker) {
+				alert('Please Enter your location');
+			} else {
+				geocoder
+						.geocode(
+								{
+									'address' : address
+								},
+								function(results, status) {
+									if (status === 'OK') {
+										resultsMap
+												.setCenter(results[0].geometry.location);
+										marker = new google.maps.Marker(
+												{
+													map : resultsMap,
+													animation : google.maps.Animation.DROP,
+													draggable : true,
+													position : results[0].geometry.location
+												});
+									} else {
+										alert('Geocode was not successful for the following reason: '
+												+ status);
+									}
+									map.setZoom(9);
+								});
+			}
+		}
+		function giveInfo() {
+			app.callFromJavascript(locationOfPin);
+		}
+
+		function populateJSMap() {
+
+			i = 3;
+			j = 0;
+			temp = app.getSize();
+			var testArray = [];
+
+			while (i < temp) {
+				testArray[i] = app.getString(i);
+				i++;
+			}
+
+			i = 0;
+
+			while (i < temp) {
+				myLatLng = new google.maps.LatLng({
+					lat : testArray[i],
+					lng : testArray[i + 1]
+				});
+				marker = placeMarker(myLatLng, map);
+				i = i + 2;
+			}
+
+			tempest = 0;
+			j = 0;
+
+		}
+	</script>
+
+</body>
 </html>

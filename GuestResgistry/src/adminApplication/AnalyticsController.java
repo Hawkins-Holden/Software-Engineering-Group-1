@@ -1,17 +1,35 @@
 package adminApplication;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import application.JavascriptComm;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
+import javafx.concurrent.Worker.State;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import netscape.javascript.JSObject;
 
 @SuppressWarnings("restriction")
 public class AnalyticsController implements Initializable {
@@ -21,6 +39,8 @@ public class AnalyticsController implements Initializable {
 	private Button clearButton;
 	@FXML
 	private Button refreshButton;
+	@FXML
+	private Button exportButton;
 	@FXML
 	private CheckBox areaCheck;
 	@FXML
@@ -114,11 +134,46 @@ public class AnalyticsController implements Initializable {
 
 	private ObservableList<VisitorDetails> data;
 
+	@FXML
+	private WebView webView;
+	private WebEngine engine;
+	JSObject window;
+
+	public void displayWeb() {
+		engine = webView.getEngine();
+		final String hellohtml = "adminMap.html"; // HTML file to view in web
+													// view
+		URL urlHello = getClass().getResource(hellohtml);
+		engine.load(urlHello.toExternalForm());
+
+		// ----------------------------------------------
+
+		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
+
+			@Override
+			public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
+
+				if (newState == State.SUCCEEDED) {
+					window = (JSObject) engine.executeScript("window");
+					window.setMember("app", new JavascriptComm());
+					System.out.println("stateChange");
+					populateMap();
+				}
+			}
+
+		});
+
+		// ----------------------------------------------
+
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		refreshMenus();
 		startDatePicker.setValue(LocalDate.now().minusYears(1));
 		endDatePicker.setValue(LocalDate.now());
+		engine = webView.getEngine();
+		displayWeb();
 	}
 
 	public void refreshMenus() {
@@ -130,7 +185,7 @@ public class AnalyticsController implements Initializable {
 		}
 		citiesMenuButton.getItems().clear();
 		citiesMenuButton.getItems().addAll(cityItems);
-		
+
 		List<String> countries = AdminJDBC.getCountries();
 		ObservableList<CheckMenuItem> countryItems = FXCollections.observableArrayList();
 		for (String country : countries) {
@@ -350,4 +405,119 @@ public class AnalyticsController implements Initializable {
 		return visitors;
 	}
 
+	private void populateMap() {
+		engine.executeScript("populateJSMap();");
+	}
+
+	@FXML
+	private void ExportAction(ActionEvent event) {
+		FileChooser chooser = new FileChooser();
+		// Set extension filter
+		if (!data.isEmpty()) {
+			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
+			chooser.getExtensionFilters().add(filter);
+			// Show save dialog
+			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
+			if (file != null) {
+				try {
+					saveXLSFile(file);
+				} catch (WriteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		else {
+			
+		}
+	}
+
+	public void saveXLSFile(File file) throws IOException, WriteException {
+		WritableWorkbook myexcel = Workbook.createWorkbook(file);
+		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
+
+		// TODO: set this up with only the checked columns in the table
+		mysheet.addCell(new Label(0, 0, "This report was generated on " + getDate() + " at " + getTime() + "."));
+		int x = 0;
+		mysheet.addCell(new Label(x, 1, "First"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Last"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Email"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "From (City)"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "From (Metro)"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "From (State)"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "From (Country)"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Number in Party"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "How Referred"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Stayed in M/WM Hotel"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Destination"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Repeat Visitor?"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Reason For Travelling"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Date of Visit"));
+
+		for (int i = 0; i < data.size(); i++) {
+			int j = 0;
+			mysheet.addCell(formatData(i, j, data.get(i).getFname()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getLname()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getEmail()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getCity()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getMetro()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getState()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getCountry()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getParty().toString()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getHeard()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getHotel()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getDestination()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getRepeatVisit().toString()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getTravelingFor()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getVisitingDay().toString()));
+			j++;
+		}
+		myexcel.write();
+		myexcel.close();
+	}
+
+	private Label formatData(int i, int j, String data) {
+		return new Label(j, i + 2, data);
+	}
+
+	private String getTime() {
+		Calendar timestamp = Calendar.getInstance();
+		return timestamp.get(Calendar.HOUR) + ":" + timestamp.get(Calendar.MINUTE) + ":"
+				+ timestamp.get(Calendar.SECOND) + timestamp.get(Calendar.AM_PM);
+	}
+
+	private String getDate() {
+		Calendar timestamp = Calendar.getInstance();
+		return (timestamp.get(Calendar.MONTH) + 1) + "/" + timestamp.get(Calendar.DATE) + "/"
+				+ timestamp.get(Calendar.YEAR);
+	}
 }

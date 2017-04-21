@@ -1,14 +1,18 @@
-package application;
+package adminApplication;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import org.json.JSONException;
+
+import application.GeoCoding;
+import application.LocationInfoExtractor;
+import application.SerializeJson;
+import application.TestArray;
 
 public class JavascriptComm {
 
