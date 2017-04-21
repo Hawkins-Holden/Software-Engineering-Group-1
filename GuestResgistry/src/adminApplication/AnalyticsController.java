@@ -10,7 +10,11 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import application.JavascriptComm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -30,6 +34,9 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import netscape.javascript.JSObject;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 @SuppressWarnings("restriction")
 public class AnalyticsController implements Initializable {
@@ -131,6 +138,12 @@ public class AnalyticsController implements Initializable {
 	private TableColumn<VisitorDetails, String> reasonColumn;
 	@FXML
 	private TableColumn<VisitorDetails, Date> dateColumn;
+	@FXML
+	private LineChart<String, Number> lineChart;
+	@FXML
+	private CategoryAxis xAxis;
+	@FXML
+	private NumberAxis yAxis;
 
 	private ObservableList<VisitorDetails> data;
 
@@ -238,7 +251,9 @@ public class AnalyticsController implements Initializable {
 	public void refreshData() {
 		data = getFilteredVisitorDetails();
 		refreshTable();
+		refreshChart();
 		refreshMenus();
+		displayWeb();
 	}
 
 	public void refreshTable() {
@@ -429,9 +444,8 @@ public class AnalyticsController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-		}
-		else {
-			
+		} else {
+
 		}
 	}
 
@@ -519,5 +533,83 @@ public class AnalyticsController implements Initializable {
 		Calendar timestamp = Calendar.getInstance();
 		return (timestamp.get(Calendar.MONTH) + 1) + "/" + timestamp.get(Calendar.DATE) + "/"
 				+ timestamp.get(Calendar.YEAR);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void refreshChart() {
+		lineChart.getData().addAll(getChartData());
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private Series getChartData() {
+		XYChart.Series series = new XYChart.Series();
+		Set<int[]> months = new HashSet<int[]>();
+		Calendar cal = Calendar.getInstance();
+		for (VisitorDetails datum : data) {
+			int[] monthYear = new int[2];
+			cal.setTime(datum.getVisitingDay());
+			monthYear[0] = cal.get(Calendar.MONTH);
+			monthYear[1] = cal.get(Calendar.YEAR);
+			months.add(monthYear);
+		}
+
+		for (int[] monthYear : months) {
+			int count = 0;
+			for (VisitorDetails datum : data) {
+				cal.setTime(datum.getVisitingDay());
+				if (monthYear[0] == cal.get(Calendar.MONTH) && monthYear[1] == cal.get(Calendar.YEAR)) {
+					if (datum.getParty() != null || datum.getParty() > 0) {
+						count += datum.getParty();
+					} else {
+						count++;
+					}
+				}
+			}
+			String monthString;
+			switch (monthYear[0]) {
+			case Calendar.JANUARY:
+				monthString = "January ";
+				break;
+			case Calendar.FEBRUARY:
+				monthString = "February ";
+				break;
+			case Calendar.MARCH:
+				monthString = "March ";
+				break;
+			case Calendar.APRIL:
+				monthString = "April ";
+				break;
+			case Calendar.MAY:
+				monthString = "May ";
+				break;
+			case Calendar.JUNE:
+				monthString = "June ";
+				break;
+			case Calendar.JULY:
+				monthString = "July ";
+				break;
+			case Calendar.AUGUST:
+				monthString = "August ";
+				break;
+			case Calendar.SEPTEMBER:
+				monthString = "September ";
+				break;
+			case Calendar.OCTOBER:
+				monthString = "October ";
+				break;
+			case Calendar.NOVEMBER:
+				monthString = "November ";
+				break;
+			case Calendar.DECEMBER:
+				monthString = "December ";
+				break;
+			default:
+				monthString = "Invalid month";
+				break;
+			}
+			monthString += monthYear[1];
+			series.getData().add(new XYChart.Data(monthString, count));
+		}
+		return series;
 	}
 }

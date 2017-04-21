@@ -152,25 +152,53 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="711.0" prefWidth="1055.0">
                <children>
-                  <TableView fx:id="visitorTable" layoutX="-1.0" layoutY="386.0" prefHeight="499.0" prefWidth="1059.0" tableMenuButtonVisible="true">
-                     <columns>
-                        <TableColumn fx:id="fnameColumn" prefWidth="75.0" text="First Name" />
-                        <TableColumn fx:id="lnameColumn" prefWidth="75.0" text="Last Name" />
-                        <TableColumn fx:id="emailColumn" prefWidth="79.0" text="Email" />
-                        <TableColumn fx:id="metroColumn" prefWidth="71.0" text="Metro Area" />
-                        <TableColumn fx:id="cityColumn" prefWidth="75.0" text="City" />
-                        <TableColumn fx:id="stateColumn" prefWidth="48.0" text="State" />
-                        <TableColumn fx:id="countryColumn" prefWidth="67.0" text="Country" />
-                        <TableColumn fx:id="partyColumn" prefWidth="47.0" text="# Party" />
-                        <TableColumn fx:id="heardColumn" prefWidth="85.0" text="Refererred by" />
-                        <TableColumn fx:id="hotelColumn" prefWidth="64.0" text="Hotel" />
-                        <TableColumn fx:id="destinationColumn" prefWidth="85.0" text="Destination" />
-                        <TableColumn fx:id="repeatColumn" prefWidth="100.0" text="Repeat Visitor" />
-                        <TableColumn fx:id="reasonColumn" prefWidth="74.0" text="Reason" />
-                        <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date of Visit" />
-                     </columns>
-                  </TableView>
-                  <WebView fx:id="webView" layoutY="-4.0" prefHeight="390.0" prefWidth="1057.0" />
+                  <TabPane layoutX="-2.0" prefHeight="464.0" prefWidth="1059.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Map">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="407.0" prefWidth="1059.0">
+                                 <children>
+                                    <WebView fx:id="webView" layoutX="2.0" layoutY="-3.0" prefHeight="438.0" prefWidth="1057.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Chart">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="visitorTable" prefHeight="437.0" prefWidth="1059.0" tableMenuButtonVisible="true">
+                                       <columns>
+                                          <TableColumn fx:id="fnameColumn" prefWidth="75.0" text="First Name" />
+                                          <TableColumn fx:id="lnameColumn" prefWidth="75.0" text="Last Name" />
+                                          <TableColumn fx:id="emailColumn" prefWidth="79.0" text="Email" />
+                                          <TableColumn fx:id="metroColumn" prefWidth="71.0" text="Metro Area" />
+                                          <TableColumn fx:id="cityColumn" prefWidth="75.0" text="City" />
+                                          <TableColumn fx:id="stateColumn" prefWidth="48.0" text="State" />
+                                          <TableColumn fx:id="countryColumn" prefWidth="67.0" text="Country" />
+                                          <TableColumn fx:id="partyColumn" prefWidth="47.0" text="# Party" />
+                                          <TableColumn fx:id="heardColumn" prefWidth="85.0" text="Refererred by" />
+                                          <TableColumn fx:id="hotelColumn" prefWidth="64.0" text="Hotel" />
+                                          <TableColumn fx:id="destinationColumn" prefWidth="85.0" text="Destination" />
+                                          <TableColumn fx:id="repeatColumn" prefWidth="100.0" text="Repeat Visitor" />
+                                          <TableColumn fx:id="reasonColumn" prefWidth="74.0" text="Reason" />
+                                          <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date of Visit" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+                  <LineChart fx:id="lineChart" layoutX="212.0" layoutY="526.0" legendVisible="false" prefHeight="345.0" prefWidth="642.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="yAxis" side="LEFT" />
+                    </yAxis>
+                  </LineChart>
                </children>
             </AnchorPane>
         </items>
