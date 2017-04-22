@@ -1,14 +1,14 @@
 package adminApplication;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -35,12 +35,28 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import netscape.javascript.JSObject;
 import java.util.Set;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.util.EntityUtils;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+
 import java.util.HashSet;
-import java.util.LinkedList;
 
 @SuppressWarnings("restriction")
 public class AnalyticsController implements Initializable {
 
+	final String accessToken = "f90e380a-300b-4a62-822e-5517f9887be3";
 	// filterControls
 	@FXML
 	private Button clearButton;
@@ -48,6 +64,8 @@ public class AnalyticsController implements Initializable {
 	private Button refreshButton;
 	@FXML
 	private Button exportButton;
+	@FXML
+	private Button exportEmailButton;
 	@FXML
 	private CheckBox areaCheck;
 	@FXML
@@ -285,9 +303,9 @@ public class AnalyticsController implements Initializable {
 					+ endDate.toString() + "'");
 		}
 		if (areaCheck.isSelected()) {
+			boolean first = true;
 			for (MenuItem cityItem : citiesMenuButton.getItems()) {
 				CheckMenuItem city = (CheckMenuItem) cityItem;
-				boolean first = true;
 				if (city.isSelected()) {
 					if (first) {
 						query.append(" AND City = " + city.getText() + " OR Metro = " + city.getText());
@@ -299,7 +317,6 @@ public class AnalyticsController implements Initializable {
 			}
 			for (MenuItem stateItem : statesMenuButton.getItems()) {
 				CheckMenuItem state = (CheckMenuItem) stateItem;
-				boolean first = true;
 				if (state.isSelected()) {
 					if (first) {
 						query.append(" AND State = " + state.getText());
@@ -311,7 +328,6 @@ public class AnalyticsController implements Initializable {
 			}
 			for (MenuItem countryItem : countriesMenuButton.getItems()) {
 				CheckMenuItem country = (CheckMenuItem) countryItem;
-				boolean first = true;
 				if (country.isSelected()) {
 					if (first) {
 						query.append(" AND Country = " + country.getText());
@@ -449,6 +465,52 @@ public class AnalyticsController implements Initializable {
 		}
 	}
 
+	@FXML
+	private void ExportEmailAction(ActionEvent event) {
+		FileChooser chooser = new FileChooser();
+		// Set extension filter
+		if (!data.isEmpty()) {
+			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
+			chooser.getExtensionFilters().add(filter);
+			// Show save dialog
+			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
+			if (file != null) {
+				try {
+					saveEmailList(file);
+				} catch (WriteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			/*
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("Export to Constant Contact");
+			alert.setHeaderText("Would you like to export this mailing list to Constant Contact?");
+			alert.setContentText("");
+
+			ButtonType buttonTypeOne = new ButtonType("Yes");
+			ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonTypeOne) {
+				if(exportToConstantContact(file) != 404){
+					System.out.println("Successfully exported emails.");
+				}
+			} else {
+				// ... user chose CANCEL or closed the dialog
+			}
+			*/
+
+		} else {
+
+		}
+	}
+
 	public void saveXLSFile(File file) throws IOException, WriteException {
 		WritableWorkbook myexcel = Workbook.createWorkbook(file);
 		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
@@ -513,6 +575,31 @@ public class AnalyticsController implements Initializable {
 			mysheet.addCell(formatData(i, j, data.get(i).getTravelingFor()));
 			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getVisitingDay().toString()));
+			j++;
+		}
+		myexcel.write();
+		myexcel.close();
+	}
+
+	public void saveEmailList(File file) throws IOException, WriteException {
+		WritableWorkbook myexcel = Workbook.createWorkbook(file);
+		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
+
+		// TODO: set this up with only the checked columns in the table
+		int x = 0;
+		mysheet.addCell(new Label(x, 1, "First"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "Last"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "Email"));
+		x++;
+		for (int i = 0; i < data.size() - 1; i++) {
+			int j = 0;
+			mysheet.addCell(formatData(i-1, j, data.get(i).getFname()));
+			j++;
+			mysheet.addCell(formatData(i-1, j, data.get(i).getLname()));
+			j++;
+			mysheet.addCell(formatData(i-1, j, data.get(i).getEmail()));
 			j++;
 		}
 		myexcel.write();
@@ -611,5 +698,54 @@ public class AnalyticsController implements Initializable {
 			series.getData().add(new XYChart.Data(monthString, count));
 		}
 		return series;
+	}
+
+	public int exportToConstantContact(File fileToUse) {
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		final HttpPost httppost = new HttpPost("https://api.constantcontact.com/v2/activities/addcontacts");
+
+		httppost.addHeader("Authorization", "Bearer " + this.accessToken);
+		httppost.addHeader("Accept", "application/json");
+		httppost.addHeader("content-type", "multipart/form-data");
+
+		final FileBody data = new FileBody(fileToUse);
+		final String listIds = "1";
+		StringBody lists = null;
+		lists = new StringBody(listIds, ContentType.APPLICATION_JSON);
+		StringBody fileName = null;
+		fileName = new StringBody(fileToUse.getName(), ContentType.APPLICATION_JSON);
+		final MultipartEntityBuilder reqEntity = MultipartEntityBuilder.create();
+		reqEntity.addPart("file_name", fileName);
+		reqEntity.addPart("lists", lists);
+		reqEntity.addPart("data", data);
+
+		httppost.setEntity(reqEntity.build());
+
+		HttpResponse response = null;
+		try {
+			response = httpclient.execute(httppost);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		final HttpEntity resEntity = response.getEntity();
+
+		try {
+			EntityUtils.consume(resEntity);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int code = response.getStatusLine().getStatusCode();
+		try {
+			httpclient.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return code;
 	}
 }

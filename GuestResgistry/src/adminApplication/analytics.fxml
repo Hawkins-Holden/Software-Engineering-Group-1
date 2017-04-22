@@ -124,7 +124,7 @@
                               </MenuButton>
                            </children>
                         </GridPane>
-                        <GridPane prefHeight="30.0" prefWidth="257.0">
+                        <GridPane prefHeight="90.0" prefWidth="261.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="78.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="11.0" />
@@ -134,12 +134,28 @@
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshData" prefHeight="25.0" prefWidth="103.0" text="Refresh" />
                               <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Clear" GridPane.columnIndex="2" />
-                              <Button fx:id="exportButton" mnemonicParsing="false" onAction="#ExportAction" prefHeight="25.0" prefWidth="89.0" text="Export Data" GridPane.columnIndex="4" />
                            </children>
+                        </GridPane>
+                        <GridPane prefHeight="30.0" prefWidth="268.0">
+                           <children>
+                              <Button fx:id="exportButton1" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="25.0" prefWidth="88.0" text="Export Emails" GridPane.columnIndex="4" />
+                              <Button fx:id="exportButton" mnemonicParsing="false" onAction="#ExportAction" prefHeight="25.0" prefWidth="85.0" text="Export Data" GridPane.columnIndex="2" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="78.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="11.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="77.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="0.0" prefWidth="8.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="88.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                         </GridPane>
                      </children>
                   </FlowPane>
@@ -167,38 +183,38 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="visitorTable" prefHeight="437.0" prefWidth="1059.0" tableMenuButtonVisible="true">
-                                       <columns>
-                                          <TableColumn fx:id="fnameColumn" prefWidth="75.0" text="First Name" />
-                                          <TableColumn fx:id="lnameColumn" prefWidth="75.0" text="Last Name" />
-                                          <TableColumn fx:id="emailColumn" prefWidth="79.0" text="Email" />
-                                          <TableColumn fx:id="metroColumn" prefWidth="71.0" text="Metro Area" />
-                                          <TableColumn fx:id="cityColumn" prefWidth="75.0" text="City" />
-                                          <TableColumn fx:id="stateColumn" prefWidth="48.0" text="State" />
-                                          <TableColumn fx:id="countryColumn" prefWidth="67.0" text="Country" />
-                                          <TableColumn fx:id="partyColumn" prefWidth="47.0" text="# Party" />
-                                          <TableColumn fx:id="heardColumn" prefWidth="85.0" text="Refererred by" />
-                                          <TableColumn fx:id="hotelColumn" prefWidth="64.0" text="Hotel" />
-                                          <TableColumn fx:id="destinationColumn" prefWidth="85.0" text="Destination" />
-                                          <TableColumn fx:id="repeatColumn" prefWidth="100.0" text="Repeat Visitor" />
-                                          <TableColumn fx:id="reasonColumn" prefWidth="74.0" text="Reason" />
-                                          <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date of Visit" />
-                                       </columns>
-                                    </TableView>
+                                    <LineChart fx:id="lineChart" layoutX="14.0" layoutY="14.0" legendVisible="false" prefHeight="383.0" prefWidth="737.0">
+                                      <xAxis>
+                                        <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis fx:id="yAxis" side="LEFT" />
+                                      </yAxis>
+                                    </LineChart>
                                  </children>
                               </AnchorPane>
                         </content>
                       </Tab>
                     </tabs>
                   </TabPane>
-                  <LineChart fx:id="lineChart" layoutX="212.0" layoutY="526.0" legendVisible="false" prefHeight="345.0" prefWidth="642.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" fx:id="xAxis" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis fx:id="yAxis" side="LEFT" />
-                    </yAxis>
-                  </LineChart>
+                  <TableView fx:id="visitorTable" layoutX="-2.0" layoutY="480.0" prefHeight="400.0" prefWidth="1059.0" tableMenuButtonVisible="true">
+                     <columns>
+                        <TableColumn fx:id="fnameColumn" prefWidth="75.0" text="First Name" />
+                        <TableColumn fx:id="lnameColumn" prefWidth="75.0" text="Last Name" />
+                        <TableColumn fx:id="emailColumn" prefWidth="79.0" text="Email" />
+                        <TableColumn fx:id="metroColumn" prefWidth="71.0" text="Metro Area" />
+                        <TableColumn fx:id="cityColumn" prefWidth="75.0" text="City" />
+                        <TableColumn fx:id="stateColumn" prefWidth="48.0" text="State" />
+                        <TableColumn fx:id="countryColumn" prefWidth="67.0" text="Country" />
+                        <TableColumn fx:id="partyColumn" prefWidth="47.0" text="# Party" />
+                        <TableColumn fx:id="heardColumn" prefWidth="85.0" text="Refererred by" />
+                        <TableColumn fx:id="hotelColumn" prefWidth="64.0" text="Hotel" />
+                        <TableColumn fx:id="destinationColumn" prefWidth="85.0" text="Destination" />
+                        <TableColumn fx:id="repeatColumn" prefWidth="100.0" text="Repeat Visitor" />
+                        <TableColumn fx:id="reasonColumn" prefWidth="74.0" text="Reason" />
+                        <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date of Visit" />
+                     </columns>
+                  </TableView>
                </children>
             </AnchorPane>
         </items>
