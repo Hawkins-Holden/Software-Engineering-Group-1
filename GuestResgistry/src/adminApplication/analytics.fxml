@@ -47,11 +47,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <MenuButton fx:id="citiesMenuButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Cities">
-                                 <contextMenu>
-                                    <ContextMenu fx:id="citiesMenu" />
-                                 </contextMenu>
-                              </MenuButton>
+                              <MenuButton fx:id="citiesMenuButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Cities" />
                               <MenuButton fx:id="statesMenuButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="States" GridPane.columnIndex="1">
                                  <contextMenu>
                                     <ContextMenu fx:id="statesMenu" />
@@ -145,6 +141,7 @@
                            <children>
                               <Button fx:id="exportButton1" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="25.0" prefWidth="88.0" text="Export Emails" GridPane.columnIndex="4" />
                               <Button fx:id="exportButton" mnemonicParsing="false" onAction="#ExportAction" prefHeight="25.0" prefWidth="85.0" text="Export Data" GridPane.columnIndex="2" />
+                              <Button fx:id="importButton" mnemonicParsing="false" onAction="#ImportAction" prefHeight="25.0" prefWidth="85.0" text="Import Data" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="78.0" />

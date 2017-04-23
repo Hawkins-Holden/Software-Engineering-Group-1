@@ -2,6 +2,7 @@ package adminApplication;
 
 import java.util.Date;
 
+
 public class VisitorDetails {
 	private int id;
 	private String fname;
@@ -13,6 +14,7 @@ public class VisitorDetails {
 	private String metro;
 	private String state;
 	private String country;
+	private Integer zip;
 	private Integer party;
 	private String heard;
 	private String hotel;
@@ -20,10 +22,10 @@ public class VisitorDetails {
 	private boolean repeatVisit;
 	private String travelingFor;
 	private Date visitingDay;
-	
+
 	public VisitorDetails(int id, String fname, String lname, String email, String latitude, String longitude,
-			String city, String metro, String state, String country, Integer party, String heard, String hotel, String destination,
-			boolean repeatVisit, String travelingFor, Date visitingDay) {
+			String city, String metro, String state, String country, Integer party, String heard, String hotel,
+			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(id);
 		this.setFname(fname);
 		this.setLname(lname);
@@ -42,11 +44,56 @@ public class VisitorDetails {
 		this.setTravelingFor(travelingFor);
 		this.setVisitingDay(visitingDay);
 	}
+
+	public VisitorDetails(String fname, String lname, String email, String city, String metro, String state,
+			String country, Integer party, String heard, String hotel, String destination, boolean repeatVisit,
+			String travelingFor, Date visitingDay) {
+		this.setId(AdminJDBC.generateID());
+		this.setFname(fname);
+		this.setLname(lname);
+		this.setEmail(email);
+		this.setLatitude("");
+		this.setLongitude("");
+		this.setCity(city);
+		this.setMetro(metro);
+		this.setState(state);
+		this.setCountry(country);
+		this.setParty(party);
+		this.setHeard(heard);
+		this.setHotel(hotel);
+		this.setDestination(destination);
+		this.setRepeatVisit(repeatVisit);
+		this.setTravelingFor(travelingFor);
+		this.setVisitingDay(visitingDay);
+	}
 	
-	public VisitorDetails(int id, String fname, String lname, String email, String latitude, String longitude,
-			Integer party, String heard, String hotel, String destination,
-			boolean repeatVisit, String travelingFor, Date visitingDay) {
-		this.setId(id);
+	public VisitorDetails(String fname, String lname, String email, String city, String metro, String state,
+			String country, Integer zip, Integer party, String heard, String hotel, String destination, boolean repeatVisit,
+			String travelingFor, Date visitingDay) {
+		this.setId(AdminJDBC.generateID());
+		this.setFname(fname);
+		this.setLname(lname);
+		this.setEmail(email);
+		this.setLatitude("");
+		this.setLongitude("");
+		this.setCity(city);
+		this.setMetro(metro);
+		this.setState(state);
+		this.setCountry(country);
+		this.setZip(zip);
+		this.setParty(party);
+		this.setHeard(heard);
+		this.setHotel(hotel);
+		this.setDestination(destination);
+		this.setRepeatVisit(repeatVisit);
+		this.setTravelingFor(travelingFor);
+		this.setVisitingDay(visitingDay);
+	}
+
+	public VisitorDetails(String fname, String lname, String email, String latitude, String longitude,
+			Integer party, String heard, String hotel, String destination, boolean repeatVisit, String travelingFor,
+			Date visitingDay) {
+		this.setId(AdminJDBC.generateID());
 		this.setFname(fname);
 		this.setLname(lname);
 		this.setEmail(email);
@@ -200,5 +247,13 @@ public class VisitorDetails {
 	public void setMetro(String metro) {
 		this.metro = metro;
 	}
-	
+
+	public Integer getZip() {
+		return zip;
+	}
+
+	public void setZip(Integer zip) {
+		this.zip = zip;
+	}
+
 }

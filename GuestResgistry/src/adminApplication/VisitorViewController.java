@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.util.Callback;
 import jxl.Workbook;
 import jxl.write.*;
@@ -22,6 +23,7 @@ import jxl.write.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 @SuppressWarnings("restriction")
 public class VisitorViewController implements Initializable {
@@ -98,6 +100,19 @@ public class VisitorViewController implements Initializable {
 
 		visitorTable.setItems(null);
 		visitorTable.setItems(data);
+		
+		visitorTable.setEditable(true);
+		cityColumn.setOnEditCommit(e -> city_OnEditCommit(e));
+		cityColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		visitorTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	}
+
+	private void city_OnEditCommit(CellEditEvent<VisitorDetails, String> e) {
+		TableColumn.CellEditEvent<VisitorDetails, String> cellEditEvent;
+        cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, String>) e;
+        VisitorDetails visitor = cellEditEvent.getRowValue();
+        visitor.setCity(cellEditEvent.getNewValue()); 
+        AdminJDBC.updateVisitorDetails(visitor);
 	}
 
 	public void addVisitor() {
@@ -106,17 +121,33 @@ public class VisitorViewController implements Initializable {
 
 	public void editVisitor() {
 		VisitorDetails visitorToEdit = visitorTable.getSelectionModel().getSelectedItem();
-		// TODO: point to form
+		
 	}
 
 	public void deleteVisitor() {
-		VisitorDetails visitorToEdit = visitorTable.getSelectionModel().getSelectedItem();
-		//todo: point to jdbc
+		VisitorDetails visitorToDelete = visitorTable.getSelectionModel().getSelectedItem();
+		//if (!data.isEmpty()) {
+			System.out.println("Delete Button Clicked!");
+			Alert deleteAlert = new Alert(Alert.AlertType.WARNING, "Confirm", ButtonType.OK, ButtonType.CANCEL);
+			deleteAlert.setContentText("Are you sure you want to delete this?\n\nTHIS CANNOT BE UNDONE.");
+			deleteAlert.showAndWait();
+			if (deleteAlert.getResult() == ButtonType.OK) {
+				AdminJDBC.deleteVisitor(visitorToDelete);
+				data.removeAll(visitorTable.getSelectionModel().getSelectedItems());
+				visitorTable.getSelectionModel().clearSelection();
+			} else {
+				deleteAlert.close();
+			}
+		//}
 	}
 
-	private ObservableList<VisitorDetails> getVisitors(LocalDate start, LocalDate end) {
+	private ObservableList<VisitorDetails> getVisitors(LocalDate startDate, LocalDate endDate) {
 		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
-		for (VisitorDetails v : AdminJDBC.getVisitorsFromDateRange(start, end)) {
+		StringBuilder query = new StringBuilder(
+				"SELECT * FROM visitors LEFT JOIN visits ON visitors.VisitorID = visits.VisitorID LEFT JOIN visitorlocations on visitors.VisitorID = visitorlocations.VisitorID WHERE visitors.VisitorID IS NOT NULL");
+		query.append(" AND Visiting_Day >= '" + startDate.toString() + "' AND Visiting_Day <= '"
+					+ endDate.toString() + "'");
+		for (VisitorDetails v : AdminJDBC.getVisitorDetailsFromQuery(query.toString())) {
 			visitors.add(v);
 		}
 		return visitors;
@@ -130,10 +161,12 @@ public class VisitorViewController implements Initializable {
 		 * party, String heard, String hotel, String destination, Boolean
 		 * repeatVisit, String travelingFor, Date visitingDay
 		 */
-		visitors.add(new VisitorDetails(1, "Connor", "Dixon", "ccd817@gmail.com", "30.430410", "-97.745597", "Austin", "Austin",
-				"TX", "United States", (Integer) 1, "Interstate Sign", "Yes", "ULM", false, "Other", new Date()));
+		visitors.add(new VisitorDetails(1, "Connor", "Dixon", "ccd817@gmail.com", "30.430410", "-97.745597", "Austin",
+				"Austin", "TX", "United States", (Integer) 1, "Interstate Sign", "Yes", "ULM", false, "Other",
+				new Date()));
 		visitors.add(new VisitorDetails(2, "Bonnor", "Nixon", "bcn817@gmail.com", "30.430410", "-97.745597", "Angola",
-				"Baton Rouge", "LA", "United States", (Integer) 1, "Interstate Sign", "Yes", "Duck Dynasty", true, "Other", new Date()));
+				"Baton Rouge", "LA", "United States", (Integer) 1, "Interstate Sign", "Yes", "Duck Dynasty", true,
+				"Other", new Date()));
 		return visitors;
 	}
 

@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import jxl.CellType;
+import jxl.Sheet;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
@@ -58,6 +62,8 @@ public class AnalyticsController implements Initializable {
 
 	final String accessToken = "f90e380a-300b-4a62-822e-5517f9887be3";
 	// filterControls
+	@FXML
+	private TextField citiesMenuText;
 	@FXML
 	private Button clearButton;
 	@FXML
@@ -163,7 +169,7 @@ public class AnalyticsController implements Initializable {
 	@FXML
 	private NumberAxis yAxis;
 
-	private ObservableList<VisitorDetails> data;
+	private static ObservableList<VisitorDetails> data;
 
 	@FXML
 	private WebView webView;
@@ -216,7 +222,7 @@ public class AnalyticsController implements Initializable {
 		}
 		citiesMenuButton.getItems().clear();
 		citiesMenuButton.getItems().addAll(cityItems);
-
+		
 		List<String> countries = AdminJDBC.getCountries();
 		ObservableList<CheckMenuItem> countryItems = FXCollections.observableArrayList();
 		for (String country : countries) {
@@ -270,7 +276,6 @@ public class AnalyticsController implements Initializable {
 		data = getFilteredVisitorDetails();
 		refreshTable();
 		refreshChart();
-		refreshMenus();
 		displayWeb();
 	}
 
@@ -290,6 +295,7 @@ public class AnalyticsController implements Initializable {
 		reasonColumn.setCellValueFactory(new PropertyValueFactory<>("travelingFor"));
 		dateColumn.setCellValueFactory(new PropertyValueFactory<>("visitingDay"));
 
+		visitorTable.setItems(null);
 		visitorTable.setItems(data);
 	}
 
@@ -307,11 +313,12 @@ public class AnalyticsController implements Initializable {
 			for (MenuItem cityItem : citiesMenuButton.getItems()) {
 				CheckMenuItem city = (CheckMenuItem) cityItem;
 				if (city.isSelected()) {
+					String cityString = city.getText().split(",")[0];
 					if (first) {
-						query.append(" AND City = " + city.getText() + " OR Metro = " + city.getText());
+						query.append(" AND City = '" + cityString + "' OR Metro = '" + cityString + "'");
 						first = false;
 					} else {
-						query.append(" OR City = " + city.getText() + " OR Metro = " + city.getText());
+						query.append(" OR City = '" + cityString + "' OR Metro = '" + cityString + "'");
 					}
 				}
 			}
@@ -319,10 +326,10 @@ public class AnalyticsController implements Initializable {
 				CheckMenuItem state = (CheckMenuItem) stateItem;
 				if (state.isSelected()) {
 					if (first) {
-						query.append(" AND State = " + state.getText());
+						query.append(" AND State = '" + state.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR State = " + state.getText());
+						query.append(" OR State = '" + state.getText() + "'");
 					}
 				}
 			}
@@ -330,10 +337,10 @@ public class AnalyticsController implements Initializable {
 				CheckMenuItem country = (CheckMenuItem) countryItem;
 				if (country.isSelected()) {
 					if (first) {
-						query.append(" AND Country = " + country.getText());
+						query.append(" AND Country = '" + country.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR Country = " + country.getText());
+						query.append(" OR Country = " + country.getText() + "'");
 					}
 				}
 			}
@@ -344,10 +351,10 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (reason.isSelected()) {
 					if (first) {
-						query.append(" AND TravelingFor = " + reason.getText());
+						query.append(" AND TravelingFor = '" + reason.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR TravelingFor = " + reason.getText());
+						query.append(" OR TravelingFor = " + reason.getText() + "'");
 					}
 				}
 			}
@@ -358,10 +365,10 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (reference.isSelected()) {
 					if (first) {
-						query.append(" AND Heard = " + reference.getText());
+						query.append(" AND Heard = '" + reference.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR Heard = " + reference.getText());
+						query.append(" OR Heard = '" + reference.getText() + "'");
 					}
 				}
 			}
@@ -372,10 +379,10 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (hotel.isSelected()) {
 					if (first) {
-						query.append(" AND Hotel = " + hotel.getText());
+						query.append(" AND Hotel = '" + hotel.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR Hotel = " + hotel.getText());
+						query.append(" OR Hotel = '" + hotel.getText() + "'");
 					}
 				}
 			}
@@ -386,10 +393,10 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (destination.isSelected()) {
 					if (first) {
-						query.append(" AND Destination = " + destination.getText());
+						query.append(" AND Destination = '" + destination.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR Destination = " + destination.getText());
+						query.append(" OR Destination = '" + destination.getText() + "'");
 					}
 				}
 			}
@@ -400,10 +407,10 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (repeat.isSelected()) {
 					if (first) {
-						query.append(" AND RepeatVisitor = " + repeat.getText());
+						query.append(" AND RepeatVisitor = '" + repeat.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR RepeatVisitor = " + repeat.getText());
+						query.append(" OR RepeatVisitor = '" + repeat.getText() + "'");
 					}
 				}
 			}
@@ -486,28 +493,165 @@ public class AnalyticsController implements Initializable {
 				}
 			}
 			/*
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setTitle("Export to Constant Contact");
-			alert.setHeaderText("Would you like to export this mailing list to Constant Contact?");
-			alert.setContentText("");
-
-			ButtonType buttonTypeOne = new ButtonType("Yes");
-			ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == buttonTypeOne) {
-				if(exportToConstantContact(file) != 404){
-					System.out.println("Successfully exported emails.");
-				}
-			} else {
-				// ... user chose CANCEL or closed the dialog
-			}
-			*/
+			 * Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			 * alert.setTitle("Export to Constant Contact"); alert.
+			 * setHeaderText("Would you like to export this mailing list to Constant Contact?"
+			 * ); alert.setContentText("");
+			 * 
+			 * ButtonType buttonTypeOne = new ButtonType("Yes"); ButtonType
+			 * buttonTypeCancel = new ButtonType("Cancel",
+			 * ButtonBar.ButtonData.CANCEL_CLOSE);
+			 * 
+			 * alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+			 * 
+			 * Optional<ButtonType> result = alert.showAndWait(); if
+			 * (result.get() == buttonTypeOne) {
+			 * if(exportToConstantContact(file) != 404){
+			 * System.out.println("Successfully exported emails."); } } else {
+			 * // ... user chose CANCEL or closed the dialog }
+			 */
 
 		} else {
 
+		}
+	}
+
+	public void ImportAction() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Export to Constant Contact");
+		alert.setHeaderText(
+				"An import template file must be used for importing visitor information. Would you like to generate a template file?");
+		alert.setContentText("");
+
+		ButtonType buttonTypeOne = new ButtonType("Generate Template");
+		ButtonType buttonTypeTwo = new ButtonType("Import from File");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne) {
+			FileChooser chooser = new FileChooser();
+			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
+			chooser.getExtensionFilters().add(filter);
+			// Show save dialog
+			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
+			try {
+				generateImportTemplate(file);
+			} catch (WriteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (result.get() == buttonTypeTwo) {
+			FileChooser chooser = new FileChooser();
+			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
+			chooser.getExtensionFilters().add(filter);
+			// Show save dialog
+			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
+			readXLSFile(file);
+		} else {
+
+		}
+		// ... user chose CANCEL or closed the dialog }
+
+	}
+
+	public void generateImportTemplate(File file) throws IOException, WriteException {
+		WritableWorkbook myexcel = Workbook.createWorkbook(file);
+		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
+
+		mysheet.addCell(new Label(0, 0, "First"));
+		mysheet.addCell(new Label(1, 0, "Last"));
+		mysheet.addCell(new Label(2, 0, "Email"));
+		mysheet.addCell(new Label(3, 0, "From (City)"));
+		mysheet.addCell(new Label(4, 0, "From (Metro)"));
+		mysheet.addCell(new Label(5, 0, "From (State)"));
+		mysheet.addCell(new Label(6, 0, "From (Country)"));
+		mysheet.addCell(new Label(7, 0, "From (Zip)"));
+		mysheet.addCell(new Label(8, 0, "Number in Party"));
+		mysheet.addCell(new Label(9, 0, "How Referred"));
+		mysheet.addCell(new Label(10, 0, "Stayed in M/WM Hotel"));
+		mysheet.addCell(new Label(11, 0, "Destination"));
+		mysheet.addCell(new Label(12, 0, "Repeat Visitor?"));
+		mysheet.addCell(new Label(13, 0, "Reason For Travelling"));
+		mysheet.addCell(new Label(14, 0, "Date of Visit"));
+
+		myexcel.write();
+		myexcel.close();
+	}
+
+	public void readXLSFile(File file) {
+		Workbook w;
+		List<VisitorDetails> newData = new ArrayList<VisitorDetails>();
+		try {
+			w = Workbook.getWorkbook(file);
+			Sheet sheet = w.getSheet(0);
+
+			for (int i = 1; i < sheet.getRows(); i++) {
+				String firstName = sheet.getCell(0, i).getContents();
+				String lastName = sheet.getCell(1, i).getContents();
+				String email = sheet.getCell(2, i).getContents();
+				String city = sheet.getCell(3, 1).getContents();
+				String metro = sheet.getCell(4, i).getContents();
+				String state = sheet.getCell(5, i).getContents();
+				String country = sheet.getCell(6, i).getContents();
+				String latitude = "";
+				String longitude = "";
+				String partyString = sheet.getCell(8, i).getContents();
+				Integer party = (partyString.isEmpty() ? null : Integer.parseInt(partyString));
+				String referred = sheet.getCell(9, i).getContents();
+				if (referred.equalsIgnoreCase("Billboard")) {
+					referred = "Billboard";
+				} else if (referred.equalsIgnoreCase("Interstate Sign")) {
+					referred = "Interstate Sign";
+				} else if (referred.equalsIgnoreCase("Other")) {
+					referred = "Other";
+				} else {
+					referred = "No Response";
+				}
+				String hotel = sheet.getCell(10, i).getContents();
+				if (hotel.equalsIgnoreCase("Yes") || hotel.equalsIgnoreCase("Y")) {
+					hotel = "Yes";
+				} else if (hotel.equalsIgnoreCase("No") || hotel.equalsIgnoreCase("N")) {
+					hotel = "No";
+				} else {
+					hotel = "No Response";
+				}
+				String destination = sheet.getCell(11, i).getContents();
+				String repeatString = sheet.getCell(12, i).getContents();
+				boolean repeat = false;
+				if (repeatString.equalsIgnoreCase("Yes") || repeatString.equalsIgnoreCase("Y")
+						|| repeatString.equalsIgnoreCase("True") || repeatString.equalsIgnoreCase("T")) {
+					repeat = true;
+				}
+				String travelingFor = sheet.getCell(13, i).getContents();
+				if (travelingFor.equalsIgnoreCase("Business")) {
+					travelingFor = "Business";
+				} else if (travelingFor.equalsIgnoreCase("Pleasure")) {
+					travelingFor = "Pleasure";
+				} else if (travelingFor.equalsIgnoreCase("Convention")) {
+					travelingFor = "Convention";
+				} else if (travelingFor.equalsIgnoreCase("Other")) {
+					travelingFor = "Other";
+				} else {
+					travelingFor = "No Response";
+				}
+				String sDate = sheet.getCell(14, i).getContents();
+				Date visitingDay;
+				if (!sDate.isEmpty()) {
+					visitingDay = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+				} else {
+					visitingDay = null;
+				}
+				newData.add(new VisitorDetails(AdminJDBC.generateID(), firstName, lastName, email, latitude, longitude, city, metro, state,
+						country, party, referred, hotel, destination, repeat, travelingFor, visitingDay));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -595,11 +739,11 @@ public class AnalyticsController implements Initializable {
 		x++;
 		for (int i = 0; i < data.size() - 1; i++) {
 			int j = 0;
-			mysheet.addCell(formatData(i-1, j, data.get(i).getFname()));
+			mysheet.addCell(formatData(i - 1, j, data.get(i).getFname()));
 			j++;
-			mysheet.addCell(formatData(i-1, j, data.get(i).getLname()));
+			mysheet.addCell(formatData(i - 1, j, data.get(i).getLname()));
 			j++;
-			mysheet.addCell(formatData(i-1, j, data.get(i).getEmail()));
+			mysheet.addCell(formatData(i - 1, j, data.get(i).getEmail()));
 			j++;
 		}
 		myexcel.write();
@@ -747,5 +891,17 @@ public class AnalyticsController implements Initializable {
 			e.printStackTrace();
 		}
 		return code;
+	}
+
+	public static ArrayList<String[]> getLatLongData() {
+		ArrayList<String[]> locations = new ArrayList<String[]>();
+		for(VisitorDetails vd: data)
+		{
+			String[] latlng = new String[2];
+			latlng[0] = vd.getLatitude();
+			latlng[1] = vd.getLongitude();
+			locations.add(latlng);
+		}
+		return locations;
 	}
 }

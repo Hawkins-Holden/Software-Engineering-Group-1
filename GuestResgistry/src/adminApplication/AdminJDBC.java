@@ -107,7 +107,7 @@ public class AdminJDBC {
 				while (res.next()) {
 					resultSet.add(new VisitorDetails(res.getInt("VisitorID"), res.getString("Fname"),
 							res.getString("Lname"), res.getString("Email"), res.getString("Latitude"),
-							res.getString("Longitude"), res.getString("City"), res.getString("City"),
+							res.getString("Longitude"), res.getString("City"), res.getString("Metro"),
 							res.getString("State"), res.getString("Country"), res.getInt("Party"),
 							res.getString("Heard"), res.getString("Hotel"), res.getString("Destination"),
 							(res.getString("RepeatVisit") == "true" ? true : false), res.getString("TravelingFor"),
@@ -261,58 +261,6 @@ public class AdminJDBC {
 			}
 
 			return resultSet;
-		}
-
-		catch (Exception e) {
-			System.err.println("Exception: " + e.getMessage());
-		} finally {
-			try {
-				if (con != null)
-					con.close();
-			} catch (SQLException e) {
-			}
-		}
-		return null;
-	}
-
-	public static List<Visitor> getVisitors() {
-		Connection con = null;
-		Statement stmt;
-
-		String url = "jdbc:mysql://localhost:3306/test";
-		String user = "root";
-		String password = "";
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			con = DriverManager.getConnection(url, user, password);
-
-			if (!con.isClosed()) {
-				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
-				stmt = con.createStatement();
-
-				// create and select db
-
-				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
-				stmt.execute("USE visitordb");
-
-				/**
-				 * Query entries with the Zip '71467'
-				 */
-
-				ResultSet res = stmt
-						.executeQuery("SELECT * FROM visitors WHERE Date >= '2011/02/25' and Date <= '2011/02/27'");
-
-				/**
-				 * Iterate over the result set from the above query
-				 */
-				List<Visitor> visitors = new ArrayList<Visitor>();
-				while (res.next()) {
-					Visitor visitor = new Visitor();
-					System.out.println(res.getInt("VisitorID") + " " + res.getString("Email"));
-				}
-
-			}
 		}
 
 		catch (Exception e) {
@@ -540,9 +488,45 @@ public class AdminJDBC {
 				 * Query entries with the Zip '71467'
 				 */
 				int visitorID = vd.getId();
-				stmt.executeQuery("DELETE FROM visitors WHERE VisitorID=" + visitorID);
-				stmt.executeQuery("DELETE FROM visits WHERE VisitorID=" + visitorID);
-				stmt.executeQuery("DELETE FROM visitorlocations WHERE VisitorID=" + visitorID);
+				stmt.executeUpdate("DELETE FROM visitors WHERE VisitorID=" + visitorID);
+				stmt.executeUpdate("DELETE FROM visits WHERE VisitorID=" + visitorID);
+				stmt.executeUpdate("DELETE FROM visitorlocations WHERE VisitorID=" + visitorID);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void updateVisitorDetails(VisitorDetails vd) {
+		Connection con = null;
+		Statement stmt;
+
+		String url = "jdbc:mysql://localhost:3306/test";
+		String user = "root";
+		String password = "";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, password);
+
+			if (!con.isClosed()) {
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+				stmt = con.createStatement();
+
+				// create and select db
+
+				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
+				stmt.execute("USE visitordb");
+
+				/**
+				 * Query entries with the Zip '71467'
+				 */
+				int visitorID = vd.getId();
+				Timestamp visitingDay = new java.sql.Timestamp(vd.getVisitingDay().getTime());
+				stmt.executeUpdate("UPDATE vists SET Party="+vd.getParty()+", Heard='"+vd.getHeard()+"', Hotel='" +vd.getHotel()+"', Destination='"+vd.getDestination()+"', RepeatVisit='"+vd.getRepeatVisit()+"', TravelingFor='"+vd.getTravelingFor()+"', VisitingDay='"+visitingDay.toString()+"' WHERE VisitorID=" + visitorID + "");
+				stmt.executeUpdate("UPDATE visitorlocations SET Latitude='"+vd.getLatitude()+"', Longitude="+vd.getLongitude()+"'City = '"+vd.getCity()+"', Metro=" +vd.getMetro()+"', State='"+vd.getState()+"', Country='"+vd.getCountry()+", Zip='"+vd.getZip()+"' WHERE VisitorID=" + visitorID + "");
+				stmt.executeUpdate("UPDATE vistors SET Fname="+vd.getFname()+", Lname='"+vd.getLname()+"', Email='" +vd.getEmail()+"' WHERE VisitorID=" + visitorID + "");
 				
 			}
 		} catch (Exception e) {

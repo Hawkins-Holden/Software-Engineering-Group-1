@@ -19,8 +19,7 @@ public class Visitor
 	
 	public Visitor (String email)
 	{
-		id = idCount;
-		idCount++;
+		id = JDBC.generateID();
 		this.email = email;
 	}
 	
