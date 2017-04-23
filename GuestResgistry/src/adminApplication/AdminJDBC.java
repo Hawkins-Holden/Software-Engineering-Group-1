@@ -491,7 +491,7 @@ public class AdminJDBC {
 				stmt.executeUpdate("DELETE FROM visitors WHERE VisitorID=" + visitorID);
 				stmt.executeUpdate("DELETE FROM visits WHERE VisitorID=" + visitorID);
 				stmt.executeUpdate("DELETE FROM visitorlocations WHERE VisitorID=" + visitorID);
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -524,10 +524,55 @@ public class AdminJDBC {
 				 */
 				int visitorID = vd.getId();
 				Timestamp visitingDay = new java.sql.Timestamp(vd.getVisitingDay().getTime());
-				stmt.executeUpdate("UPDATE vists SET Party="+vd.getParty()+", Heard='"+vd.getHeard()+"', Hotel='" +vd.getHotel()+"', Destination='"+vd.getDestination()+"', RepeatVisit='"+vd.getRepeatVisit()+"', TravelingFor='"+vd.getTravelingFor()+"', VisitingDay='"+visitingDay.toString()+"' WHERE VisitorID=" + visitorID + "");
-				stmt.executeUpdate("UPDATE visitorlocations SET Latitude='"+vd.getLatitude()+"', Longitude="+vd.getLongitude()+"'City = '"+vd.getCity()+"', Metro=" +vd.getMetro()+"', State='"+vd.getState()+"', Country='"+vd.getCountry()+", Zip='"+vd.getZip()+"' WHERE VisitorID=" + visitorID + "");
-				stmt.executeUpdate("UPDATE vistors SET Fname="+vd.getFname()+", Lname='"+vd.getLname()+"', Email='" +vd.getEmail()+"' WHERE VisitorID=" + visitorID + "");
-				
+				stmt.executeUpdate("UPDATE vists SET Party=" + vd.getParty() + ", Heard='" + vd.getHeard()
+						+ "', Hotel='" + vd.getHotel() + "', Destination='" + vd.getDestination() + "', RepeatVisit='"
+						+ vd.getRepeatVisit() + "', TravelingFor='" + vd.getTravelingFor() + "', VisitingDay='"
+						+ visitingDay.toString() + "' WHERE VisitorID=" + visitorID + "");
+				stmt.executeUpdate("UPDATE visitorlocations SET Latitude='" + vd.getLatitude() + "', Longitude="
+						+ vd.getLongitude() + "'City = '" + vd.getCity() + "', Metro=" + vd.getMetro() + "', State='"
+						+ vd.getState() + "', Country='" + vd.getCountry() + ", Zip='" + vd.getZip()
+						+ "' WHERE VisitorID=" + visitorID + "");
+				stmt.executeUpdate("UPDATE vistors SET Fname=" + vd.getFname() + ", Lname='" + vd.getLname()
+						+ "', Email='" + vd.getEmail() + "' WHERE VisitorID=" + visitorID + "");
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void addVisitors(List<VisitorDetails> newData) {
+		Connection con = null;
+		Statement stmt;
+
+		String url = "jdbc:mysql://localhost:3306/test";
+		String user = "root";
+		String password = "";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, password);
+
+			if (!con.isClosed()) {
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+				stmt = con.createStatement();
+
+				// create and select db
+
+				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
+				stmt.execute("USE visitordb");
+
+				/**
+				 * Query entries with the Zip '71467'
+				 */
+				for (VisitorDetails vd : newData) {
+					int visitorID = vd.getId();
+					Timestamp visitingDay = new java.sql.Timestamp(vd.getVisitingDay().getTime());
+					
+					stmt.executeUpdate("INSERT INTO visitorlocations (VisitorID, Latitude, Longitude, City, Metro, State, Country, Zip) VALUES ("+visitorID+", "+vd.getLatitude()+"', '"+vd.getLongitude()+"', '"+vd.getCity()+"', '"+vd.getMetro()+"', '"+vd.getState()+"', '"+vd.getCountry()+"', '"+vd.getZip()+"')");
+					stmt.executeUpdate("INSERT INTO visitors (VisitorID, Fname, Lname, Email) VALUES ("+visitorID+", '"+vd.getFname()+"', '"+vd.getLname()+"', '"+vd.getEmail()+"')");
+					stmt.executeUpdate("INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES ("+visitorID+", "+vd.getParty()+", \""+vd.getHeard()+"\", \""+vd.getHotel()+"\", '"+vd.getDestination()+"', "+vd.getParty()+", '"+vd.getTravelingFor()+"', '"+visitingDay+"')");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

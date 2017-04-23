@@ -1,6 +1,7 @@
 package adminApplication;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -210,7 +211,7 @@ public class AnalyticsController implements Initializable {
 		startDatePicker.setValue(LocalDate.now().minusYears(1));
 		endDatePicker.setValue(LocalDate.now());
 		engine = webView.getEngine();
-		displayWeb();
+		refreshData();
 	}
 
 	public void refreshMenus() {
@@ -222,7 +223,7 @@ public class AnalyticsController implements Initializable {
 		}
 		citiesMenuButton.getItems().clear();
 		citiesMenuButton.getItems().addAll(cityItems);
-		
+
 		List<String> countries = AdminJDBC.getCountries();
 		ObservableList<CheckMenuItem> countryItems = FXCollections.observableArrayList();
 		for (String country : countries) {
@@ -550,8 +551,20 @@ public class AnalyticsController implements Initializable {
 			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
 			chooser.getExtensionFilters().add(filter);
 			// Show save dialog
-			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
-			readXLSFile(file);
+
+			try {
+				File file = chooser.showOpenDialog(exportButton.getScene().getWindow());
+				readXLSFile(file);
+			} catch (Exception e) {
+				Alert errorAlert = new Alert(Alert.AlertType.CONFIRMATION);
+				errorAlert.setTitle("Error");
+				errorAlert.setHeaderText("A " + e.getClass().getName() + " was thrown. Details are shown below. Please contact an administrator for assistance.");
+				errorAlert.setContentText(e.getMessage());
+				ButtonType cancelButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+				errorAlert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, cancelButton);
+				errorAlert.showAndWait();
+			}
 		} else {
 
 		}
@@ -640,16 +653,17 @@ public class AnalyticsController implements Initializable {
 					travelingFor = "No Response";
 				}
 				String sDate = sheet.getCell(14, i).getContents();
-				Date visitingDay;
+				java.util.Date visitingDay;
 				if (!sDate.isEmpty()) {
-					visitingDay = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+					visitingDay = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
 				} else {
 					visitingDay = null;
 				}
-				newData.add(new VisitorDetails(AdminJDBC.generateID(), firstName, lastName, email, latitude, longitude, city, metro, state,
-						country, party, referred, hotel, destination, repeat, travelingFor, visitingDay));
-				
+				newData.add(new VisitorDetails(AdminJDBC.generateID(), firstName, lastName, email, latitude, longitude,
+						city, metro, state, country, party, referred, hotel, destination, repeat, travelingFor,
+						visitingDay));
 			}
+			AdminJDBC.addVisitors(newData);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -768,6 +782,7 @@ public class AnalyticsController implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	private void refreshChart() {
+		lineChart.getData().clear();
 		lineChart.getData().addAll(getChartData());
 	}
 
@@ -895,8 +910,7 @@ public class AnalyticsController implements Initializable {
 
 	public static ArrayList<String[]> getLatLongData() {
 		ArrayList<String[]> locations = new ArrayList<String[]>();
-		for(VisitorDetails vd: data)
-		{
+		for (VisitorDetails vd : data) {
 			String[] latlng = new String[2];
 			latlng[0] = vd.getLatitude();
 			latlng[1] = vd.getLongitude();
