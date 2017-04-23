@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.sql.*;
 import java.time.LocalDate;
@@ -13,6 +14,8 @@ public class AdminJDBC {
 	/*
 	 * Reads from the database
 	 */
+	private static Set<Integer> ids;
+
 	public static List<VisitorDetails> getVisitorDetailsFromQuery(String query) {
 		Connection con = null;
 		Statement stmt;
@@ -63,7 +66,7 @@ public class AdminJDBC {
 		}
 		return null;
 	}
-	
+
 	public static List<VisitorDetails> getVisitorsFromDateRange(LocalDate start, LocalDate end) {
 		Connection con = null;
 		Statement stmt;
@@ -458,5 +461,92 @@ public class AdminJDBC {
 			}
 		}
 		return null;
+	}
+
+	public static int generateID() {
+		updateIDs();
+		Random generator = new Random();
+		int id = generator.nextInt(Integer.MAX_VALUE);
+		while (ids.contains(id)) {
+			id = generator.nextInt(Integer.MAX_VALUE);
+		}
+		return id;
+	}
+
+	public static void updateIDs() {
+		ids = new HashSet<Integer>();
+		Connection con = null;
+		Statement stmt;
+
+		String url = "jdbc:mysql://localhost:3306/test";
+		String user = "root";
+		String password = "";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, password);
+
+			if (!con.isClosed()) {
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+				stmt = con.createStatement();
+
+				// create and select db
+
+				stmt.execute("CREATE DATABASE IF NOT EXISTS VisitorsDB");
+				stmt.execute("USE visitordb");
+
+				/**
+				 * Query entries with the Zip '71467'
+				 */
+
+				ResultSet res = stmt.executeQuery("SELECT VisitorID FROM visitors");
+
+				/**
+				 * Iterate over the result set from the above query
+				 */
+
+				while (res.next()) {
+					ids.add(res.getInt("VisitorID"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void deleteVisitor(VisitorDetails vd) {
+		Connection con = null;
+		Statement stmt;
+
+		String url = "jdbc:mysql://localhost:3306/test";
+		String user = "root";
+		String password = "";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, password);
+
+			if (!con.isClosed()) {
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+				stmt = con.createStatement();
+
+				// create and select db
+
+				stmt.execute("CREATE DATABASE IF NOT EXISTS VisitorsDB");
+				stmt.execute("USE visitordb");
+
+				/**
+				 * Query entries with the Zip '71467'
+				 */
+				int visitorID = vd.getId();
+				stmt.executeQuery("DELETE FROM visitors WHERE VisitorID=" + visitorID);
+				stmt.executeQuery("DELETE FROM visits WHERE VisitorID=" + visitorID);
+				stmt.executeQuery("DELETE FROM visitorlocations WHERE VisitorID=" + visitorID);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
