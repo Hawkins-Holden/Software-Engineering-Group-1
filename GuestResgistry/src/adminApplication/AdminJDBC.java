@@ -2,11 +2,15 @@ package adminApplication;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import javafx.scene.control.TableColumn;
+
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -94,8 +98,8 @@ public class AdminJDBC {
 				 * Query entries with the Zip '71467'
 				 */
 
-				Date startDate = Date.valueOf(start);
-				Date endDate = Date.valueOf(end);
+				Date startDate = java.sql.Date.valueOf(start);
+				Date endDate = java.sql.Date.valueOf(end);
 
 				ResultSet res = stmt.executeQuery(
 						"SELECT * FROM visitors LEFT JOIN visits ON visitors.VisitorID = visits.VisitorID LEFT JOIN visitorlocations on visitors.VisitorID = visitorlocations.VisitorID WHERE Visiting_Day BETWEEN "
@@ -523,17 +527,25 @@ public class AdminJDBC {
 				 * Query entries with the Zip '71467'
 				 */
 				int visitorID = vd.getId();
+				Integer repeatVisit = vd.getRepeatVisit() ? 1 : 0;
+				System.out.println(vd.getVisitingDay().toString());
 				Timestamp visitingDay = new java.sql.Timestamp(vd.getVisitingDay().getTime());
-				stmt.executeUpdate("UPDATE vists SET Party=" + vd.getParty() + ", Heard='" + vd.getHeard()
+				String visitsQuery = "UPDATE visits SET Party=" + vd.getParty() + ", Heard='" + vd.getHeard()
 						+ "', Hotel='" + vd.getHotel() + "', Destination='" + vd.getDestination() + "', RepeatVisit='"
-						+ vd.getRepeatVisit() + "', TravelingFor='" + vd.getTravelingFor() + "', VisitingDay='"
-						+ visitingDay.toString() + "' WHERE VisitorID=" + visitorID + "");
-				stmt.executeUpdate("UPDATE visitorlocations SET Latitude='" + vd.getLatitude() + "', Longitude="
-						+ vd.getLongitude() + "'City = '" + vd.getCity() + "', Metro=" + vd.getMetro() + "', State='"
-						+ vd.getState() + "', Country='" + vd.getCountry() + ", Zip='" + vd.getZip()
-						+ "' WHERE VisitorID=" + visitorID + "");
-				stmt.executeUpdate("UPDATE vistors SET Fname=" + vd.getFname() + ", Lname='" + vd.getLname()
-						+ "', Email='" + vd.getEmail() + "' WHERE VisitorID=" + visitorID + "");
+						+ repeatVisit + "', TravelingFor='" + vd.getTravelingFor() + "', Visiting_Day='"
+						+ visitingDay.toString() + "' WHERE VisitorID=" + visitorID + "";
+				System.out.println(visitsQuery);
+				stmt.executeUpdate(visitsQuery);
+				String visitorLocationsQuery = "UPDATE visitorlocations SET Latitude='" + vd.getLatitude()
+						+ "', Longitude='" + vd.getLongitude() + "', City = '" + vd.getCity() + "', Metro='"
+						+ vd.getMetro() + "', State='" + vd.getState() + "', Country='" + vd.getCountry() + "', Zip="
+						+ vd.getZip() + " WHERE VisitorID=" + visitorID + "";
+				System.out.println(visitorLocationsQuery);
+				stmt.executeUpdate(visitorLocationsQuery);
+				String visitorsQuery = "UPDATE visitors SET Fname='" + vd.getFname() + "', Lname='" + vd.getLname()
+						+ "', Email='" + vd.getEmail() + "' WHERE VisitorID=" + visitorID + "";
+				System.out.println(visitorsQuery);
+				stmt.executeUpdate(visitorsQuery);
 
 			}
 		} catch (Exception e) {
@@ -565,14 +577,33 @@ public class AdminJDBC {
 				/**
 				 * Query entries with the Zip '71467'
 				 */
+				int count = 0;
 				for (VisitorDetails vd : newData) {
+
 					int visitorID = vd.getId();
-					Timestamp visitingDay = new java.sql.Timestamp(vd.getVisitingDay().getTime());
-					
-					stmt.executeUpdate("INSERT INTO visitorlocations (VisitorID, Latitude, Longitude, City, Metro, State, Country, Zip) VALUES ("+visitorID+", "+vd.getLatitude()+"', '"+vd.getLongitude()+"', '"+vd.getCity()+"', '"+vd.getMetro()+"', '"+vd.getState()+"', '"+vd.getCountry()+"', '"+vd.getZip()+"')");
-					stmt.executeUpdate("INSERT INTO visitors (VisitorID, Fname, Lname, Email) VALUES ("+visitorID+", '"+vd.getFname()+"', '"+vd.getLname()+"', '"+vd.getEmail()+"')");
-					stmt.executeUpdate("INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES ("+visitorID+", "+vd.getParty()+", \""+vd.getHeard()+"\", \""+vd.getHotel()+"\", '"+vd.getDestination()+"', "+vd.getParty()+", '"+vd.getTravelingFor()+"', '"+visitingDay+"')");
+					Date newDate = vd.getVisitingDay();
+					System.out.println(newDate.toString());
+					Timestamp visitingDay = new Timestamp(newDate.getTime());
+					String visitorLocationsQuery = "INSERT INTO visitorlocations (VisitorID, Latitude, Longitude, City, Metro, State, Country, Zip) VALUES ";
+					String visitorsQuery = "INSERT INTO visitors (VisitorID, Fname, Lname, Email) VALUES ";
+					String visitsQuery = "INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES ";
+
+					visitorLocationsQuery += "(" + visitorID + ", '" + vd.getLatitude() + "', '" + vd.getLongitude()
+							+ "', '" + vd.getCity() + "', '" + vd.getMetro() + "', '" + vd.getState() + "', '"
+							+ vd.getCountry() + "', " + vd.getZip() + ")";
+					visitorsQuery += "(" + visitorID + ", '" + vd.getFname() + "', '" + vd.getLname() + "', '"
+							+ vd.getEmail() + "')";
+					visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \"" + vd.getHeard() + "\", \""
+							+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + vd.getParty() + ", '"
+							+ vd.getTravelingFor() + "', '" + visitingDay + "')";
+					System.out.println(visitorLocationsQuery);
+					System.out.println(visitorsQuery);
+					System.out.println(visitsQuery);
+					stmt.executeUpdate(visitorLocationsQuery);
+					stmt.executeUpdate(visitorsQuery);
+					stmt.executeUpdate(visitsQuery);
 				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

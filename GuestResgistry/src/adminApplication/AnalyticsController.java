@@ -1,11 +1,10 @@
 package adminApplication;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import application.JavascriptComm;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
@@ -31,7 +29,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
-import jxl.CellType;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.write.Label;
@@ -41,17 +38,14 @@ import jxl.write.WriteException;
 import netscape.javascript.JSObject;
 import java.util.Set;
 
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
@@ -295,6 +289,7 @@ public class AnalyticsController implements Initializable {
 		repeatColumn.setCellValueFactory(new PropertyValueFactory<>("repeatVisit"));
 		reasonColumn.setCellValueFactory(new PropertyValueFactory<>("travelingFor"));
 		dateColumn.setCellValueFactory(new PropertyValueFactory<>("visitingDay"));
+		// partyColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		visitorTable.setItems(null);
 		visitorTable.setItems(data);
@@ -558,7 +553,8 @@ public class AnalyticsController implements Initializable {
 			} catch (Exception e) {
 				Alert errorAlert = new Alert(Alert.AlertType.CONFIRMATION);
 				errorAlert.setTitle("Error");
-				errorAlert.setHeaderText("A " + e.getClass().getName() + " was thrown. Details are shown below. Please contact an administrator for assistance.");
+				errorAlert.setHeaderText("A " + e.getClass().getName()
+						+ " was thrown. Details are shown below. Please contact an administrator for assistance.");
 				errorAlert.setContentText(e.getMessage());
 				ButtonType cancelButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
 
@@ -569,7 +565,7 @@ public class AnalyticsController implements Initializable {
 
 		}
 		// ... user chose CANCEL or closed the dialog }
-
+		refreshData();
 	}
 
 	public void generateImportTemplate(File file) throws IOException, WriteException {
@@ -611,8 +607,8 @@ public class AnalyticsController implements Initializable {
 				String metro = sheet.getCell(4, i).getContents();
 				String state = sheet.getCell(5, i).getContents();
 				String country = sheet.getCell(6, i).getContents();
-				String latitude = "";
-				String longitude = "";
+				String zipString = sheet.getCell(7, i).getContents();
+				Integer zip = (zipString.isEmpty() ? null : Integer.parseInt(zipString));
 				String partyString = sheet.getCell(8, i).getContents();
 				Integer party = (partyString.isEmpty() ? null : Integer.parseInt(partyString));
 				String referred = sheet.getCell(9, i).getContents();
@@ -652,16 +648,22 @@ public class AnalyticsController implements Initializable {
 				} else {
 					travelingFor = "No Response";
 				}
-				String sDate = sheet.getCell(14, i).getContents();
+				String dateString = sheet.getCell(14, i).getContents();
 				java.util.Date visitingDay;
-				if (!sDate.isEmpty()) {
-					visitingDay = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+				if (!dateString.isEmpty()) {
+					DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
+					visitingDay = (java.util.Date) formatter.parse(dateString);
+
+					// cal.set(Integer.parseInt(times[2]),
+					// Integer.parseInt(times[0]) - 1,
+					// Integer.parseInt(times[1]));
+
+					// visitingDay = cal.getTime();
 				} else {
 					visitingDay = null;
 				}
-				newData.add(new VisitorDetails(AdminJDBC.generateID(), firstName, lastName, email, latitude, longitude,
-						city, metro, state, country, party, referred, hotel, destination, repeat, travelingFor,
-						visitingDay));
+				newData.add(new VisitorDetails(firstName, lastName, email, city, metro, state, country, zip, party,
+						referred, hotel, destination, repeat, travelingFor, visitingDay));
 			}
 			AdminJDBC.addVisitors(newData);
 		} catch (Exception e) {
@@ -689,6 +691,8 @@ public class AnalyticsController implements Initializable {
 		mysheet.addCell(new Label(x, 1, "From (State)"));
 		x++;
 		mysheet.addCell(new Label(x, 1, "From (Country)"));
+		x++;
+		mysheet.addCell(new Label(x, 1, "From (Zip)"));
 		x++;
 		mysheet.addCell(new Label(x, 1, "Number in Party"));
 		x++;
@@ -719,6 +723,8 @@ public class AnalyticsController implements Initializable {
 			mysheet.addCell(formatData(i, j, data.get(i).getState()));
 			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getCountry()));
+			j++;
+			mysheet.addCell(formatData(i, j, data.get(i).getZip().toString()));
 			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getParty().toString()));
 			j++;
@@ -915,6 +921,14 @@ public class AnalyticsController implements Initializable {
 			latlng[0] = vd.getLatitude();
 			latlng[1] = vd.getLongitude();
 			locations.add(latlng);
+		}
+		return locations;
+	}
+
+	public static ArrayList<Integer> getZipData() {
+		ArrayList<Integer> locations = new ArrayList<Integer>();
+		for (VisitorDetails vd : data) {
+			locations.add(vd.getZip());
 		}
 		return locations;
 	}

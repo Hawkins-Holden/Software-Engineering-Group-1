@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="visitortable.VisitorTableController">
+   <children>
+      <TableView fx:id="tableId" layoutX="41.0" layoutY="122.0" prefHeight="367.0" prefWidth="625.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="102.0" text="ID" />
+          <TableColumn fx:id="name" prefWidth="140.0" text="Name" />
+            <TableColumn fx:id="city" onEditCommit="#city_OnEditCommit" prefWidth="145.0" text="City" />
+            <TableColumn fx:id="country" prefWidth="176.0" text="Country" />
+        </columns>
+      </TableView>
+      <TextField fx:id="cityInput" layoutX="63.0" layoutY="61.0" prefHeight="43.0" prefWidth="195.0" promptText="City" />
+      <TextField fx:id="countryInput" layoutX="329.0" layoutY="61.0" prefHeight="43.0" prefWidth="195.0" promptText="Country" />
+      <Label layoutX="286.0" layoutY="74.0" text="OR" />
+      <Label layoutX="63.0" layoutY="31.0" prefHeight="17.0" prefWidth="80.0" text="FILTER BY" />
+      <Button fx:id="delete_btn" layoutX="41.0" layoutY="508.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="49.0" prefWidth="87.0" text="Delete" />
+   </children>
+</AnchorPane>

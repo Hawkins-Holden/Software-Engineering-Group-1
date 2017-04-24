@@ -84,7 +84,7 @@ public class VisitorViewController implements Initializable {
 		fnameColumn.setCellValueFactory(new PropertyValueFactory<>("fname"));
 		lnameColumn.setCellValueFactory(new PropertyValueFactory<>("lname"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-		metroColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+		metroColumn.setCellValueFactory(new PropertyValueFactory<>("metro"));
 		cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
 		stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
 		countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));

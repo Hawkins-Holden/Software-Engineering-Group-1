@@ -11,9 +11,9 @@ public class APIClient {
 		System.out.println(latlng[0] + ", " + latlng[1]);
 	}
 
-	private static String[] geocodingRequest(String country) {
+	public static String[] geocodingRequest(String zip) {
 		Client client = ClientBuilder.newClient();
-		String url = "https://maps.googleapis.com/maps/api/geocode/xml?components=country:Nepal&key=AIzaSyBuT9VzPqnYSaB5Os0U4mkI8C7CiuFzwao";
+		String url = "https://maps.googleapis.com/maps/api/geocode/xml?address="+zip+"&key=AIzaSyBuT9VzPqnYSaB5Os0U4mkI8C7CiuFzwao";
 		System.out.println(url);
 		WebTarget target = client.target(url);
 				String output = (target.request(MediaType.APPLICATION_JSON_TYPE).get(String.class));

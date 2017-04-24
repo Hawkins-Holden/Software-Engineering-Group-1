@@ -2,7 +2,6 @@ package adminApplication;
 
 import java.util.Date;
 
-
 public class VisitorDetails {
 	private int id;
 	private String fname;
@@ -66,21 +65,33 @@ public class VisitorDetails {
 		this.setTravelingFor(travelingFor);
 		this.setVisitingDay(visitingDay);
 	}
-	
+
 	public VisitorDetails(String fname, String lname, String email, String city, String metro, String state,
-			String country, Integer zip, Integer party, String heard, String hotel, String destination, boolean repeatVisit,
-			String travelingFor, Date visitingDay) {
+			String country, Integer zip, Integer party, String heard, String hotel, String destination,
+			boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(AdminJDBC.generateID());
 		this.setFname(fname);
 		this.setLname(lname);
 		this.setEmail(email);
-		this.setLatitude("");
-		this.setLongitude("");
+
 		this.setCity(city);
 		this.setMetro(metro);
 		this.setState(state);
 		this.setCountry(country);
 		this.setZip(zip);
+		if (zip != null) {
+			String[] latlong = APIClient.geocodingRequest(zip.toString());
+			if (latlong.length > 1) {
+				String lat = latlong[0];
+				String lng = latlong[1];
+				if (!lat.isEmpty()) {
+					this.setLatitude(lat);
+				}
+				if (!lng.isEmpty()) {
+					this.setLongitude(lng);
+				}
+			}
+		}
 		this.setParty(party);
 		this.setHeard(heard);
 		this.setHotel(hotel);
@@ -90,8 +101,8 @@ public class VisitorDetails {
 		this.setVisitingDay(visitingDay);
 	}
 
-	public VisitorDetails(String fname, String lname, String email, String latitude, String longitude,
-			Integer party, String heard, String hotel, String destination, boolean repeatVisit, String travelingFor,
+	public VisitorDetails(String fname, String lname, String email, String latitude, String longitude, Integer party,
+			String heard, String hotel, String destination, boolean repeatVisit, String travelingFor,
 			Date visitingDay) {
 		this.setId(AdminJDBC.generateID());
 		this.setFname(fname);
