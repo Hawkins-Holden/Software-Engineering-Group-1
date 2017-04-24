@@ -113,7 +113,7 @@ public class MiddleFormController implements Initializable, ControlledScreen {
                 
                 else {
                     if (Destination_error.getText().isEmpty()){
-                    empty_field.setText("We aren't sharing your information with anyone, please let us know e=whre you're heading.");
+                    empty_field.setText("We aren't sharing your information with anyone, please let us know where you're heading.");
                     }
                 }
       
