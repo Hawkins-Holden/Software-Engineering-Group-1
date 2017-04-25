@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 /********************************************************************************
 JDBC takes the values from the visitor object and inserts them into the database.   	
@@ -103,15 +104,19 @@ public class JDBC {
 				 */
 
 				ResultSet res = stmt.executeQuery(
-						"SELECT Latitude, Longitude FROM visitorlocations WHERE (Latitude <> 'null' AND Longitude <> 'null');");
+						"SELECT Latitude, Longitude FROM visitorlocations WHERE (Latitude IS NOT NULL AND Longitude IS NOT NULL)");
 
 				/**
 				 * Iterate over the result set from the above query
 				 */
-
+				Scanner scan;
 				while (res.next()) {
-					latLongs.add(res.getString("Latitude"));
-					latLongs.add(res.getString("Longitude"));
+					scan = new Scanner(res.getString("Latitude"));
+					latLongs.add(""+scan.nextDouble());
+					scan.close();
+					scan = new Scanner(res.getString("Longitude"));
+					latLongs.add(""+scan.nextDouble());
+					scan.close();
 				}
 
 			}

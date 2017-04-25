@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import application.APIClient;
 import javafx.scene.control.TableColumn;
 
@@ -50,9 +49,9 @@ public class AdminJDBC {
 					resultSet.add(new VisitorDetails(res.getInt("VisitorID"), res.getString("Fname"),
 							res.getString("Lname"), res.getString("Email"), res.getString("Latitude"),
 							res.getString("Longitude"), res.getString("City"), res.getString("Metro"),
-							res.getString("State"), res.getString("Country"), res.getInt("Party"),
+							res.getString("State"), res.getString("Country"),res.getInt("zip"), res.getInt("Party"),
 							res.getString("Heard"), res.getString("Hotel"), res.getString("Destination"),
-							(res.getString("RepeatVisit") == "true" ? true : false), res.getString("TravelingFor"),
+							(res.getInt("RepeatVisit") == 1? true : false), res.getString("TravelingFor"),
 							(Date) res.getDate("Visiting_Day")));
 				}
 			}

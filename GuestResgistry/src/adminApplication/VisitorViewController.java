@@ -203,6 +203,7 @@ public class VisitorViewController implements Initializable {
 	      cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, Integer>) e;
 	      VisitorDetails visitor = cellEditEvent.getRowValue();
 	      visitor.setZip(cellEditEvent.getNewValue());
+	      AdminJDBC.updateVisitorDetails(visitor);
 	   }
 	
 	
@@ -211,6 +212,7 @@ public class VisitorViewController implements Initializable {
       cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, Integer>) e;
       VisitorDetails visitor = cellEditEvent.getRowValue();
       visitor.setParty(cellEditEvent.getNewValue());
+      AdminJDBC.updateVisitorDetails(visitor);
    }
 	
    private void heard_OnEditCommit(CellEditEvent<VisitorDetails, String> e) {
@@ -264,8 +266,12 @@ public class VisitorViewController implements Initializable {
    }
 	
 
-   public void addVisitor() {
-   	// TODO: point to Form
+   public void addVisitor(ActionEvent e) throws IOException {
+	   Parent newScene = FXMLLoader.load(getClass().getResource("AdminViewForm.fxml"));
+	   Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		new_Stage.setTitle("Form");
+		new_Stage.setScene(new Scene(newScene,1000,1000));
+		new_Stage.show();
    }
 
 	

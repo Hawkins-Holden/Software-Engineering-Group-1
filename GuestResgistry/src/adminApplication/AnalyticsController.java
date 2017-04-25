@@ -12,6 +12,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -23,12 +27,14 @@ import javafx.collections.*;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.write.Label;
@@ -59,6 +65,12 @@ public class AnalyticsController implements Initializable {
 	// filterControls
 	@FXML
 	private TextField citiesMenuText;
+	@FXML
+	private TextField filterCity;
+	@FXML
+	private TextField filterCountry;
+	@FXML
+	private TextField filterState;
 	@FXML
 	private Button clearButton;
 	@FXML
@@ -144,6 +156,8 @@ public class AnalyticsController implements Initializable {
 	@FXML
 	private TableColumn<VisitorDetails, String> countryColumn;
 	@FXML
+	private TableColumn<VisitorDetails, String> zipColumn;
+	@FXML
 	private TableColumn<VisitorDetails, Integer> partyColumn;
 	@FXML
 	private TableColumn<VisitorDetails, String> heardColumn;
@@ -206,7 +220,81 @@ public class AnalyticsController implements Initializable {
 		endDatePicker.setValue(LocalDate.now());
 		engine = webView.getEngine();
 		refreshData();
+		
+		  filterCity.textProperty().addListener(new ChangeListener(){
+	            public void changed(ObservableValue observable, Object oldValue, Object newValue ) {
+	                filterVisitorByCity((String) oldValue, (String) newValue);
+	            }   
+	        });
+	        
+	         filterCountry.textProperty().addListener(new ChangeListener(){
+	            public void changed(ObservableValue observable, Object oldValue, Object newValue ) {
+	                filterVisitorByCountry((String) oldValue, (String) newValue);
+	            }   
+	        });
+	         
+	         filterState.textProperty().addListener(new ChangeListener(){
+		            public void changed(ObservableValue observable, Object oldValue, Object newValue ) {
+		                filterVisitorByState((String) oldValue, (String) newValue);
+		            }   
+		        });
 	}
+	
+	public void filterVisitorByCountry(String oldValue, String newValue){
+        ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList(); 
+   if ((filterCountry == null) || (newValue.length() < oldValue.length() ) || newValue == null) {
+       visitorTable.setItems(data);    
+   }
+   else {
+       newValue = newValue.toUpperCase();
+       for (VisitorDetails visitors: visitorTable.getItems()){
+           String filterByCountry = visitors.getCountry();
+           if (filterByCountry.toUpperCase().contains(newValue)) {
+               filteredList.add(visitors); 
+           }   
+       }
+       visitorTable.setItems(filteredList); 
+   }
+   
+}
+	
+	public void filterVisitorByCity(String oldValue, String newValue){
+        ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList(); 
+   if ((filterCity == null) || (newValue.length() < oldValue.length() ) || newValue == null) {
+       visitorTable.setItems(data);    
+   }
+   else {
+       newValue = newValue.toUpperCase();
+       for (VisitorDetails visitors: visitorTable.getItems()){
+           String filterByCity = visitors.getCity();
+           if (filterByCity.toUpperCase().contains(newValue)) {
+               filteredList.add(visitors); 
+           }   
+       }
+       visitorTable.setItems(filteredList); 
+   }
+   
+}
+	
+	public void filterVisitorByState(String oldValue, String newValue){
+        ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList(); 
+   if ((filterState == null) || (newValue.length() < oldValue.length() ) || newValue == null) {
+       visitorTable.setItems(data);    
+   }
+   else {
+       newValue = newValue.toUpperCase();
+       for (VisitorDetails visitors: visitorTable.getItems()){
+           String filterByState = visitors.getState();
+           if (filterByState.toUpperCase().contains(newValue)) {
+               filteredList.add(visitors); 
+           }   
+       }
+       visitorTable.setItems(filteredList); 
+   }
+   
+}
+	
+	
 
 	public void refreshMenus() {
 		List<String> cities = AdminJDBC.getCitiesandMetros();
@@ -272,6 +360,7 @@ public class AnalyticsController implements Initializable {
 		refreshTable();
 		refreshChart();
 		displayWeb();
+	
 	}
 
 	public void refreshTable() {
@@ -282,6 +371,7 @@ public class AnalyticsController implements Initializable {
 		cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
 		stateColumn.setCellValueFactory(new PropertyValueFactory<>("state"));
 		countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
+		zipColumn.setCellValueFactory(new PropertyValueFactory<>("zip"));
 		partyColumn.setCellValueFactory(new PropertyValueFactory<>("party"));
 		heardColumn.setCellValueFactory(new PropertyValueFactory<>("heard"));
 		hotelColumn.setCellValueFactory(new PropertyValueFactory<>("hotel"));
@@ -442,6 +532,14 @@ public class AnalyticsController implements Initializable {
 	private void populateMap() {
 		engine.executeScript("populateJSMap();");
 	}
+	
+	public void goBack(ActionEvent e) throws IOException { 
+		   Parent newScene = FXMLLoader.load(getClass().getResource("Platform.fxml"));
+			Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+			new_Stage.setTitle("Visitor Table");
+			new_Stage.setScene(new Scene(newScene,1000,1000));
+			new_Stage.show();
+	   }
 
 	@FXML
 	private void ExportAction(ActionEvent event) {

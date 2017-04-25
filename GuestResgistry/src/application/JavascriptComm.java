@@ -18,7 +18,7 @@ private ArrayList<String> latLongArray = new ArrayList<String>();
 	public int getSize(){
 		
 		latLongArray = JDBC.getLatLongs();
-		System.out.println("size retrieved");
+		System.out.println("size retrieved"+latLongArray.size());
 		return latLongArray.size();
 		
 	}
@@ -26,7 +26,9 @@ private ArrayList<String> latLongArray = new ArrayList<String>();
 	public double getString(int i){
 		
 		double number = 0.1;
-		number = Double.parseDouble(latLongArray.get(i));
+		Scanner scan = new Scanner(latLongArray.get(i));
+		number = scan.nextDouble();
+		scan.close();
 		System.out.println("lat or long retrieved: " + number);
 		return number;
 		

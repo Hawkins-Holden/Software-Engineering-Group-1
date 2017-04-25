@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="828.0" prefWidth="1172.0" style="-fx-background-color: #20B2AA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.PlatformController">
+   <children>
+      <Label layoutX="346.0" layoutY="30.0" text="Welcome to Admin Platform. ">
+         <font>
+            <Font name="System Bold" size="38.0" />
+         </font>
+      </Label>
+      <Label layoutX="412.0" layoutY="104.0" text="What do you like to do today?">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Button layoutX="61.0" layoutY="151.0" mnemonicParsing="false" onAction="#Visitor" prefHeight="397.0" prefWidth="520.0" style="-fx-background-color: green;">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="375.0" fitWidth="498.0">
+               <image>
+                  <Image url="@../../../../visitor.PNG" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="655.0" layoutY="151.0" mnemonicParsing="false" onAction="#Analytics" prefHeight="397.0" prefWidth="487.0" style="-fx-background-color: green;">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="370.0" fitWidth="467.0">
+               <image>
+                  <Image url="@../../../../analytics.PNG" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="879.0" layoutY="686.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="101.0" prefWidth="193.0" style="-fx-background-color: red;" text="Log-Out">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="158.0" layoutY="561.0" text="See the Visitor Details">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="761.0" layoutY="561.0" text="See the Analytics">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
