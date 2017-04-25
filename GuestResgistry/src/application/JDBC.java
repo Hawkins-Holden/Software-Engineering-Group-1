@@ -214,6 +214,14 @@ public class JDBC {
 				stmt.execute("USE visitordb");
 
 				int visitorID = vd.getId();
+				Integer zip = vd.getZip();
+				if(zip!=null){
+					String[] latlng = APIClient.geocodingRequest(zip.toString());
+					vd.setLatitude(latlng[0]);
+					System.out.println("lat" + latlng[0]);
+					vd.setLongitude(latlng[1]);
+					System.out.println("lng" + latlng[0]);
+				}
 				Timestamp newDate = getCurrentTimeStamp();// vd.getVisitingDay();
 
 				System.out.println(newDate.toString());

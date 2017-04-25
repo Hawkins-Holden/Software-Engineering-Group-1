@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import application.APIClient;
 import javafx.scene.control.TableColumn;
 
 import java.sql.*;
@@ -584,6 +585,14 @@ public class AdminJDBC {
 					Date newDate = vd.getVisitingDay();
 					System.out.println(newDate.toString());
 					Timestamp visitingDay = new Timestamp(newDate.getTime());
+					Integer zip = vd.getZip();
+					if(zip!=null){
+						String[] latlng = APIClient.geocodingRequest(zip.toString());
+						vd.setLatitude(latlng[0]);
+						System.out.println("lat" + latlng[0]);
+						vd.setLongitude(latlng[1]);
+						System.out.println("lng" + latlng[0]);
+					}
 					String visitorLocationsQuery = "INSERT INTO visitorlocations (VisitorID, Latitude, Longitude, City, Metro, State, Country, Zip) VALUES ";
 					String visitorsQuery = "INSERT INTO visitors (VisitorID, Fname, Lname, Email) VALUES ";
 					String visitsQuery = "INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES ";
