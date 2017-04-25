@@ -38,9 +38,20 @@ public class JavascriptComm {
 			if (!(zipData.get(j)==null || zipData.get(j).toString().isEmpty())) {
 				String[] latlong = APIClient.geocodingRequest(zipData.get(j).toString());
 				if (i % 2 == 0) {
+					if(latlong[0] != null){
 					number = Double.parseDouble(latlong[0]);
+					}
+					else{
+					number = null;
+					}
+						
 				} else {
+					if(latlong[0] != null){
 					number = Double.parseDouble(latlong[1]);
+					}
+					else{
+					number = null;
+					}
 				}
 			}
 		}
@@ -55,6 +66,10 @@ public class JavascriptComm {
 			latlngs.add(latlng[1]);
 		}
 		return latlngs;
+	}
+	
+	public void testCall(String str){
+		System.out.println("This is test call: " + str);
 	}
 
 }

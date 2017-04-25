@@ -95,10 +95,10 @@ public class AdminJDBC {
 				/**
 				 * Query entries with the Zip '71467'
 				 */
-
+				
 				Date startDate = java.sql.Date.valueOf(start);
 				Date endDate = java.sql.Date.valueOf(end);
-
+				
 				ResultSet res = stmt.executeQuery(
 						"SELECT * FROM visitors LEFT JOIN visits ON visitors.VisitorID = visits.VisitorID LEFT JOIN visitorlocations on visitors.VisitorID = visitorlocations.VisitorID WHERE Visiting_Day BETWEEN "
 								+ startDate + " AND " + endDate + " ORDER BY Visiting_Day");

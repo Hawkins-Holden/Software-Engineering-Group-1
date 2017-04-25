@@ -73,7 +73,6 @@ html, body {
 	
 	// A function to create the marker and set up the event window function 
 	function createMarker(latlng) {
-	
 		nums = latlng;
 		var marker = new google.maps.Marker({
 			position : latlng,
@@ -86,7 +85,6 @@ html, body {
 		nums = latlng;
 		//markers[i] = marker;
 		//i = i + 1;
-		testCallJavaFX("pin creation completed");
 		return marker;
 	}
 	

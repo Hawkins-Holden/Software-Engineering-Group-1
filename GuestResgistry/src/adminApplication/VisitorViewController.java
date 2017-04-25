@@ -299,7 +299,8 @@ public class VisitorViewController implements Initializable {
       StringBuilder query = new StringBuilder(
          	"SELECT * FROM visitors LEFT JOIN visits ON visitors.VisitorID = visits.VisitorID LEFT JOIN visitorlocations on visitors.VisitorID = visitorlocations.VisitorID WHERE visitors.VisitorID IS NOT NULL");
       query.append(" AND Visiting_Day >= '" + startDate.toString() + "' AND Visiting_Day <= '"
-         		+ endDate.toString() + "'");
+         		+ endDate.toString() + "' ORDER BY Visiting_Day");
+      System.out.println(query.toString());
       for (VisitorDetails v : AdminJDBC.getVisitorDetailsFromQuery(query.toString())) {
          visitors.add(v);
       }

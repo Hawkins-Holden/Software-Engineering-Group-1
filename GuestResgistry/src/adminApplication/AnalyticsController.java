@@ -220,81 +220,76 @@ public class AnalyticsController implements Initializable {
 		endDatePicker.setValue(LocalDate.now());
 		engine = webView.getEngine();
 		refreshData();
-		
-		  filterCity.textProperty().addListener(new ChangeListener(){
-	            public void changed(ObservableValue observable, Object oldValue, Object newValue ) {
-	                filterVisitorByCity((String) oldValue, (String) newValue);
-	            }   
-	        });
-	        
-	         filterCountry.textProperty().addListener(new ChangeListener(){
-	            public void changed(ObservableValue observable, Object oldValue, Object newValue ) {
-	                filterVisitorByCountry((String) oldValue, (String) newValue);
-	            }   
-	        });
-	         
-	         filterState.textProperty().addListener(new ChangeListener(){
-		            public void changed(ObservableValue observable, Object oldValue, Object newValue ) {
-		                filterVisitorByState((String) oldValue, (String) newValue);
-		            }   
-		        });
+
+		filterCity.textProperty().addListener(new ChangeListener() {
+			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+				filterVisitorByCity((String) oldValue, (String) newValue);
+			}
+		});
+
+		filterCountry.textProperty().addListener(new ChangeListener() {
+			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+				filterVisitorByCountry((String) oldValue, (String) newValue);
+			}
+		});
+
+		filterState.textProperty().addListener(new ChangeListener() {
+			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+				filterVisitorByState((String) oldValue, (String) newValue);
+			}
+		});
 	}
-	
-	public void filterVisitorByCountry(String oldValue, String newValue){
-        ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList(); 
-   if ((filterCountry == null) || (newValue.length() < oldValue.length() ) || newValue == null) {
-       visitorTable.setItems(data);    
-   }
-   else {
-       newValue = newValue.toUpperCase();
-       for (VisitorDetails visitors: visitorTable.getItems()){
-           String filterByCountry = visitors.getCountry();
-           if (filterByCountry.toUpperCase().contains(newValue)) {
-               filteredList.add(visitors); 
-           }   
-       }
-       visitorTable.setItems(filteredList); 
-   }
-   
-}
-	
-	public void filterVisitorByCity(String oldValue, String newValue){
-        ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList(); 
-   if ((filterCity == null) || (newValue.length() < oldValue.length() ) || newValue == null) {
-       visitorTable.setItems(data);    
-   }
-   else {
-       newValue = newValue.toUpperCase();
-       for (VisitorDetails visitors: visitorTable.getItems()){
-           String filterByCity = visitors.getCity();
-           if (filterByCity.toUpperCase().contains(newValue)) {
-               filteredList.add(visitors); 
-           }   
-       }
-       visitorTable.setItems(filteredList); 
-   }
-   
-}
-	
-	public void filterVisitorByState(String oldValue, String newValue){
-        ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList(); 
-   if ((filterState == null) || (newValue.length() < oldValue.length() ) || newValue == null) {
-       visitorTable.setItems(data);    
-   }
-   else {
-       newValue = newValue.toUpperCase();
-       for (VisitorDetails visitors: visitorTable.getItems()){
-           String filterByState = visitors.getState();
-           if (filterByState.toUpperCase().contains(newValue)) {
-               filteredList.add(visitors); 
-           }   
-       }
-       visitorTable.setItems(filteredList); 
-   }
-   
-}
-	
-	
+
+	public void filterVisitorByCountry(String oldValue, String newValue) {
+		ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList();
+		if ((filterCountry == null) || (newValue.length() < oldValue.length()) || newValue == null) {
+			visitorTable.setItems(data);
+		} else {
+			newValue = newValue.toUpperCase();
+			for (VisitorDetails visitors : visitorTable.getItems()) {
+				String filterByCountry = visitors.getCountry();
+				if (filterByCountry.toUpperCase().contains(newValue)) {
+					filteredList.add(visitors);
+				}
+			}
+			visitorTable.setItems(filteredList);
+		}
+
+	}
+
+	public void filterVisitorByCity(String oldValue, String newValue) {
+		ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList();
+		if ((filterCity == null) || (newValue.length() < oldValue.length()) || newValue == null) {
+			visitorTable.setItems(data);
+		} else {
+			newValue = newValue.toUpperCase();
+			for (VisitorDetails visitors : visitorTable.getItems()) {
+				String filterByCity = visitors.getCity();
+				if (filterByCity.toUpperCase().contains(newValue)) {
+					filteredList.add(visitors);
+				}
+			}
+			visitorTable.setItems(filteredList);
+		}
+
+	}
+
+	public void filterVisitorByState(String oldValue, String newValue) {
+		ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList();
+		if ((filterState == null) || (newValue.length() < oldValue.length()) || newValue == null) {
+			visitorTable.setItems(data);
+		} else {
+			newValue = newValue.toUpperCase();
+			for (VisitorDetails visitors : visitorTable.getItems()) {
+				String filterByState = visitors.getState();
+				if (filterByState.toUpperCase().contains(newValue)) {
+					filteredList.add(visitors);
+				}
+			}
+			visitorTable.setItems(filteredList);
+		}
+
+	}
 
 	public void refreshMenus() {
 		List<String> cities = AdminJDBC.getCitiesandMetros();
@@ -360,7 +355,7 @@ public class AnalyticsController implements Initializable {
 		refreshTable();
 		refreshChart();
 		displayWeb();
-	
+
 	}
 
 	public void refreshTable() {
@@ -522,6 +517,7 @@ public class AnalyticsController implements Initializable {
 		}
 		query.append(" ORDER BY Visiting_Day");
 
+		System.out.println(query);
 		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
 		for (VisitorDetails v : AdminJDBC.getVisitorDetailsFromQuery(query.toString())) {
 			visitors.add(v);
@@ -532,14 +528,14 @@ public class AnalyticsController implements Initializable {
 	private void populateMap() {
 		engine.executeScript("populateJSMap();");
 	}
-	
-	public void goBack(ActionEvent e) throws IOException { 
-		   Parent newScene = FXMLLoader.load(getClass().getResource("Platform.fxml"));
-			Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-			new_Stage.setTitle("Visitor Table");
-			new_Stage.setScene(new Scene(newScene,1000,1000));
-			new_Stage.show();
-	   }
+
+	public void goBack(ActionEvent e) throws IOException {
+		Parent newScene = FXMLLoader.load(getClass().getResource("Platform.fxml"));
+		Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+		new_Stage.setTitle("Visitor Table");
+		new_Stage.setScene(new Scene(newScene, 1000, 1000));
+		new_Stage.show();
+	}
 
 	@FXML
 	private void ExportAction(ActionEvent event) {
@@ -897,21 +893,27 @@ public class AnalyticsController implements Initializable {
 		Calendar cal = Calendar.getInstance();
 		for (VisitorDetails datum : data) {
 			int[] monthYear = new int[2];
-			cal.setTime(datum.getVisitingDay());
-			monthYear[0] = cal.get(Calendar.MONTH);
-			monthYear[1] = cal.get(Calendar.YEAR);
-			months.add(monthYear);
+			Date dat = (Date) datum.getVisitingDay();
+			if (dat != null) {
+				cal.setTime(dat);
+				monthYear[0] = cal.get(Calendar.MONTH);
+				monthYear[1] = cal.get(Calendar.YEAR);
+				months.add(monthYear);
+			}
 		}
 
 		for (int[] monthYear : months) {
 			int count = 0;
 			for (VisitorDetails datum : data) {
-				cal.setTime(datum.getVisitingDay());
-				if (monthYear[0] == cal.get(Calendar.MONTH) && monthYear[1] == cal.get(Calendar.YEAR)) {
-					if (datum.getParty() != null || datum.getParty() > 0) {
-						count += datum.getParty();
-					} else {
-						count++;
+				Date dat = (Date) datum.getVisitingDay();
+				if (dat != null) {
+					cal.setTime(datum.getVisitingDay());
+					if (monthYear[0] == cal.get(Calendar.MONTH) && monthYear[1] == cal.get(Calendar.YEAR)) {
+						if (datum.getParty() != null || datum.getParty() > 0) {
+							count += datum.getParty();
+						} else {
+							count++;
+						}
 					}
 				}
 			}

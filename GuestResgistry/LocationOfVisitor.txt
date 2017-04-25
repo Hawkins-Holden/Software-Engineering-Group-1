@@ -1,7 +1,7 @@
-1611 Airport Commerce Dr
-Austin
-TX
+Indian Service Rte 5080
+Newcomb
+NM
 USA
-types=[street_address],
- 78741
-Austin
+types=[route],
+ 87455
+

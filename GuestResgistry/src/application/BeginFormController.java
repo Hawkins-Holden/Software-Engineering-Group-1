@@ -111,6 +111,7 @@ public class BeginFormController implements Initializable, ControlledScreen {
 				// If so, perform analytics
 				String city = locationInfo[1];
 				String zip = locationInfo[5];
+				System.out.print(zip);
 				String state = locationInfo[2];
 				String metro = locationInfo[6];
 
@@ -120,6 +121,7 @@ public class BeginFormController implements Initializable, ControlledScreen {
 				if(zip!=null && !zip.isEmpty()){
 					Scanner scanner = new Scanner(zip);
 					int newZip = scanner.nextInt();
+					System.out.println(zip);
 					visitor.setZip(newZip);
 				}
 				visitor.setState(state);

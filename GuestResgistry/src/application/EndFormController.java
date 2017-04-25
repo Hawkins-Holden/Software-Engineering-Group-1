@@ -129,6 +129,7 @@ public class EndFormController implements Initializable, ControlledScreen {
 		
 
 		if (Email_error.getText().isEmpty() || !rbYes.isSelected()) {
+			System.out.println(visitor.getZip());
 			JDBC.addVisitor(visitor);
 			Parent newScene = FXMLLoader.load(getClass().getResource("Gratitude.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

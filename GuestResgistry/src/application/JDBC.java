@@ -237,7 +237,7 @@ public class JDBC {
 				
 				visitorLocationsQuery += "(" + visitorID + ", '" + vd.getLatitude() + "', '" + vd.getLongitude()
 						+ "', '" + vd.getCity() + "', '" + vd.getMetro() + "', '" + vd.getState() + "', '"
-						+ vd.getCountry() + "', " + 71467 + ")";
+						+ vd.getCountry() + "', " + vd.getZip() + ")";
 				visitorsQuery += "(" + visitorID + ", '" + vd.getFname() + "', '" + vd.getLname() + "', '"
 						+ vd.getEmail() + "')";
 				visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \"" + vd.getHeard() + "\", \""
