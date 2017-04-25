@@ -104,8 +104,14 @@ public class MiddleFormController implements Initializable {
     	if(rbYes.isSelected()){
     		visitor.setHotel("Yes");
     	}
+    	else {
+    		visitor.setHotel(null);
+    	}
     	if(rbNo.isSelected()){
     		visitor.setHotel("No");
+    	}
+    	else {
+    		visitor.setHotel(null);
     	}
 
 

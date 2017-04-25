@@ -1,106 +1,60 @@
 package application;
 
-public class Visitor 
-{
-	private static int idCount = 1;
+import java.util.Date;
+
+public class Visitor {
 	private int id;
 	private String fname;
-	private String midInit;
 	private String lname;
 	private String email;
-	private boolean hasVisited;
-	private String reasonForVisit;
-	private String heard;
 	private String latitude;
 	private String longitude;
-	private String destination;
-	private String hotel;
 	private String city;
-	private String state;
 	private String metro;
-	private String zip;
+	private String state;
 	private String country;
+	private Integer zip;
+	private Integer party;
+	private String heard;
+	private String hotel;
+	private String destination;
+	private boolean repeatVisit;
+	private String travelingFor;
+	private Date visitingDay;
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getMetro() {
-		return metro;
-	}
-
-	public void setMetro(String metro) {
-		this.metro = metro;
-	}
-
-	public String getZip() {
-		return zip;
-	}
-
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	private int party;
-	
-	public Visitor (String email)
-	{
-		//id = JDBC.generateID();
-		this.email = email;
-	}
-	
 	/*
-	  This is the 'real' constructor... for now
-	*/
-	
-	public Visitor (int id, String fname, String midInit, String lname, String email, boolean hasVisited, String reasonForVisit, String heard, 
-			String latitude, String longitude, String destination, String hotel, int party)
-	{
+	 * Constructor for visitor object
+	 */
+
+	public Visitor(int id, String fname, String lname, String email, String latitude, String longitude, String city,
+			String metro, String state, String country, int zip, int party, String heard, String hotel,
+			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.id = id;
 		this.fname = fname;
-		this.midInit = midInit;
 		this.lname = lname;
 		this.email = email;
-		this.hasVisited = hasVisited;
-		this.reasonForVisit = reasonForVisit;
-		this.heard = heard;
 		this.latitude = latitude;
-		this.longitude = longitude; 
-		this.destination = destination;
-		this.hotel = hotel;
+		this.longitude = longitude;
+		this.city = city;
+		this.metro = metro;
+		this.state = state;
+		this.country = country;
+		this.zip = zip;
 		this.party = party;
+		this.heard = heard;
+		this.hotel = hotel;
+		this.destination = destination;
+		this.repeatVisit = repeatVisit;
+		this.travelingFor = travelingFor;
+		this.visitingDay = visitingDay;
 	}
-	
+
+	/*
+	 * A crap ton of getters and setters
+	 */
+
 	public Visitor() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public static int getIdCount() {
-		return idCount;
-	}
-
-	public static void setIdCount(int idCount) {
-		Visitor.idCount = idCount;
+		this.id = JDBC.generateID();
 	}
 
 	public int getId() {
@@ -119,14 +73,6 @@ public class Visitor
 		this.fname = fname;
 	}
 
-	public String getMidInit() {
-		return midInit;
-	}
-
-	public void setMidInit(String midInit) {
-		this.midInit = midInit;
-	}
-
 	public String getLname() {
 		return lname;
 	}
@@ -141,30 +87,6 @@ public class Visitor
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public boolean isHasVisited() {
-		return hasVisited;
-	}
-
-	public void setHasVisited(boolean hasVisited) {
-		this.hasVisited = hasVisited;
-	}
-
-	public String getReasonForVisit() {
-		return reasonForVisit;
-	}
-
-	public void setReasonForVisit(String reasonForVisit) {
-		this.reasonForVisit = reasonForVisit;
-	}
-
-	public String getHeard() {
-		return heard;
-	}
-
-	public void setHeard(String heard) {
-		this.heard = heard;
 	}
 
 	public String getLatitude() {
@@ -183,6 +105,67 @@ public class Visitor
 		this.longitude = longitude;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public Integer getParty() {
+		return party;
+	}
+
+	public void setParty(Integer party) {
+		this.party = party;
+	}
+
+	public String getHeard() {
+		return heard;
+	}
+
+	public void setHeard(String heard) {
+		if (heard.equals("Interstate Sign")) {
+			this.heard = "Interstate Sign";
+		}
+		else if (heard.equals("Billboard")) {
+			this.heard = "Billboard";
+		}
+		else {
+			this.heard = "Other";
+		}
+	}
+
+	public String getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(String hotel) {
+		if (hotel==null){
+			this.hotel = "No Response";
+		}
+		else {
+			this.hotel = hotel;
+		}
+	}
+
 	public String getDestination() {
 		return destination;
 	}
@@ -191,21 +174,43 @@ public class Visitor
 		this.destination = destination;
 	}
 
-	public String getHotel() {
-		return hotel;
+	public Boolean getRepeatVisit() {
+		return repeatVisit;
 	}
 
-	public void setHotel(String hotel) {
-		this.hotel = hotel;
+	public void setRepeatVisit(Boolean repeatVisit) {
+		this.repeatVisit = repeatVisit;
 	}
 
-	public int getParty() {
-		return party;
+	public String getTravelingFor() {
+		return travelingFor;
 	}
 
-	public void setParty(int party) {
-		this.party = party;
+	public void setTravelingFor(String travelingFor) {
+		this.travelingFor = travelingFor;
 	}
 
+	public Date getVisitingDay() {
+		return visitingDay;
+	}
 
-}//end class
+	public void setVisitingDay(Date visitingDay) {
+		this.visitingDay = visitingDay;
+	}
+
+	public String getMetro() {
+		return metro;
+	}
+
+	public void setMetro(String metro) {
+		this.metro = metro;
+	}
+
+	public Integer getZip() {
+		return zip;
+	}
+
+	public void setZip(Integer zip) {
+		this.zip = zip;
+	}
+}// end class

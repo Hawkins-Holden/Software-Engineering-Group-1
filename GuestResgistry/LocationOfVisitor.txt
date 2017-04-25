@@ -1,7 +1,7 @@
-Pelican Dr
-St Francisville
-LA
+5400 Jimmy Clay Dr
+Austin
+TX
 USA
-types=[route],
- 70775
-
+types=[street_address],
+ 78744
+Austin

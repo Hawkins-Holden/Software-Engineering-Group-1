@@ -12,10 +12,12 @@ import org.json.JSONException;
 
 public class JavascriptComm {
 
+private ArrayList<String> latLongArray = new ArrayList<String>();
+	
+	
 	public int getSize(){
 		
-		ArrayList<String> latLongArray = new ArrayList<String>();
-		latLongArray = getLocations();
+		latLongArray = JDBC.getLatLongs();
 		System.out.println("size retrieved");
 		return latLongArray.size();
 		
@@ -23,8 +25,6 @@ public class JavascriptComm {
 	
 	public double getString(int i){
 		
-		ArrayList<String> latLongArray = new ArrayList<String>();
-		latLongArray = getLocations();
 		double number = 0.1;
 		number = Double.parseDouble(latLongArray.get(i));
 		System.out.println("lat or long retrieved: " + number);

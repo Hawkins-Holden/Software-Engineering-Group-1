@@ -32,20 +32,16 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import org.json.JSONException;
 
-
-
-
-
 /**
  *
  * @author admin
  */
 public class BeginFormController implements Initializable, ControlledScreen {
-    
-   ScreensController myController;
-   
-        @FXML 
-        private BorderPane mainBody; 
+
+	ScreensController myController;
+
+	@FXML
+	private BorderPane mainBody;
 	@FXML
 	private TextField Fname;
 	@FXML
@@ -54,17 +50,22 @@ public class BeginFormController implements Initializable, ControlledScreen {
 	private Label Fname_error;
 	@FXML
 	private Label Lname_error;
-        @FXML
+	@FXML
 	private Label empty_field;
-        @FXML
-    	private TextField State;
-	
 	@FXML
-	private TextField CIty;  //This must be a TextField, not a Label, or it WILL NOT WORK
+	private Label welcomeLabel;
 	@FXML
-	private TextField Country; //This must be a TextField, not a Label, or it WILL NOT WORK
+	private TextField State;
+
 	@FXML
-	private TextField ZipC; //This must be a TextField, not a Label, or it WILL NOT WORK
+	private TextField CIty; // This must be a TextField, not a Label, or it WILL
+							// NOT WORK
+	@FXML
+	private TextField Country; // This must be a TextField, not a Label, or it
+								// WILL NOT WORK
+	@FXML
+	private TextField ZipC; // This must be a TextField, not a Label, or it WILL
+							// NOT WORK
 
 	private String firstName;
 	private String lastName;
@@ -72,95 +73,108 @@ public class BeginFormController implements Initializable, ControlledScreen {
 			"DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
 			"MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN",
 			"TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY");
-		private Visitor visitor;
+	private Visitor visitor;
 
+	/**
+	 * Initializes the controller class.
+	 */
 
-    /**
-     * Initializes the controller class.
-     */
-   
-   
-    public void setScreenParent(ScreensController screenParent){
-        myController = screenParent;
-    }
-    
-     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        visitor = VisitorContext.getInstance().currentVisitor();
-       // State.setItems(state_list);    
-     // ----------------------------------------------
-     		String[] locationInfo = new String[25];
-     		int i = 0;
-     		
-     		try {
+	public void setScreenParent(ScreensController screenParent) {
+		myController = screenParent;
+	}
 
-     			// Get visitor location to perform analytics on it
-     			System.out.println("file read attempted");
-     			Scanner scan = new Scanner(new File("LocationOfVisitor.txt"));
-     			while (scan.hasNext() && i < 15) {
-     				locationInfo[i] = (scan.nextLine());
-     				i++;
-     			}
-     			
-     			System.out.println("This is begin controller " + locationInfo[0] + ",  " + locationInfo[1]);
-     			i = 0;
-     			scan.close();
-     			
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		visitor = VisitorContext.getInstance().currentVisitor();
+		// State.setItems(state_list);
+		// ----------------------------------------------
+		String[] locationInfo = new String[25];
+		int i = 0;
 
-     			// Check if location is inside the US
-     			if (locationInfo[3].equals("USA")) {
+		try {
 
-     				// If so, perform analytics
-     				String city = locationInfo[1];
-     				String zip = locationInfo[5];
-     				String state = locationInfo[2];
-     				String metro = locationInfo[6];
-     				
-     				System.out.println("this is city: " + city);
-     				
-     				visitor.setCity(city);
-     				visitor.setZip(zip);
-     				visitor.setState(state);
-     				visitor.setMetro(metro);
-     				visitor.setLatitude(locationInfo[8]);
-     				visitor.setLongitude(locationInfo[9]);
-     				visitor.setCountry("USA");
+			// Get visitor location to perform analytics on it
+			System.out.println("file read attempted");
+			Scanner scan = new Scanner(new File("LocationOfVisitor.txt"));
+			while (scan.hasNext() && i < 15) {
+				locationInfo[i] = (scan.nextLine());
+				i++;
+			}
 
-     				CIty.setText(city);
-     				Country.setText("USA");
-     				ZipC.setText(zip);
-     				State.setText(state);
-     				
-     				//State.setAccessibleText(state);
+			System.out.println("This is begin controller " + locationInfo[0] + ",  " + locationInfo[1]);
+			i = 0;
+			scan.close();
 
-     				// String message = checkDataBase(city, state);//
-     				// messageLabel.setText(message);
+			// Check if location is inside the US
+			if (locationInfo[3].equals("USA")) {
 
-     			}
+				// If so, perform analytics
+				String city = locationInfo[1];
+				String zip = locationInfo[5];
+				String state = locationInfo[2];
+				String metro = locationInfo[6];
 
-     		} catch (Exception e) {
-     			// cry
-     			System.out.println("file n");
-     		}
-     		//-------------------------------------------------
-                
-    }
+				System.out.println("this is city: " + city);
 
-    @FXML
-    public void goToScreen2(ActionEvent event) throws IOException{
-    	
-    	
-       
-		//fnameValidate(Fname, Fname_error);
-		//lnameValidate(Lname, Lname_error);
-		
-		
-		
-		
+				visitor.setCity(city);
+				if(zip!=null && !zip.isEmpty()){
+					Scanner scanner = new Scanner(zip);
+					int newZip = scanner.nextInt();
+					visitor.setZip(newZip);
+				}
+				visitor.setState(state);
+				visitor.setMetro(metro);
+				visitor.setLatitude(locationInfo[8]);
+				visitor.setLongitude(locationInfo[9]);
+				visitor.setCountry("USA");
+
+				CIty.setText(city);
+				Country.setText("USA");
+				ZipC.setText(zip);
+				State.setText(state);
+
+				int count = JDBC.getNumberofVisitors(city, metro);
+				String numberVisitor = "" + count;
+				String suffix;
+				if (numberVisitor.charAt(numberVisitor.length() - 1) == '1') {
+					suffix = "st";
+				} else if (numberVisitor.charAt(numberVisitor.length() - 1) == '2') {
+					suffix = "nd";
+				} else {
+					suffix = "th";
+				}
+				numberVisitor += suffix;
+				String area = (metro == null || metro.isEmpty()) ? city : metro;
+
+				if (!area.isEmpty()){
+				welcomeLabel.textProperty().setValue("Welcome to the Monroe - West Monroe area! Y'all are the "
+						+ numberVisitor + " group to visit from the " + area + " area!");
+				}
+				// State.setAccessibleText(state);
+
+				// String message = checkDataBase(city, state);//
+				// messageLabel.setText(message);
+
+			}
+
+		} catch (Exception e) {
+			// cry
+			System.out.println("file n");
+		}
+		// -------------------------------------------------
+
+	}
+
+	@FXML
+	public void goToScreen2(ActionEvent event) throws IOException {
+
+		// fnameValidate(Fname, Fname_error);
+		// lnameValidate(Lname, Lname_error);
+
 		visitor.setFname(firstName);
 		System.out.println("Form1 visitor: " + visitor.getFname());
-		
-		//myController.setScreen(SoftwareEngineering.screen2ID);
+
+		// myController.setScreen(SoftwareEngineering.screen2ID);
 		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
@@ -168,52 +182,50 @@ public class BeginFormController implements Initializable, ControlledScreen {
 		new_Stage.show();
 
 		/*
-		if ((Fname_error.getText().isEmpty() && Lname_error.getText().isEmpty())
-				&& ((!Fname.getText().isEmpty() || !Lname.getText().isEmpty()))) {	
-               
-    }*/
-                
-                 /*
-                else {
-                    if (Fname_error.getText().isEmpty() && Lname_error.getText().isEmpty()){
-                    empty_field.setText("Your information will not be shared. Please enter your name.");
-                    }
-                    
-                    */
-      }
-                
-               // }
-    
-    /*
-	public void fnameValidate(TextField Fname, Label Fname_error) {
+		 * if ((Fname_error.getText().isEmpty() &&
+		 * Lname_error.getText().isEmpty()) && ((!Fname.getText().isEmpty() ||
+		 * !Lname.getText().isEmpty()))) {
+		 * 
+		 * }
+		 */
 
-		if (Fname.getText() != null && !Fname.getText().matches("[a-zA-Z]+") && !Fname.getText().isEmpty()) {
-			Fname_error.setText("Please enter a valid First Name!");
-		} else {
-			Fname_error.setText("");
-		}
-
+		/*
+		 * else { if (Fname_error.getText().isEmpty() &&
+		 * Lname_error.getText().isEmpty()){ empty_field.
+		 * setText("Your information will not be shared. Please enter your name."
+		 * ); }
+		 * 
+		 */
 	}
-	*/
-	public void setFields(){
-		
+
+	// }
+
+	/*
+	 * public void fnameValidate(TextField Fname, Label Fname_error) {
+	 * 
+	 * if (Fname.getText() != null && !Fname.getText().matches("[a-zA-Z]+") &&
+	 * !Fname.getText().isEmpty()) {
+	 * Fname_error.setText("Please enter a valid First Name!"); } else {
+	 * Fname_error.setText(""); }
+	 * 
+	 * }
+	 */
+	public void setFields() {
+
 	}
 
 	/*
-	public void lnameValidate(TextField Lname, Label Lname_error) {
-
-		if (Lname.getText() != null && !Lname.getText().matches("[a-zA-Z]+") && !Lname.getText().isEmpty()) {
-			Lname_error.setText("Please enter a valid Last name!");
-		} else {
-			Lname_error.setText("");
-		}
-
-	}
-    */
+	 * public void lnameValidate(TextField Lname, Label Lname_error) {
+	 * 
+	 * if (Lname.getText() != null && !Lname.getText().matches("[a-zA-Z]+") &&
+	 * !Lname.getText().isEmpty()) {
+	 * Lname_error.setText("Please enter a valid Last name!"); } else {
+	 * Lname_error.setText(""); }
+	 * 
+	 * }
+	 */
 	/*
-    @FXML
-    private void goToScreen3(ActionEvent event){
-       myController.setScreen(SoftwareEngineering.screen3ID);
-    }
-    */
+	 * @FXML private void goToScreen3(ActionEvent event){
+	 * myController.setScreen(SoftwareEngineering.screen3ID); }
+	 */
 }

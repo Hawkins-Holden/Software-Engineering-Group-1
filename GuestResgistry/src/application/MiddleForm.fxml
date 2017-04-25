@@ -60,7 +60,7 @@
    <center>
       <Pane fx:id="second_body" prefHeight="432.0" prefWidth="820.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="Stay_label" layoutX="14.0" layoutY="26.0" text="Did you stay in Monroe-West Monroe Hotel?">
+            <Label fx:id="Stay_label" layoutX="14.0" layoutY="44.0" text="Are y'all staying in a hotel in Monroe or West Monroe while y'all are here?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -73,23 +73,23 @@
                   <ToggleGroup fx:id="radioGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rbNo" layoutX="14.0" layoutY="113.0" mnemonicParsing="false" onAction="#radioSelect" text="NO" toggleGroup="$radioGroup">
+            <RadioButton fx:id="rbNo" layoutX="15.0" layoutY="105.0" mnemonicParsing="false" onAction="#radioSelect" text="NO" toggleGroup="$radioGroup">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </RadioButton>
-            <Label fx:id="hear_label" layoutX="14.0" layoutY="167.0" text="How did you hear about the Monroe-West Monroe CVB?">
+            <Label fx:id="hear_label" layoutX="14.0" layoutY="176.0" prefHeight="27.0" prefWidth="551.0" text="How did y'all hear about the Convention and Visitors' Bureau?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <ComboBox fx:id="Hear" layoutX="14.0" layoutY="203.0" prefHeight="52.0" prefWidth="341.0" promptText="Select One" />
-            <Label fx:id="travel_label" layoutX="14.0" layoutY="279.0" text="Where are you travelling? ">
+            <Label fx:id="travel_label" layoutX="14.0" layoutY="289.0" text="What brings y'all in today?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="TravelCity" layoutX="14.0" layoutY="316.0" prefHeight="53.0" prefWidth="345.0" promptText="Enter City Name" />
+            <TextField fx:id="TravelCity" layoutX="14.0" layoutY="316.0" prefHeight="53.0" prefWidth="345.0" promptText="Duck Commander?  ULM?  Just passing through?" />
             <Label fx:id="Destination_error" layoutX="14.0" layoutY="380.0" textFill="RED">
                <font>
                   <Font size="24.0" />

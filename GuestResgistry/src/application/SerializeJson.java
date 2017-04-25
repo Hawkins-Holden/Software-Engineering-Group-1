@@ -15,20 +15,21 @@ public class SerializeJson {
 		String temp1 = "";
 		String temp2 = "";
 		String metro = "";
-		int num1 = 0;
+		int firstMetroIndex = 0;
 		int beginIndex = 0;
 		int endIndex = 0;
 		
-		num1 = jsonObject.indexOf("Metropolitan");
+		firstMetroIndex = jsonObject.indexOf("Metropolitan");
 
-		if (num1 != -1) {
-			temp1 = jsonObject.substring(0, num1 + 1);
-			temp2 = jsonObject.substring(num1);
-			beginIndex = temp1.lastIndexOf('"') + 1;
-			endIndex = temp2.indexOf('"') + beginIndex + 16;
-
-			metro = jsonObject.substring(beginIndex, endIndex);
-			System.out.println("This is Metro: " + metro);
+		if (firstMetroIndex != -1) {
+			String testString = jsonObject;
+			int metroIndex = testString.indexOf("Metropolitan");
+			String begin = testString.substring(0, metroIndex);
+			int begindex = begin.lastIndexOf('"')+1;
+			String end = testString.substring(metroIndex);
+			int endex = testString.indexOf('"')+metroIndex-5;
+			metro = testString.substring(begindex, endex);
+			System.out.println(testString.substring(begindex, endex));
 			returner[0] = metro;
 		} else {
 			returner[0] = "";

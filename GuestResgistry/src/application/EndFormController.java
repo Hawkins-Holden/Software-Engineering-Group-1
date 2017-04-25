@@ -108,7 +108,9 @@ public class EndFormController implements Initializable, ControlledScreen {
 	@FXML
 	private void onSubmit(ActionEvent event) throws IOException {
 
-		visitor.setReasonForVisit(Reason.getValue());
+		String reason = Reason.getValue();
+		reason = (reason==null ? "No Response": reason);
+		visitor.setTravelingFor(reason);		
 		String partyText = Party.getText();
 		Integer party = (partyText.isEmpty() ? 1 : Integer.parseInt(partyText));
 		visitor.setParty(party.intValue());
@@ -123,10 +125,11 @@ public class EndFormController implements Initializable, ControlledScreen {
 		if (rbYes.isSelected() && Email.getText().isEmpty()) {
 			Email_error.setText("Please Provide your email address.");
 		}
-
-		System.out.println(visitor.getReasonForVisit() + "is the reason for the visit");
+		
+		
 
 		if (Email_error.getText().isEmpty() || !rbYes.isSelected()) {
+			JDBC.addVisitor(visitor);
 			Parent newScene = FXMLLoader.load(getClass().getResource("Gratitude.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			new_Stage.setTitle("Your Information");

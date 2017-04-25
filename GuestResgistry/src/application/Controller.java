@@ -123,8 +123,8 @@ public class Controller implements Initializable {
 			int partyNum = Integer.parseInt(Party);
 			
 			int visitorID = (int) Math.ceil((Math.random()*10000));//the visitor ID. Will need to make sure that it's unique at some point. 
-			Visitor visit = new Visitor(visitorID,Fname,Mname,Lname,Email,true,Heard,Reason,GeoCoding.getLat(),GeoCoding.getLon(), Destination,choice,partyNum);
-			JDBC.insertIntoDB(visit);
+			//Visitor visit = new Visitor(visitorID,Fname,Mname,Lname,Email,true,Heard,Reason,GeoCoding.getLat(),GeoCoding.getLon(), Destination,choice,partyNum);
+			//JDBC.insertIntoDB(visit);
 		}
 	}
 

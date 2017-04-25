@@ -531,8 +531,8 @@ public class AdminJDBC {
 				System.out.println(vd.getVisitingDay().toString());
 				Timestamp visitingDay = new java.sql.Timestamp(vd.getVisitingDay().getTime());
 				String visitsQuery = "UPDATE visits SET Party=" + vd.getParty() + ", Heard='" + vd.getHeard()
-						+ "', Hotel='" + vd.getHotel() + "', Destination='" + vd.getDestination() + "', RepeatVisit='"
-						+ repeatVisit + "', TravelingFor='" + vd.getTravelingFor() + "', Visiting_Day='"
+						+ "', Hotel='" + vd.getHotel() + "', Destination='" + vd.getDestination() + "', RepeatVisit="
+						+ repeatVisit + ", TravelingFor='" + vd.getTravelingFor() + "', Visiting_Day='"
 						+ visitingDay.toString() + "' WHERE VisitorID=" + visitorID + "";
 				System.out.println(visitsQuery);
 				stmt.executeUpdate(visitsQuery);

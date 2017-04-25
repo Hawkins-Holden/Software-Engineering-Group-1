@@ -47,43 +47,45 @@
       <AnchorPane fx:id="right_begin" prefHeight="526.0" prefWidth="774.0" stylesheets="@BeginStyle.css" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <AnchorPane fx:id="bottom_begin" prefHeight="583.0" prefWidth="1920.0" stylesheets="@BeginStyle.css" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="bottom_begin" prefHeight="477.0" prefWidth="1920.0" stylesheets="@BeginStyle.css" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="nxt_btn" layoutX="749.0" layoutY="8.0" mnemonicParsing="false" onAction="#goToScreen2" prefHeight="79.0" prefWidth="130.0" stylesheets="@BeginStyle.css" text="NEXT">
                <font>
                   <Font size="24.0" />
-               </font></Button>
+               </font>
+            </Button>
             <Button fx:id="home_btn" layoutX="598.0" layoutY="7.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="133.0" stylesheets="@BeginStyle.css" text="HOME">
                <font>
                   <Font size="24.0" />
-               </font></Button>
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </bottom>
    <center>
-      <Pane fx:id="first_body" stylesheets="@BeginStyle.css" BorderPane.alignment="CENTER">
+      <Pane fx:id="first_body" prefHeight="417.0" prefWidth="684.0" stylesheets="@BeginStyle.css" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="title_label" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="553.0" text="We will like to learn more about you!">
+            <Label fx:id="title_label" alignment="CENTER" layoutX="42.0" layoutY="167.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="600.0" text="We like to learn about the folks visiting our area.  Would y'all like to tell us more about yourselves?" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="name_label" alignment="CENTER" layoutX="38.0" layoutY="44.0" prefHeight="27.0" prefWidth="75.0" text="Name">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="Fname" alignment="CENTER" layoutX="46.0" layoutY="71.0" prefHeight="45.0" prefWidth="255.0" promptText="First Name" />
-            <TextField fx:id="Lname" alignment="CENTER" layoutX="326.0" layoutY="71.0" prefHeight="45.0" prefWidth="272.0" promptText="Last Name" />
-            <Label fx:id="address_label" layoutX="46.0" layoutY="177.0" text="Address">
+            <Label fx:id="name_label" alignment="CENTER" layoutX="46.0" layoutY="243.0" prefHeight="27.0" prefWidth="177.0" text="What's your name?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="CIty" layoutX="45.0" layoutY="211.0" prefHeight="43.0" prefWidth="380.0" promptText="City" />
-            <TextField fx:id="Country" layoutX="44.0" layoutY="265.0" prefHeight="44.0" prefWidth="381.0" promptText="Country" />
-            <TextField fx:id="ZipC" layoutX="463.0" layoutY="266.0" prefHeight="43.0" prefWidth="141.0" promptText="Zip-Code" />
-            <TextField fx:id="State" layoutX="464.0" layoutY="209.0" prefHeight="47.0" prefWidth="140.0" promptText="State" />
+            <TextField fx:id="Fname" alignment="CENTER" layoutX="54.0" layoutY="270.0" prefHeight="45.0" prefWidth="255.0" promptText="First Name" />
+            <TextField fx:id="Lname" alignment="CENTER" layoutX="334.0" layoutY="270.0" prefHeight="45.0" prefWidth="272.0" promptText="Last Name" />
+            <Label fx:id="address_label" layoutX="46.0" layoutY="328.0" text="Is this where y'all are visiting us from?">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="CIty" layoutX="45.0" layoutY="362.0" prefHeight="43.0" prefWidth="380.0" promptText="City" />
+            <TextField fx:id="Country" layoutX="44.0" layoutY="416.0" prefHeight="44.0" prefWidth="381.0" promptText="Country" />
+            <TextField fx:id="ZipC" layoutX="463.0" layoutY="417.0" prefHeight="43.0" prefWidth="141.0" promptText="Zip-Code" />
+            <TextField fx:id="State" layoutX="464.0" layoutY="360.0" prefHeight="47.0" prefWidth="140.0" promptText="State" />
             <Label fx:id="empty_field" layoutX="52.0" layoutY="309.0" textFill="RED" />
             <Label fx:id="Fname_error" layoutX="46.0" layoutY="125.0" textFill="RED">
                <font>
@@ -93,6 +95,11 @@
             <Label fx:id="Lname_error" layoutX="425.0" layoutY="125.0" textFill="RED">
                <font>
                   <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="welcomeLabel" layoutX="44.0" prefHeight="140.0" prefWidth="572.0" text="Welcome to the Monroe - West Monroe area! Y'all are the 1st group to visit from your area!" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="28.0" />
                </font>
             </Label>
          </children>
