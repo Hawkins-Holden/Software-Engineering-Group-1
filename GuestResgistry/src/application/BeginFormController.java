@@ -171,7 +171,8 @@ public class BeginFormController implements Initializable, ControlledScreen {
 		// fnameValidate(Fname, Fname_error);
 		// lnameValidate(Lname, Lname_error);
 
-		visitor.setFname(firstName);
+		visitor.setFname(Fname.getText());
+		visitor.setLname(Lname.getText());
 		System.out.println("Form1 visitor: " + visitor.getFname());
 
 		// myController.setScreen(SoftwareEngineering.screen2ID);

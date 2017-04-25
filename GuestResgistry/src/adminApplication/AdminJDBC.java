@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import application.APIClient;
-import javafx.scene.control.TableColumn;
-
 import java.sql.*;
 import java.time.LocalDate;
 

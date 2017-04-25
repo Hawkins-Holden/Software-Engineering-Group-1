@@ -16,8 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
-public class AdminViewFormController  implements Initializable  {
-	
+public class AdminViewFormController implements Initializable {
+
 	@FXML
 	private TextField Fname;
 	@FXML
@@ -31,7 +31,7 @@ public class AdminViewFormController  implements Initializable  {
 	@FXML
 	private TextField Party;
 	@FXML
-	private Label FnameError; 
+	private Label FnameError;
 	@FXML
 	private Label LnameError;
 	@FXML
@@ -60,14 +60,13 @@ public class AdminViewFormController  implements Initializable  {
 	private RadioButton rbNN;
 	@FXML
 	private TextField Email;
-	
+
 	ObservableList<String> state_list = FXCollections.observableArrayList("AL", "AK", "AZ", "AR", "CA", "CO", "CT",
 			"DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
 			"MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN",
 			"TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY");
 	ObservableList<String> list = FXCollections.observableArrayList("Business", "Pleasure", "Other");
 	ObservableList<String> slist = FXCollections.observableArrayList("Billboard", "Interstate Sign", "Other");
-	
 
 	public void fnameValidate(TextField Fname, Label FnameError) {
 
@@ -78,7 +77,6 @@ public class AdminViewFormController  implements Initializable  {
 		}
 
 	}
-	
 
 	public void LnameValidate(TextField Lname, Label LnameError) {
 
@@ -89,29 +87,26 @@ public class AdminViewFormController  implements Initializable  {
 		}
 
 	}
-	
-	
+
 	public void destinationValidate(TextField Destination, Label DestinationError) {
 
-		if (Destination.getText() != null && !Destination.getText().matches("[a-zA-Z ]+") && !Destination.getText().isEmpty()) {
+		if (Destination.getText() != null && !Destination.getText().matches("[a-zA-Z ]+")
+				&& !Destination.getText().isEmpty()) {
 			DestinationError.setText("Please enter a valid City!");
 		} else {
 			DestinationError.setText("");
 		}
 
 	}
-	
+
 	public void emailValidate(TextField Email, Label EmailError) {
-		if (Email.getText() != null
-				&& !Email.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
+		if (Email.getText() != null && !Email.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
 				&& !Email.getText().isEmpty()) {
 			EmailError.setText("Please enter a valid email address!");
 		} else {
 			EmailError.setText("");
 		}
 	}
-
-		
 
 	public void partyValidate(TextField Party, Label PartyError) {
 
@@ -122,8 +117,7 @@ public class AdminViewFormController  implements Initializable  {
 		}
 
 	}
-	
-	
+
 	public void exitButtonClicked(ActionEvent event) throws IOException {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -133,7 +127,7 @@ public class AdminViewFormController  implements Initializable  {
 		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.get() == ButtonType.OK) {
-			
+
 			Parent closeScene = FXMLLoader.load(getClass().getResource("VisitorView.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			new_Stage.setTitle("Visitor");
@@ -146,7 +140,7 @@ public class AdminViewFormController  implements Initializable  {
 			alert.close();
 		}
 	}
-	
+
 	public void updateButton(ActionEvent event) throws IOException {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -156,13 +150,31 @@ public class AdminViewFormController  implements Initializable  {
 		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.get() == ButtonType.OK) {
-			
-			fnameValidate(Fname,FnameError);
-			LnameValidate(Lname,LnameError);
+
+			fnameValidate(Fname, FnameError);
+			LnameValidate(Lname, LnameError);
 			emailValidate(Email, EmailError);
-			destinationValidate(Destination,DestinationError);
-			partyValidate(Party,PartyError);
+			destinationValidate(Destination, DestinationError);
+			partyValidate(Party, PartyError);
+			String partyString = Party.getText();
+			Scanner scan = new Scanner(partyString);
+			int party;
+			if (scan.hasNextInt()) {
+				party = scan.nextInt();
+			} else {
+				party = 1;
+			}
+			scan.close();
 			
+
+			List<VisitorDetails> single = new ArrayList<VisitorDetails>();
+			single.add(new VisitorDetails(Fname.getText(), Lname.getText(), Email.getText(), City.getText(), "",
+					State.getValue(), Country.getText(), party, Reason.getValue(), (rbYes.isSelected() ? "Yes" : "No"),
+					Destination.getText(), false, Purpose.getValue(), new Date()));
+			single.get(0).setHeard(Reason.getValue()==null ? "Other" : Reason.getValue());
+			single.get(0).setTravelingFor(Purpose.getValue()==null ? "No Response" : Purpose.getValue());
+			AdminJDBC.addVisitors(single);
+
 			Parent closeScene = FXMLLoader.load(getClass().getResource("VisitorView.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			new_Stage.setTitle("Map");
@@ -175,8 +187,7 @@ public class AdminViewFormController  implements Initializable  {
 			alert.close();
 		}
 	}
-	
-	
+
 	public void initialize(URL location, ResourceBundle resources) {
 		State.setItems(state_list);
 		Reason.setItems(slist);
