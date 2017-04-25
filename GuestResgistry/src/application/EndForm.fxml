@@ -26,7 +26,7 @@
          <children>
             <ProgressBar layoutX="659.0" layoutY="97.0" prefHeight="23.0" prefWidth="555.0" progress="1.0">
               </ProgressBar>
-            <Label layoutX="434.0" layoutY="91.0" prefHeight="35.0" prefWidth="200.0" text="Page 3/3">
+            <Label layoutX="434.0" layoutY="91.0" prefHeight="35.0" prefWidth="200.0" text="YOUR PROGRESS">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -50,7 +50,7 @@
                <font>
                   <Font size="24.0" />
                </font></Button>
-            <Button fx:id="back_btn" layoutX="765.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToScreen2" prefHeight="83.0" prefWidth="130.0" text="BACK">
+            <Button fx:id="back_btn" layoutX="765.0" layoutY="31.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="130.0" text="BACK">
                <font>
                   <Font size="24.0" />
                </font></Button>
@@ -61,7 +61,7 @@
       <Pane fx:id="third_body" prefHeight="458.0" prefWidth="820.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="14.0" layoutY="32.0" />
-            <Label fx:id="reason_label" layoutX="14.0" layoutY="22.0" text="Are you travelling for business or pleasure?">
+            <Label fx:id="reason_label" layoutX="14.0" layoutY="22.0" text="Why are you travelling?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -74,12 +74,12 @@
                </font>
             </Label>
             <TextField fx:id="Party" layoutX="14.0" layoutY="168.0" prefHeight="44.0" prefWidth="180.0" promptText="Enter a number" />
-            <Label fx:id="email_label" layoutX="17.0" layoutY="252.0" text="Are you interested in recieving updates about events going on in our area?">
+            <Label fx:id="email_label" layoutX="17.0" layoutY="252.0" text="Are you interested to learn more about Monroe and West Monroe?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="rbYes" layoutX="16.0" layoutY="283.0" mnemonicParsing="false" onAction="#radioSelect" text="Yes, please">
+            <RadioButton fx:id="rbYes" layoutX="16.0" layoutY="283.0" mnemonicParsing="false" onAction="#radioSelect" text="YES, I LOVE TO">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -87,17 +87,17 @@
                   <ToggleGroup fx:id="toggleGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rbNo" layoutX="15.0" layoutY="320.0" mnemonicParsing="false" onAction="#radioSelect" text="No, thank you" toggleGroup="$toggleGroup">
+            <RadioButton fx:id="rbNo" layoutX="15.0" layoutY="320.0" mnemonicParsing="false" onAction="#radioSelect" text="NO, I AM GOOD" toggleGroup="$toggleGroup">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </RadioButton>
-            <Label fx:id="email_pop_label" layoutX="17.0" layoutY="355.0" text="To send you updates about Monroe and West Monroe, we will need your email address." visible="false">
+            <Label fx:id="email_pop_label" layoutX="17.0" layoutY="355.0" text="To send you updates about Monroe and West Monroe, we need your email address." visible="false">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="Email" layoutX="17.0" layoutY="387.0" prefHeight="39.0" prefWidth="477.0" promptText="Please enter your email address" visible="false" />
+            <TextField fx:id="Email" layoutX="17.0" layoutY="387.0" prefHeight="39.0" prefWidth="477.0" promptText="Enter your email address" visible="false" />
             <Label fx:id="Party_error" layoutX="17.0" layoutY="222.0" textFill="RED">
                <font>
                   <Font size="24.0" />

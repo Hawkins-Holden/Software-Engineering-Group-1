@@ -30,10 +30,9 @@ import javafx.stage.Stage;
  */
 public class EndFormController implements Initializable, ControlledScreen {
 
+	ScreensController myController;
 
-    ScreensController myController;
-    
-    @FXML
+	@FXML
 	private ComboBox<String> Reason;
 	@FXML
 	private RadioButton rbYes;
@@ -41,7 +40,7 @@ public class EndFormController implements Initializable, ControlledScreen {
 	private RadioButton rbNo;
 	@FXML
 	private TextField Party;
-        @FXML
+	@FXML
 	private Label email_pop_label;
 	@FXML
 	private TextField Email;
@@ -49,39 +48,39 @@ public class EndFormController implements Initializable, ControlledScreen {
 	private Label Party_error;
 	@FXML
 	private Label Email_error;
-	
+	private Visitor visitor;
+
 	ObservableList<String> list = FXCollections.observableArrayList("Business", "Pleasure", "Other");
-	
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        Reason.setItems(list);
-       
-    }    
-    
-    public void setScreenParent(ScreensController screenParent){
-        myController = screenParent;
-    }
-    
-    	
+
+	/**
+	 * Initializes the controller class.
+	 */
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		visitor = VisitorContext.getInstance().currentVisitor();
+		Reason.setItems(list);
+
+	}
+
+	public void setScreenParent(ScreensController screenParent) {
+		myController = screenParent;
+	}
+
 	public void radioSelect(ActionEvent event) {
-       
-		if (rbYes.isSelected()){
-                   	email_pop_label.setVisible(true); 
-                        Email.setVisible(true); 
+
+		if (rbYes.isSelected()) {
+			email_pop_label.setVisible(true);
+			Email.setVisible(true);
 		}
 
 		else if (rbNo.isSelected()) {
-                    email_pop_label.setVisible(false); 
-                    Email.setVisible(false);
-                    Email_error.setText("");
-            
+			email_pop_label.setVisible(false);
+			Email.setVisible(false);
+			Email_error.setText("");
+
 		}
 	}
-	
+
 	public void partyValidate(TextField Party, Label Party_error) {
 
 		if (Party.getText() != null && !Party.getText().matches("[1-9][0-9]*") && !Party.getText().isEmpty()) {
@@ -91,55 +90,50 @@ public class EndFormController implements Initializable, ControlledScreen {
 		}
 
 	}
-	
 
 	public void emailValidate(TextField Email, Label Email_error) {
-		if (Email.getText() != null
-				&& !Email.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
+		if (Email.getText() != null && !Email.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
 				&& !Email.getText().isEmpty()) {
-			Email_error.setText("Please, enter a valid email address.");
+			Email_error.setText("Please enter a valid email address!");
 		} else {
 			Email_error.setText("");
 		}
 	}
-	
-    
-    @FXML
-    private void goToScreen2(ActionEvent event) throws IOException{
-       //myController.setScreen(SoftwareEngineering.screen2ID);
-		//-----------------
-		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
-		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		new_Stage.setTitle("Your Information");
-		new_Stage.setScene(new Scene(newScene, 1680, 1200));
-		new_Stage.show();
-		//-----------------
-    }
-    
-    @FXML
-    private void onSubmit(ActionEvent event){
-        
-    	myController.setScreen(SoftwareEngineering.screen4ID);
-    	
-    	/*
-        	partyValidate(Party, Party_error);
+
+	/*
+	 * @FXML private void goToScreen2(ActionEvent event){
+	 * myController.setScreen(SoftwareEngineering.screen2ID); }
+	 */
+
+	@FXML
+	private void onSubmit(ActionEvent event) throws IOException {
+
+		visitor.setReasonForVisit(Reason.getValue());
+		String partyText = Party.getText();
+		Integer party = (partyText.isEmpty() ? 1 : Integer.parseInt(partyText));
+		visitor.setParty(party.intValue());
+
+		if (Email.getText() != null) {
+			visitor.setEmail(Email.getText());
+		}
+
+		// partyValidate(Party, Party_error);
 		emailValidate(Email, Email_error);
-                
-                if (rbYes.isSelected() && Email.getText().isEmpty())
-                {
-                    Email_error.setText("Please Provide your email address.");
-                }
-		
-		if ((Party_error.getText().isEmpty() && Email_error.getText().isEmpty()) && (!Party.getText().isEmpty() || !Email.getText().isEmpty()
-						|| !Reason.getSelectionModel().isEmpty() || rbNo.isSelected())){
-                    
-                  
-		} 
-                else {
-                    if (Party.getText().isEmpty() && Email.getText().isEmpty() && Reason.getSelectionModel().isEmpty() && !rbNo.isSelected() && !rbYes.isSelected()){
-                    Email_error.setText("Please fill out all fields, thanks.");
-                    }
-                }
-                */
-    }
+
+		if (rbYes.isSelected() && Email.getText().isEmpty()) {
+			Email_error.setText("Please Provide your email address.");
+		}
+
+		System.out.println(visitor.getReasonForVisit() + "is the reason for the visit");
+
+		if (Email_error.getText().isEmpty() || !rbYes.isSelected()) {
+			Parent newScene = FXMLLoader.load(getClass().getResource("Gratitude.fxml"));
+			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			new_Stage.setTitle("Your Information");
+			new_Stage.setScene(new Scene(newScene, 1680, 1200));
+			new_Stage.show();
+
+		}
+
+	}
 }

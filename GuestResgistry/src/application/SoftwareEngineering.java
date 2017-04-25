@@ -15,7 +15,9 @@ import javafx.stage.Stage;
  * @author admin
  */
 public class SoftwareEngineering extends Application {
-    
+	
+   // public static String screen0ID = "map";
+   // public static String screen0File = "Map.fxml";
     public static String screen1ID = "main";
     public static String screen1File = "BeginForm.fxml";
     public static String screen2ID = "screen2";
@@ -29,6 +31,7 @@ public class SoftwareEngineering extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         ScreensController mainContainer = new ScreensController();
+       // mainContainer.loadScreen(SoftwareEngineering.screen0ID, SoftwareEngineering.screen0File);
         mainContainer.loadScreen(SoftwareEngineering.screen1ID, SoftwareEngineering.screen1File);
         mainContainer.loadScreen(SoftwareEngineering.screen2ID, SoftwareEngineering.screen2File);
         mainContainer.loadScreen(SoftwareEngineering.screen3ID, SoftwareEngineering.screen3File);

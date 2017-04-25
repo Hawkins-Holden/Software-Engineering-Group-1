@@ -29,15 +29,21 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 
 public class MapController implements Initializable {
+	
+	//ScreensController myController;
+	
 
 	@FXML
 	private WebView webView;
 	private WebEngine engine;
+	private Visitor visitor;
 	JSObject window;
 
+	@SuppressWarnings("restriction")
 	public void displayWeb() {
 		engine = webView.getEngine();
-		final String hellohtml = "FinalMap.html"; // HTML file to view in web view
+		final String hellohtml = "FinalMap.html"; // HTML file to view in web
+													// view
 		URL urlHello = getClass().getResource(hellohtml);
 		engine.load(urlHello.toExternalForm());
 
@@ -62,19 +68,23 @@ public class MapController implements Initializable {
 
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		visitor = VisitorContext.getInstance().currentVisitor();
 		engine = webView.getEngine();
-		displayWeb();		
+		displayWeb();
 	}
-	
+
 	/**
 	 * Changes the focus of the map to Asia
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
+	@SuppressWarnings("restriction")
 	public void AsiaButton(ActionEvent event) throws IOException {
-		
+
 		// ----------------------------------------------
 
 		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
@@ -98,14 +108,15 @@ public class MapController implements Initializable {
 		// ----------------------------------------------
 		populateMap();
 	}
-	
+
 	/**
 	 * Changes the focus of the map to Africa
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
 	public void AfricaButton(ActionEvent event) throws IOException {
-		
+
 		// ----------------------------------------------
 
 		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
@@ -129,14 +140,15 @@ public class MapController implements Initializable {
 		// ----------------------------------------------
 		populateMap();
 	}
-	
+
 	/**
 	 * Changes the focus of the map to Europe
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
 	public void EuropeButton(ActionEvent event) throws IOException {
-		
+
 		// ----------------------------------------------
 
 		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
@@ -160,14 +172,15 @@ public class MapController implements Initializable {
 		// ----------------------------------------------
 		populateMap();
 	}
-	
+
 	/**
 	 * Changes the focus of the map to the USA
+	 * 
 	 * @param event
 	 * @throws IOException
 	 */
 	public void USAButton(ActionEvent event) throws IOException {
-		
+
 		// ----------------------------------------------
 
 		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
@@ -215,8 +228,8 @@ public class MapController implements Initializable {
 		window.setMember("app", new JavascriptComm());
 		engine.executeScript("giveInfo();");
 
-		// ----------------------------------------------
-
+		
+		//myController.setScreen(SoftwareEngineering.screen1ID);
 		Parent newScene = FXMLLoader.load(getClass().getResource("BeginForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
@@ -231,6 +244,14 @@ public class MapController implements Initializable {
 	private void populateMap() {
 		engine.executeScript("populateJSMap();");
 	}
+
+	/*
+	@Override
+	public void setScreenParent(ScreensController screenPage) {
+		myController = screenPage;
+		
+	}
 	
+	*/
 
 }

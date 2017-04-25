@@ -28,10 +28,10 @@ import javafx.stage.Stage;
  *
  * @author admin
  */
-public class MiddleFormController implements Initializable, ControlledScreen {
+public class MiddleFormController implements Initializable {
 
      ScreensController myController;
-        @FXML
+    @FXML
 	private RadioButton rbYes;
 	@FXML
 	private RadioButton rbNo;
@@ -39,10 +39,12 @@ public class MiddleFormController implements Initializable, ControlledScreen {
 	private ComboBox<String> Hear;
 	@FXML
 	private TextField TravelCity; 
+
 	@FXML
 	private Label Destination_error;
         @FXML
 	private Label empty_field;
+        private Visitor visitor;
 	
 	
 	ObservableList<String> slist = FXCollections.observableArrayList("Billboard", "Interstate Sign", "Other");
@@ -51,11 +53,12 @@ public class MiddleFormController implements Initializable, ControlledScreen {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    	visitor = VisitorContext.getInstance().currentVisitor();
         Hear.setItems(slist);
 
     }
     
+    /*
     public void setScreenParent(ScreensController screenParent){
         myController = screenParent;
          
@@ -64,13 +67,13 @@ public class MiddleFormController implements Initializable, ControlledScreen {
     	public void destinationValidate(TextField TravelCity, Label Destination_error) {
 
 		if (TravelCity.getText() != null && !TravelCity.getText().matches("[a-zA-Z ]+") && !TravelCity.getText().isEmpty()) {
-			Destination_error.setText("Please let us know where you're heading");
+			Destination_error.setText("Please enter a valid City!");
 		} else {
 			Destination_error.setText("");
 		}
 
 	}
-	
+	*/
 	
 	public void radioSelect(ActionEvent eve) {
 
@@ -81,46 +84,54 @@ public class MiddleFormController implements Initializable, ControlledScreen {
 		}
 	}
 
+	/*
 
     @FXML
-    private void goToScreen1(ActionEvent event) throws IOException{
+    private void goToScreen1(ActionEvent event){
         
-       //myController.setScreen(SoftwareEngineering.screen1ID);
-		//-----------------
-		Parent newScene = FXMLLoader.load(getClass().getResource("BeginForm.fxml"));
-		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		new_Stage.setTitle("Your Information");
-		new_Stage.setScene(new Scene(newScene, 1680, 1200));
-		new_Stage.show();
-		//-----------------
+       myController.setScreen(SoftwareEngineering.screen1ID);
     }
+    */
     
     @FXML
     private void goToScreen3(ActionEvent event) throws IOException{
-        
-		//-----------------
-		Parent newScene = FXMLLoader.load(getClass().getResource("EndForm.fxml"));
+        //destinationValidate(TravelCity, Destination_error);
+    	System.out.println("Form2 visitor: " + visitor.getCity());
+    	
+    	visitor.setDestination(TravelCity.getText());
+    	visitor.setHeard(Hear.getPromptText());
+    	
+    	if(rbYes.isSelected()){
+    		visitor.setHotel("Yes");
+    	}
+    	if(rbNo.isSelected()){
+    		visitor.setHotel("No");
+    	}
+
+
+		/*
+		if (Destination_error.getText().isEmpty() && (!Hear.getSelectionModel().isEmpty() || 
+				!TravelCity.getText().isEmpty() || rbYes.isSelected() || rbNo.isSelected())) 
+				{
+			 
+		}
+		
+                
+                else {
+                    if (Destination_error.getText().isEmpty()){
+                    empty_field.setText("Your information will not be shared. Please enter your destination.");
+                    }
+                   
+                    */
+                    
+                    //myController.setScreen(SoftwareEngineering.screen3ID);
+    	Parent newScene = FXMLLoader.load(getClass().getResource("EndForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
 		new_Stage.setScene(new Scene(newScene, 1680, 1200));
 		new_Stage.show();
-		//-----------------
-		
-		
-    	
-    	/*destinationValidate(TravelCity, Destination_error);
-		
-		if (Destination_error.getText().isEmpty() && (!Hear.getSelectionModel().isEmpty() || 
-				!TravelCity.getText().isEmpty() || rbYes.isSelected() || rbNo.isSelected())) {
-			 //myController.setScreen(SoftwareEngineering.screen3ID);
-		}
-                
-                else {
-                    if (Destination_error.getText().isEmpty()){
-                    empty_field.setText("We aren't sharing your information with anyone, please let us know where you're heading.");
-                    }
-                }*/
+                }
       
     }
-}
+
 

@@ -15,11 +15,57 @@ public class Visitor
 	private String longitude;
 	private String destination;
 	private String hotel;
+	private String city;
+	private String state;
+	private String metro;
+	private String zip;
+	private String country;
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getMetro() {
+		return metro;
+	}
+
+	public void setMetro(String metro) {
+		this.metro = metro;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	private int party;
 	
 	public Visitor (String email)
 	{
-		id = JDBC.generateID();
+		//id = JDBC.generateID();
 		this.email = email;
 	}
 	
@@ -45,65 +91,121 @@ public class Visitor
 		this.party = party;
 	}
 	
-	public int getId()
-	{
+	public Visitor() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static int getIdCount() {
+		return idCount;
+	}
+
+	public static void setIdCount(int idCount) {
+		Visitor.idCount = idCount;
+	}
+
+	public int getId() {
 		return id;
 	}
-	
-	public String getEmail()
-	{
-		return email;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	
-	public String getFirstName()
-	{
+
+	public String getFname() {
 		return fname;
 	}
-	
-	public String getMiddleInitial()
-	{
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	public String getMidInit() {
 		return midInit;
 	}
-	
-	public String getLastName()
-	{
+
+	public void setMidInit(String midInit) {
+		this.midInit = midInit;
+	}
+
+	public String getLname() {
 		return lname;
 	}
-	
-	public boolean getHasVisited()
-	{
+
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isHasVisited() {
 		return hasVisited;
 	}
-	
-	public String getReason()
-	{
+
+	public void setHasVisited(boolean hasVisited) {
+		this.hasVisited = hasVisited;
+	}
+
+	public String getReasonForVisit() {
 		return reasonForVisit;
 	}
-	
-	public String getHeard()
-	{
+
+	public void setReasonForVisit(String reasonForVisit) {
+		this.reasonForVisit = reasonForVisit;
+	}
+
+	public String getHeard() {
 		return heard;
 	}
-	
-	public String getLat()
-	{
+
+	public void setHeard(String heard) {
+		this.heard = heard;
+	}
+
+	public String getLatitude() {
 		return latitude;
 	}
-	
-	public String getLong()
-	{
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
 		return longitude;
 	}
-	public String getDestination()
-	{
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getDestination() {
 		return destination;
 	}
-	public String getHotel()
-	{
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public String getHotel() {
 		return hotel;
 	}
-	public int getParty()
-	{
+
+	public void setHotel(String hotel) {
+		this.hotel = hotel;
+	}
+
+	public int getParty() {
 		return party;
 	}
+
+	public void setParty(int party) {
+		this.party = party;
+	}
+
+
 }//end class
