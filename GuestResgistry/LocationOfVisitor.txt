@@ -1,7 +1,7 @@
-5400 Jimmy Clay Dr
-Austin
-TX
+2871-2881 3rd St
+San Francisco
+CA
 USA
 types=[street_address],
- 78744
-Austin
+ 94107
+San Francisco

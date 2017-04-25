@@ -1,4 +1,4 @@
-package adminApplication;
+package application;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
