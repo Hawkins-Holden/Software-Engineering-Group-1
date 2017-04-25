@@ -22,6 +22,11 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 
 public class MapController implements Initializable {
 
@@ -32,7 +37,7 @@ public class MapController implements Initializable {
 
 	public void displayWeb() {
 		engine = webView.getEngine();
-		final String hellohtml = "MapTest.html"; // HTML file to view in web view
+		final String hellohtml = "FinalMap.html"; // HTML file to view in web view
 		URL urlHello = getClass().getResource(hellohtml);
 		engine.load(urlHello.toExternalForm());
 
@@ -62,8 +67,131 @@ public class MapController implements Initializable {
 		engine = webView.getEngine();
 		displayWeb();		
 	}
+	
+	/**
+	 * Changes the focus of the map to Asia
+	 * @param event
+	 * @throws IOException
+	 */
+	public void AsiaButton(ActionEvent event) throws IOException {
+		
+		// ----------------------------------------------
 
-	@SuppressWarnings("restriction")
+		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
+
+			@Override
+			public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
+
+				if (newState == State.SUCCEEDED) {
+					window = (JSObject) engine.executeScript("window");
+					window.setMember("app", new JavascriptComm());
+					System.out.println("stateChange");
+				}
+			}
+
+		});
+
+		window = (JSObject) engine.executeScript("window");
+		window.setMember("app", new JavascriptComm());
+		engine.executeScript("getAsianLatandLong();");
+
+		// ----------------------------------------------
+		populateMap();
+	}
+	
+	/**
+	 * Changes the focus of the map to Africa
+	 * @param event
+	 * @throws IOException
+	 */
+	public void AfricaButton(ActionEvent event) throws IOException {
+		
+		// ----------------------------------------------
+
+		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
+
+			@Override
+			public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
+
+				if (newState == State.SUCCEEDED) {
+					window = (JSObject) engine.executeScript("window");
+					window.setMember("app", new JavascriptComm());
+					System.out.println("stateChange");
+				}
+			}
+
+		});
+
+		window = (JSObject) engine.executeScript("window");
+		window.setMember("app", new JavascriptComm());
+		engine.executeScript("getAfricanLatandLong();");
+
+		// ----------------------------------------------
+		populateMap();
+	}
+	
+	/**
+	 * Changes the focus of the map to Europe
+	 * @param event
+	 * @throws IOException
+	 */
+	public void EuropeButton(ActionEvent event) throws IOException {
+		
+		// ----------------------------------------------
+
+		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
+
+			@Override
+			public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
+
+				if (newState == State.SUCCEEDED) {
+					window = (JSObject) engine.executeScript("window");
+					window.setMember("app", new JavascriptComm());
+					System.out.println("stateChange");
+				}
+			}
+
+		});
+
+		window = (JSObject) engine.executeScript("window");
+		window.setMember("app", new JavascriptComm());
+		engine.executeScript("getEuropeanLatandLong();");
+
+		// ----------------------------------------------
+		populateMap();
+	}
+	
+	/**
+	 * Changes the focus of the map to the USA
+	 * @param event
+	 * @throws IOException
+	 */
+	public void USAButton(ActionEvent event) throws IOException {
+		
+		// ----------------------------------------------
+
+		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
+
+			@Override
+			public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
+
+				if (newState == State.SUCCEEDED) {
+					window = (JSObject) engine.executeScript("window");
+					window.setMember("app", new JavascriptComm());
+					System.out.println("stateChange");
+				}
+			}
+
+		});
+
+		window = (JSObject) engine.executeScript("window");
+		window.setMember("app", new JavascriptComm());
+		engine.executeScript("getUSALatandLong();");
+
+		// ----------------------------------------------
+		populateMap();
+	}
+
 	public void NextButton(ActionEvent event) throws IOException {
 
 		// Get necessary stuff from Javascript
@@ -103,4 +231,6 @@ public class MapController implements Initializable {
 	private void populateMap() {
 		engine.executeScript("populateJSMap();");
 	}
+	
+
 }

@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A helper class used by the Controller.java class. Essentially takes in the latitude and longitude pairs from the database and returns them in an arraylist.
@@ -50,6 +51,33 @@ public class TestArray {
 		latLongs.add("-88.41796875");
 		latLongs.add("43.58039085560783");
 		latLongs.add("-85.4296875");
+		
+		
+		//Uncomment to stress test
+		/*Random rand = new Random();
+		Integer n = new Integer(4);
+		
+		for(int i = 0; i < 499; i++){
+		n = rand.nextInt(25) + 25;
+		latLongs.add(n.toString());
+		}
+		for(int i = 0; i < 499; i++){
+		n = rand.nextInt(15) + 25;
+		latLongs.add(n.toString());
+		}
+		for(int i = 0; i < 499; i++){
+		n = rand.nextInt(40) + 25;
+		latLongs.add(n.toString());
+		}
+		for(int i = 0; i < 499; i++){
+		n = rand.nextInt(30) + 25;
+		latLongs.add(n.toString());
+		}
+		for(int i = 0; i < 499; i++){
+		n = rand.nextInt(20) + 25;
+		latLongs.add(n.toString());
+		}*/
+		
 		
 		return latLongs;
 		

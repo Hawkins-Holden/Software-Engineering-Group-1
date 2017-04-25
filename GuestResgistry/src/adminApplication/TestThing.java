@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 import jxl.Workbook;
 import jxl.write.*;
 import jxl.write.Label;
@@ -23,15 +24,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
-import javafx.util.converter.BooleanStringConverter;
 
 @SuppressWarnings("restriction")
-public class VisitorViewController implements Initializable {
+public class TestThing implements Initializable {
 
 	@FXML
 	private Button addButton;
 	@FXML
 	private Button deleteButton;
+	@FXML
+	private Button editButton;
 	@FXML
 	private Button refreshButton;
 	@FXML
@@ -122,8 +124,8 @@ public class VisitorViewController implements Initializable {
 		destinationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		hotelColumn.setOnEditCommit(e -> hotel_OnEditCommit(e));
 		hotelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-		//repeatColumn.setOnEditCommit(e -> repeat_OnEditCommit(e));
-		//repeatColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+		repeatColumn.setOnEditCommit(e -> repeat_OnEditCommit(e));
+		repeatColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		reasonColumn.setOnEditCommit(e -> reason_OnEditCommit(e));
 		reasonColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 	
@@ -186,12 +188,12 @@ public class VisitorViewController implements Initializable {
         AdminJDBC.updateVisitorDetails(visitor);
 	}
 	
-	
 	private void party_OnEditCommit(CellEditEvent<VisitorDetails, Integer> e){
-		TableColumn.CellEditEvent<VisitorDetails, Integer> cellEditEvent;
-		cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, Integer>) e;
+		CellEditEvent<VisitorDetails, Integer> cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, Integer>) e;
 		VisitorDetails visitor = cellEditEvent.getRowValue();
-		visitor.setParty(cellEditEvent.getNewValue());
+		Integer val = cellEditEvent.getNewValue();
+		visitor.setParty(val);
+		AdminJDBC.updateVisitorDetails(visitor);
 	}
 	
 	private void heard_OnEditCommit(CellEditEvent<VisitorDetails, String> e) {
@@ -219,11 +221,12 @@ public class VisitorViewController implements Initializable {
 	}
 	
 	
-	private void repeat_OnEditCommit(CellEditEvent<VisitorDetails, java.lang.Boolean> e){
-		CellEditEvent<VisitorDetails, java.lang.Boolean> cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, java.lang.Boolean>) e;
+	private void repeat_OnEditCommit(CellEditEvent<VisitorDetails, String> e){
+		CellEditEvent<VisitorDetails, String> cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, String>) e;
 		VisitorDetails visitor = cellEditEvent.getRowValue();
-		boolean val = cellEditEvent.getNewValue();
-		visitor.setRepeatVisit(val);
+		String val = cellEditEvent.getNewValue().toUpperCase();
+		boolean repeat = (val.equals("YES") || val.equals("Y") || val.equals("TRUE") || val.equals("T")) ? true : false;
+		visitor.setRepeatVisit(repeat);
 		AdminJDBC.updateVisitorDetails(visitor);
 	
 	}

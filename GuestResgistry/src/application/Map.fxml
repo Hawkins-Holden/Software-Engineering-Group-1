@@ -9,7 +9,19 @@
    <bottom>
       <Pane prefHeight="62.0" prefWidth="594.0" style="-fx-background-color: #093145;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="next_btn" layoutX="452.0" layoutY="6.0" mnemonicParsing="false" onAction="#NextButton" opacity="0.79" prefHeight="50.0" prefWidth="141.0" style="-fx-background-color: green;" text="NEXT&gt;" />
+            <Button fx:id="next_btn" layoutX="960.0" layoutY="6.0" mnemonicParsing="false" onAction="#NextButton" opacity="0.79" prefHeight="50.0" prefWidth="141.0" style="-fx-background-color: green;" text="NEXT&gt;" />
+         </children>
+         <children>
+            <Button fx:id="usa_btn" layoutX="800.0" layoutY="6.0" mnemonicParsing="false" onAction="#USAButton" opacity="0.79" prefHeight="50.0" prefWidth="141.0" style="-fx-background-color: yellow;" text="Reload Page" />
+         </children>
+         <children>
+            <Button fx:id="asia_btn" layoutX="640.0" layoutY="6.0" mnemonicParsing="false" onAction="#AsiaButton" opacity="0.79" prefHeight="50.0" prefWidth="141.0" style="-fx-background-color: orange;" text="I'm from Asia" />
+         </children>
+         <children>
+            <Button fx:id="africa_btn" layoutX="480.0" layoutY="6.0" mnemonicParsing="false" onAction="#AfricaButton" opacity="0.79" prefHeight="50.0" prefWidth="141.0" style="-fx-background-color: orange;" text="I'm from Africa" />
+         </children>
+         <children>
+            <Button fx:id="europe_btn" layoutX="320.0" layoutY="6.0" mnemonicParsing="false" onAction="#EuropeButton" opacity="0.79" prefHeight="50.0" prefWidth="141.0" style="-fx-background-color: orange;" text="I'm from Europe" />
          </children>
       </Pane>
    </bottom>

@@ -50,6 +50,10 @@ public class JavascriptComm {
 		TestArray.sendLatLongs(latLongPair);
 		addressElements = LocationInfoExtractor.extractLocationInfo(SerializeJson.getAddress(GeoCoding.reverseGeoCode(coords)));
 		
+		WriteToFile writerFile = new WriteToFile();
+		
+		//writerFile.write(addressElements);
+		
 		while(i < addressElements.length && addressElements[i] != null){
 			writer.println(addressElements[i]);
 			i++;
@@ -82,4 +86,24 @@ public class JavascriptComm {
 		return TestArray.getLatLongs();
 	}
 	
+	public double getAsianLat(){
+		return 34.0479;
+	}
+	public double getAsianLong(){
+		return 100.6197;
+	}
+	
+	public double getAfricaLat(){
+		return 34.5085;
+	}
+	public double getAfricaLong(){
+		return 8.7832;
+	}
+	
+	public double getEuropeLat(){
+		return 54.5260;
+	}
+	public double getEuropeLong(){
+		return 15.2551 ;
+	}
 }

@@ -5,17 +5,23 @@
  */
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -91,7 +97,7 @@ public class EndFormController implements Initializable, ControlledScreen {
 		if (Email.getText() != null
 				&& !Email.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
 				&& !Email.getText().isEmpty()) {
-			Email_error.setText("Please enter a valid email address!");
+			Email_error.setText("Please, enter a valid email address.");
 		} else {
 			Email_error.setText("");
 		}
@@ -99,13 +105,23 @@ public class EndFormController implements Initializable, ControlledScreen {
 	
     
     @FXML
-    private void goToScreen2(ActionEvent event){
-       myController.setScreen(SoftwareEngineering.screen2ID);
+    private void goToScreen2(ActionEvent event) throws IOException{
+       //myController.setScreen(SoftwareEngineering.screen2ID);
+		//-----------------
+		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
+		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		new_Stage.setTitle("Your Information");
+		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.show();
+		//-----------------
     }
     
     @FXML
     private void onSubmit(ActionEvent event){
         
+    	myController.setScreen(SoftwareEngineering.screen4ID);
+    	
+    	/*
         	partyValidate(Party, Party_error);
 		emailValidate(Email, Email_error);
                 
@@ -116,13 +132,14 @@ public class EndFormController implements Initializable, ControlledScreen {
 		
 		if ((Party_error.getText().isEmpty() && Email_error.getText().isEmpty()) && (!Party.getText().isEmpty() || !Email.getText().isEmpty()
 						|| !Reason.getSelectionModel().isEmpty() || rbNo.isSelected())){
-                    myController.setScreen(SoftwareEngineering.screen4ID);
+                    
                   
 		} 
                 else {
                     if (Party.getText().isEmpty() && Email.getText().isEmpty() && Reason.getSelectionModel().isEmpty() && !rbNo.isSelected() && !rbYes.isSelected()){
-                    Email_error.setText("Your information will not be shared. Please enter any one field.");
+                    Email_error.setText("Please fill out all fields, thanks.");
                     }
                 }
+                */
     }
 }

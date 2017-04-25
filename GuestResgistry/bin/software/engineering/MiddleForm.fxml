@@ -20,13 +20,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@MiddleStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MiddleFormController">
+<BorderPane fx:id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@MiddleStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software.engineering.MiddleFormController">
    <top>
       <AnchorPane opacity="0.6" prefHeight="210.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
          <children>
             <ProgressBar fx:id="Progress_bar" layoutX="631.0" layoutY="82.0" prefHeight="23.0" prefWidth="669.0" progress="0.59">
               </ProgressBar>
-            <Label layoutX="399.0" layoutY="76.0" text="Page 2/3">
+            <Label layoutX="399.0" layoutY="76.0" text="YOUR PROGRESS">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -60,7 +60,7 @@
    <center>
       <Pane fx:id="second_body" prefHeight="432.0" prefWidth="820.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="Stay_label" layoutX="14.0" layoutY="26.0" text="Did you stay in a hotel here in Monroe or West Monroe?">
+            <Label fx:id="Stay_label" layoutX="14.0" layoutY="26.0" text="Did you stay in Monroe-West Monroe Hotel?">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -84,7 +84,7 @@
                </font>
             </Label>
             <ComboBox fx:id="Hear" layoutX="14.0" layoutY="203.0" prefHeight="52.0" prefWidth="341.0" promptText="Select One" />
-            <Label fx:id="travel_label" layoutX="14.0" layoutY="279.0" text="Where are you heading? ">
+            <Label fx:id="travel_label" layoutX="14.0" layoutY="279.0" text="Where are you travelling? ">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
