@@ -56,6 +56,9 @@ public class MiddleFormController implements Initializable {
     	visitor = VisitorContext.getInstance().currentVisitor();
         Hear.setItems(slist);
 
+        
+		System.out.println("Middle Form Lat: " + visitor.getLatitude());
+		System.out.println("Middle Form Lat: " + visitor.getLongitude());
     }
     
     /*

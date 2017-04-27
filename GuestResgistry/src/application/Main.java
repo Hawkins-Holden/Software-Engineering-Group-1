@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	/** Intentionally start with map, this will be changed later. */
-	private static String FxmlTarget = "MapViewer.fxml";
+	private static String FxmlTarget = "Map.fxml";
 	/**Is the form (as opposed to the map) to be loaded?*/
 
 	public static void main(String[] args) {

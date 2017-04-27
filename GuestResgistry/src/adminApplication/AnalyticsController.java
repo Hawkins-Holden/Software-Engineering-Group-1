@@ -525,6 +525,152 @@ public class AnalyticsController implements Initializable {
 		return visitors;
 	}
 
+	
+	public ObservableList<VisitorDetails> getFilteredLatLongs() {
+		Date startDate = Date.valueOf(startDatePicker.getValue());
+		Date endDate = Date.valueOf(endDatePicker.getValue().plusDays(1));
+		StringBuilder query = new StringBuilder(
+				"SELECT Latitude, Longitude FROM visitors LEFT JOIN visits ON visitors.VisitorID = visits.VisitorID LEFT JOIN visitorlocations on visitors.VisitorID = visitorlocations.VisitorID WHERE visitors.VisitorID IS NOT NULL");
+		if (dateCheck.isSelected()) {
+			query.append(" AND Visiting_Day >= '" + startDate.toString() + "' AND Visiting_Day <= '"
+					+ endDate.toString() + "'");
+		}
+		if (areaCheck.isSelected()) {
+			boolean first = true;
+			for (MenuItem cityItem : citiesMenuButton.getItems()) {
+				CheckMenuItem city = (CheckMenuItem) cityItem;
+				if (city.isSelected()) {
+					String cityString = city.getText().split(",")[0];
+					if (first) {
+						query.append(" AND City = '" + cityString + "' OR Metro = '" + cityString + "'");
+						first = false;
+					} else {
+						query.append(" OR City = '" + cityString + "' OR Metro = '" + cityString + "'");
+					}
+				}
+			}
+			for (MenuItem stateItem : statesMenuButton.getItems()) {
+				CheckMenuItem state = (CheckMenuItem) stateItem;
+				if (state.isSelected()) {
+					if (first) {
+						query.append(" AND State = '" + state.getText() + "'");
+						first = false;
+					} else {
+						query.append(" OR State = '" + state.getText() + "'");
+					}
+				}
+			}
+			for (MenuItem countryItem : countriesMenuButton.getItems()) {
+				CheckMenuItem country = (CheckMenuItem) countryItem;
+				if (country.isSelected()) {
+					if (first) {
+						query.append(" AND Country = '" + country.getText() + "'");
+						first = false;
+					} else {
+						query.append(" OR Country = " + country.getText() + "'");
+					}
+				}
+			}
+		}
+		if (travelingCheck.isSelected()) {
+			for (MenuItem reasonItem : travelingMenuButton.getItems()) {
+				CheckMenuItem reason = (CheckMenuItem) reasonItem;
+				boolean first = true;
+				if (reason.isSelected()) {
+					if (first) {
+						query.append(" AND TravelingFor = '" + reason.getText() + "'");
+						first = false;
+					} else {
+						query.append(" OR TravelingFor = " + reason.getText() + "'");
+					}
+				}
+			}
+		}
+		if (referredCheck.isSelected()) {
+			for (MenuItem referenceItem : referenceMenuButton.getItems()) {
+				CheckMenuItem reference = (CheckMenuItem) referenceItem;
+				boolean first = true;
+				if (reference.isSelected()) {
+					if (first) {
+						query.append(" AND Heard = '" + reference.getText() + "'");
+						first = false;
+					} else {
+						query.append(" OR Heard = '" + reference.getText() + "'");
+					}
+				}
+			}
+		}
+		if (hotelCheck.isSelected()) {
+			for (MenuItem hotelItem : hotelMenuButton.getItems()) {
+				CheckMenuItem hotel = (CheckMenuItem) hotelItem;
+				boolean first = true;
+				if (hotel.isSelected()) {
+					if (first) {
+						query.append(" AND Hotel = '" + hotel.getText() + "'");
+						first = false;
+					} else {
+						query.append(" OR Hotel = '" + hotel.getText() + "'");
+					}
+				}
+			}
+		}
+		if (destinationCheck.isSelected()) {
+			for (MenuItem destinationItem : destinationMenuButton.getItems()) {
+				CheckMenuItem destination = (CheckMenuItem) destinationItem;
+				boolean first = true;
+				if (destination.isSelected()) {
+					if (first) {
+						query.append(" AND Destination = '" + destination.getText() + "'");
+						first = false;
+					} else {
+						query.append(" OR Destination = '" + destination.getText() + "'");
+					}
+				}
+			}
+		}
+		if (repeatCheck.isSelected()) {
+			for (MenuItem repeatItem : repeatMenuButton.getItems()) {
+				CheckMenuItem repeat = (CheckMenuItem) repeatItem;
+				boolean first = true;
+				if (repeat.isSelected()) {
+					if (first) {
+						query.append(" AND RepeatVisitor = '" + repeat.getText() + "'");
+						first = false;
+					} else {
+						query.append(" OR RepeatVisitor = '" + repeat.getText() + "'");
+					}
+				}
+			}
+		}
+		if (emailCheck.isSelected()) {
+			boolean first = true;
+			if (providedMenuItem.isSelected()) {
+				if (first) {
+					query.append(" AND Email IS NOT NULL");
+					first = false;
+				} else {
+					query.append(" OR Email IS NOT NULL");
+				}
+			}
+			if (notProvidedMenuItem.isSelected()) {
+				if (first) {
+					query.append(" AND Email IS NULL");
+					first = false;
+				} else {
+					query.append(" OR Email IS NULL");
+				}
+			}
+		}
+		query.append("AND (Latitude IS NOT NULL AND Latitude != '' AND Latitude != 'null' AND Longitude IS NOT NULL AND Longitude != '' AND Longitude != 'null') ORDER BY Visiting_Day");
+
+		System.out.println(query);
+		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
+		for (VisitorDetails v : AdminJDBC.getVisitorDetailsFromQuery(query.toString())) {
+			visitors.add(v);
+		}
+		return visitors;
+	}
+
 	private void populateMap() {
 		engine.executeScript("populateJSMap();");
 	}
@@ -1016,11 +1162,14 @@ public class AnalyticsController implements Initializable {
 
 	public static ArrayList<String[]> getLatLongData() {
 		ArrayList<String[]> locations = new ArrayList<String[]>();
+		
 		for (VisitorDetails vd : data) {
 			String[] latlng = new String[2];
+			if(!(vd.getLatitude()==null || vd.getLatitude().isEmpty() || vd.getLatitude().equals("null"))){
 			latlng[0] = vd.getLatitude();
 			latlng[1] = vd.getLongitude();
 			locations.add(latlng);
+			}
 		}
 		return locations;
 	}

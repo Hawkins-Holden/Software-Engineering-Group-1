@@ -36,9 +36,9 @@ import org.json.JSONException;
  *
  * @author admin
  */
-public class BeginFormController implements Initializable, ControlledScreen {
+public class BeginFormController implements Initializable {
 
-	ScreensController myController;
+	//ScreensController myController;
 
 	@FXML
 	private BorderPane mainBody;
@@ -79,9 +79,9 @@ public class BeginFormController implements Initializable, ControlledScreen {
 	 * Initializes the controller class.
 	 */
 
-	public void setScreenParent(ScreensController screenParent) {
-		myController = screenParent;
-	}
+	/*public void setScreenParent(ScreensController screenParent) {
+		//myController = screenParent;
+	}*/
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -129,6 +129,9 @@ public class BeginFormController implements Initializable, ControlledScreen {
 				visitor.setLatitude(locationInfo[8]);
 				visitor.setLongitude(locationInfo[9]);
 				visitor.setCountry("USA");
+				
+				System.out.println("Begin Form Lat: " + locationInfo[8]);
+				System.out.println("Begin Form Lat: " + locationInfo[9]);
 
 				CIty.setText(city);
 				Country.setText("USA");

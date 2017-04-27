@@ -104,19 +104,15 @@ public class JDBC {
 				 */
 
 				ResultSet res = stmt.executeQuery(
-						"SELECT Latitude, Longitude FROM visitorlocations WHERE (Latitude IS NOT NULL AND Longitude IS NOT NULL)");
+						"SELECT Latitude, Longitude FROM visitorlocations WHERE (Latitude IS NOT NULL AND Latitude != '' AND Latitude != 'null' AND Longitude IS NOT NULL AND Longitude != '' AND Longitude != 'null')");
 
 				/**
 				 * Iterate over the result set from the above query
 				 */
 				Scanner scan;
 				while (res.next()) {
-					scan = new Scanner(res.getString("Latitude"));
-					latLongs.add(""+scan.nextDouble());
-					scan.close();
-					scan = new Scanner(res.getString("Longitude"));
-					latLongs.add(""+scan.nextDouble());
-					scan.close();
+					latLongs.add(res.getString("Latitude"));
+					latLongs.add(res.getString("Longitude"));
 				}
 
 			}

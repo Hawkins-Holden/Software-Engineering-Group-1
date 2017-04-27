@@ -60,6 +60,9 @@ public class EndFormController implements Initializable, ControlledScreen {
 		visitor = VisitorContext.getInstance().currentVisitor();
 		Reason.setItems(list);
 
+		System.out.println("End Form Lat: " + visitor.getLatitude());
+		System.out.println("End Form Lat: " + visitor.getLongitude());
+		
 	}
 
 	public void setScreenParent(ScreensController screenParent) {

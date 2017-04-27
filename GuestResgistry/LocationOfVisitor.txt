@@ -1,7 +1,0 @@
-Indian Service Rte 5080
-Newcomb
-NM
-USA
-types=[route],
- 87455
-

@@ -14,7 +14,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="243.0" layoutY="252.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="115.0" text="HOME" textFill="#1b2cae">
+      <Button layoutX="243.0" layoutY="252.0" mnemonicParsing="false" onAction="#goHome" prefHeight="80.0" prefWidth="115.0" text="HOME" textFill="#1b2cae">
          <font>
             <Font size="24.0" />
          </font>

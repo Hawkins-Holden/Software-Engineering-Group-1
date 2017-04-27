@@ -25,10 +25,11 @@ private ArrayList<String> latLongArray = new ArrayList<String>();
 	
 	public double getString(int i){
 		
-		double number = 0.1;
-		Scanner scan = new Scanner(latLongArray.get(i));
-		number = scan.nextDouble();
-		scan.close();
+		double number = 0;
+		String s = latLongArray.get(i);
+		if (s != null && !s.isEmpty() && !s.equals("null")){
+		number = Double.parseDouble(s);
+		}
 		System.out.println("lat or long retrieved: " + number);
 		return number;
 		
