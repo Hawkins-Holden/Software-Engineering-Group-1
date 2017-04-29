@@ -86,6 +86,8 @@ public class BeginFormController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		visitor = VisitorContext.getInstance().currentVisitor();
+		visitor.generateNewID();
+		visitor.clearData();
 		// State.setItems(state_list);
 		// ----------------------------------------------
 		String[] locationInfo = new String[25];

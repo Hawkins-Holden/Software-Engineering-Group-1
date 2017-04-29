@@ -175,7 +175,7 @@ public class JDBC {
 
 				while (res.next()) {
 					int fromHere = res.getInt("VisitorsFromArea");
-					System.out.println(""+fromHere);
+					System.out.println("" + fromHere);
 					count += fromHere;
 				}
 			}
@@ -216,12 +216,17 @@ public class JDBC {
 
 				int visitorID = vd.getId();
 				Integer zip = vd.getZip();
-				if(zip!=null){
-					String[] latlng = APIClient.geocodingRequest(zip.toString());
-					vd.setLatitude(latlng[0]);
-					System.out.println("lat" + latlng[0]);
-					vd.setLongitude(latlng[1]);
-					System.out.println("lng" + latlng[0]);
+				String lat = vd.getLatitude();
+				String lng = vd.getLongitude();
+				if ((lat == null || lat.isEmpty() || lat.equals("null"))
+						&& (lng == null || lng.isEmpty() || lng.equals("null"))) {
+					if (zip != null) {
+						String[] latlng = APIClient.geocodingRequest(zip.toString());
+						vd.setLatitude(latlng[0]);
+						System.out.println("lat" + latlng[0]);
+						vd.setLongitude(latlng[1]);
+						System.out.println("lng" + latlng[1]);
+					}
 				}
 				Timestamp newDate = getCurrentTimeStamp();// vd.getVisitingDay();
 
@@ -230,7 +235,7 @@ public class JDBC {
 				String visitorLocationsQuery = "INSERT INTO visitorlocations (VisitorID, Latitude, Longitude, City, Metro, State, Country, Zip) VALUES ";
 				String visitorsQuery = "INSERT INTO visitors (VisitorID, Fname, Lname, Email) VALUES ";
 				String visitsQuery = "INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES ";
-				
+
 				visitorLocationsQuery += "(" + visitorID + ", '" + vd.getLatitude() + "', '" + vd.getLongitude()
 						+ "', '" + vd.getCity() + "', '" + vd.getMetro() + "', '" + vd.getState() + "', '"
 						+ vd.getCountry() + "', " + vd.getZip() + ")";

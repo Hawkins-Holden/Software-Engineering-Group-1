@@ -21,9 +21,11 @@ public class APIClient {
 		System.out.println(output);
 		int latStart = output.indexOf("<lat>") + 5;
 		int latEnd = output.indexOf("</lat>");
+		System.out.print(output.substring(latStart, latEnd));
 		latlng[0] = output.substring(latStart, latEnd);
-		int lngStart = output.indexOf("<lng>") + 8;
+		int lngStart = output.indexOf("<lng>") + 5;
 		int lngEnd = output.indexOf("</lng>");
+		System.out.print(output.substring(lngStart, lngEnd));
 		latlng[1] = output.substring(lngStart, lngEnd);
 		return latlng;
 	}

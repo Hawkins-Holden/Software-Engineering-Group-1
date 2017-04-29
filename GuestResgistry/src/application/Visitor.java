@@ -213,4 +213,28 @@ public class Visitor {
 	public void setZip(Integer zip) {
 		this.zip = zip;
 	}
+
+	public void generateNewID() {
+		this.id = JDBC.generateID();
+	}
+
+	public void clearData() {
+		this.city = null;
+		this.country = null;
+		this.destination = null;
+		this.email = null;
+		this.fname = null;
+		this.heard = null;
+		this.hotel = null;
+		this.latitude = null;
+		this.lname = null;
+		this.longitude = null;
+		this.metro = null;
+		this.party = null;
+		this.repeatVisit = false;
+		this.state = null;
+		this.travelingFor = null;
+		this.visitingDay = null;
+		this.zip = null;
+	}
 }// end class
