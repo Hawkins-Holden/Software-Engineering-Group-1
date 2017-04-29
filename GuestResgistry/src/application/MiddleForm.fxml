@@ -22,7 +22,7 @@
 
 <BorderPane fx:id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@MiddleStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MiddleFormController">
    <top>
-      <AnchorPane opacity="0.6" prefHeight="210.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="210.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
          <children>
             <ProgressBar fx:id="Progress_bar" layoutX="631.0" layoutY="82.0" prefHeight="23.0" prefWidth="669.0" progress="0.59">
               </ProgressBar>
@@ -40,7 +40,7 @@
       <AnchorPane opacity="0.32" prefHeight="396.0" prefWidth="550.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <AnchorPane opacity="0.6" prefHeight="399.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="399.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="nxt_btn" layoutX="1093.0" layoutY="16.0" mnemonicParsing="false" onAction="#goToScreen3" prefHeight="61.0" prefWidth="115.0" text="NEXT">
                <font>
@@ -50,7 +50,7 @@
                <font>
                   <Font size="24.0" />
                </font></Button>
-            <Button fx:id="back_btn" layoutX="792.0" layoutY="15.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="130.0" text="BACK">
+            <Button fx:id="back_btn" layoutX="788.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" prefHeight="67.0" prefWidth="130.0" text="BACK">
                <font>
                   <Font size="24.0" />
                </font></Button>

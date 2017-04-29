@@ -7,14 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GratitudeController">
+<AnchorPane id="AnchorPane" fx:id="mainBody" prefHeight="400.0" prefWidth="699.0" stylesheets="@Gratitude.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GratitudeController">
    <children>
-      <Label layoutX="185.0" layoutY="103.0" prefHeight="133.0" prefWidth="232.0" text="Got it! Thank y'all for coming, and y'all come see us again!" textAlignment="CENTER" textFill="#3522e1" wrapText="true" AnchorPane.bottomAnchor="164.0" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="183.0" AnchorPane.topAnchor="103.0">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Button layoutX="243.0" layoutY="252.0" mnemonicParsing="false" onAction="#goHome" prefHeight="80.0" prefWidth="115.0" text="HOME" textFill="#1b2cae">
+      <Button fx:id="home_btn" alignment="CENTER" layoutX="307.0" layoutY="185.0" mnemonicParsing="false" onAction="#goHome" prefHeight="80.0" prefWidth="115.0" text="Got it! Thank y'all for coming, and y'all come see us again! Click to go to Home!" wrapText="true" AnchorPane.bottomAnchor="185.0" AnchorPane.leftAnchor="307.0" AnchorPane.rightAnchor="277.0" AnchorPane.topAnchor="185.0">
          <font>
             <Font size="24.0" />
          </font>

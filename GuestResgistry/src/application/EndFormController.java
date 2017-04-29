@@ -102,6 +102,15 @@ public class EndFormController implements Initializable, ControlledScreen {
 			Email_error.setText("");
 		}
 	}
+	
+	public void goBack(ActionEvent event) throws IOException {
+		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
+		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		new_Stage.setTitle("Your Information");
+		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.show();
+
+	}
 
 	/*
 	 * @FXML private void goToScreen2(ActionEvent event){

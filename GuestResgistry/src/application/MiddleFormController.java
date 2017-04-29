@@ -86,6 +86,16 @@ public class MiddleFormController implements Initializable {
 		else if (rbNo.isSelected()) {
 		}
 	}
+	
+	public void goBack(ActionEvent event) throws IOException {
+		
+		Parent newScene = FXMLLoader.load(getClass().getResource("BeginForm.fxml"));
+		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		new_Stage.setTitle("Your Information");
+		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.show();
+
+	}
 
 	/*
 

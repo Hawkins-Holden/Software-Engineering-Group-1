@@ -17,10 +17,15 @@ import javafx.scene.control.Label;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,6 +36,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
 import org.json.JSONException;
+import javafx.animation.*;
+import javafx.scene.shape.Line;
 
 /**
  *
@@ -55,7 +62,19 @@ public class BeginFormController implements Initializable {
 	@FXML
 	private Label welcomeLabel;
 	@FXML
+	private Label address_label;
+	@FXML
 	private TextField State;
+	@FXML
+	private Button rightAddress;
+	@FXML
+	private Button wrongAddress; 
+	@FXML
+	private Label title_label1;
+	@FXML
+	private Button nxt_btn;
+	@FXML
+	private Button home_btn;
 
 	@FXML
 	private TextField CIty; // This must be a TextField, not a Label, or it WILL
@@ -85,6 +104,21 @@ public class BeginFormController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		PathTransition transition = new PathTransition(); 
+		
+		Line line = new Line();
+		line.setStartX(10);
+		line.setEndX(1000);
+		line.setStartY(60);
+		line.setEndY(60);
+		transition.setDuration(Duration.seconds(15));
+		transition.setNode(welcomeLabel);
+		transition.setPath(line);
+		transition.setAutoReverse(true);
+		transition.setCycleCount(TranslateTransition.INDEFINITE);
+		transition.play();
+		
+		
 		visitor = VisitorContext.getInstance().currentVisitor();
 		// State.setItems(state_list);
 		// ----------------------------------------------
@@ -167,7 +201,33 @@ public class BeginFormController implements Initializable {
 			System.out.println("file n");
 		}
 		// -------------------------------------------------
+		
+		if (State.getText().isEmpty()|| ZipC.getText().isEmpty())
+		{
+			address_label.setText("Where are y'all visiting from?");
+			State.setVisible(false);
+			ZipC.setVisible(false);
+			rightAddress.setVisible(false);
+			wrongAddress.setVisible(false);
+			nxt_btn.setVisible(true);
+			home_btn.setVisible(true);
+		}
 
+	}
+	
+	public void rightAddress(ActionEvent e) {
+		title_label1.setVisible(true);
+		nxt_btn.setVisible(true);
+		home_btn.setVisible(true);
+		wrongAddress.setVisible(false);
+		rightAddress.setVisible(false);
+		address_label.setText("Ok Great! Y'all are awesome.");
+		address_label.setTextFill(Color.web("#0076a3"));
+	}
+	public void wrongAddress(ActionEvent e) {
+		address_label.setText("Feel free to modify your address.");
+		address_label.setTextFill(Color.web("#0076a3"));
+		
 	}
 
 	@FXML
@@ -176,9 +236,9 @@ public class BeginFormController implements Initializable {
 		// fnameValidate(Fname, Fname_error);
 		// lnameValidate(Lname, Lname_error);
 
-		visitor.setFname(Fname.getText());
-		visitor.setLname(Lname.getText());
-		System.out.println("Form1 visitor: " + visitor.getFname());
+		//visitor.setFname(Fname.getText());
+		//visitor.setLname(Lname.getText());
+		//System.out.println("Form1 visitor: " + visitor.getFname());
 
 		// myController.setScreen(SoftwareEngineering.screen2ID);
 		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
@@ -219,6 +279,24 @@ public class BeginFormController implements Initializable {
 	public void setFields() {
 
 	}
+	
+	public void noButton(ActionEvent event) throws IOException {
+		
+		    //System.out.println("No button clicked");
+             Alert backAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm", ButtonType.YES, ButtonType.NO);
+             backAlert.setContentText("Are you sure you want to go home?\n\nWe would love to know about y'all.");
+             backAlert.showAndWait();
+             if (backAlert.getResult() == ButtonType.YES) {
+             Parent newScene = FXMLLoader.load(getClass().getResource("Map.fxml"));
+         		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+         		new_Stage.setTitle("Welcome to Monroe-West Monroe CVB");
+         		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+         		new_Stage.show();
+             }
+             else {
+                 backAlert.close();
+             }   
+	}	
 
 	/*
 	 * public void lnameValidate(TextField Lname, Label Lname_error) {
