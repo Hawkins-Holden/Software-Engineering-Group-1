@@ -140,7 +140,9 @@ public class BeginFormController implements Initializable {
 			System.out.println("This is begin controller " + locationInfo[0] + ",  " + locationInfo[1]);
 			i = 0;
 			scan.close();
-
+			
+			visitor.setLatitude(locationInfo[8]);
+			visitor.setLongitude(locationInfo[9]);
 			// Check if location is inside the US
 			if (locationInfo[3].equals("USA")) {
 
@@ -162,8 +164,6 @@ public class BeginFormController implements Initializable {
 				}
 				visitor.setState(state);
 				visitor.setMetro(metro);
-				visitor.setLatitude(locationInfo[8]);
-				visitor.setLongitude(locationInfo[9]);
 				visitor.setCountry("USA");
 				
 				System.out.println("Begin Form Lat: " + locationInfo[8]);
@@ -296,6 +296,7 @@ public class BeginFormController implements Initializable {
          		new_Stage.show();
              }
              else {
+            	 JDBC.addVisitor(visitor);
                  backAlert.close();
              }   
 	}	

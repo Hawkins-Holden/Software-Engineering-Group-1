@@ -28,6 +28,7 @@ import javafx.stage.Stage;
  *
  * @author admin
  */
+@SuppressWarnings("restriction")
 public class EndFormController implements Initializable, ControlledScreen {
 
 	ScreensController myController;

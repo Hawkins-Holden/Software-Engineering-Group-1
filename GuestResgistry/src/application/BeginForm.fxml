@@ -95,8 +95,13 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="rightAddress" layoutX="492.0" layoutY="373.0" mnemonicParsing="false" onAction="#rightAddress" prefHeight="67.0" prefWidth="132.0" text="YES!" />
-            <Button fx:id="wrongAddress" layoutX="320.0" layoutY="372.0" mnemonicParsing="false" onAction="#wrongAddress" prefHeight="69.0" prefWidth="133.0" text="NO!" />
+            <Button fx:id="rightAddress" layoutX="424.0" layoutY="455.0" mnemonicParsing="false" onAction="#rightAddress" prefHeight="67.0" prefWidth="132.0" text="Sure!" />
+            <Button fx:id="wrongAddress" layoutX="268.0" layoutY="454.0" mnemonicParsing="false" onAction="#wrongAddress" prefHeight="69.0" prefWidth="133.0" text="No" />
+            <Label fx:id="address_label1" layoutX="140.0" layoutY="413.0" text="Would y'all like to take a second tell us more about your trip?">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </center>
