@@ -4,8 +4,6 @@ import java.util.Date;
 
 public class Visitor {
 	private int id;
-	private String fname;
-	private String lname;
 	private String email;
 	private String latitude;
 	private String longitude;
@@ -30,8 +28,6 @@ public class Visitor {
 			String metro, String state, String country, int zip, int party, String heard, String hotel,
 			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.id = id;
-		this.fname = fname;
-		this.lname = lname;
 		this.email = email;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -63,22 +59,6 @@ public class Visitor {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getFname() {
-		return fname;
-	}
-
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-
-	public String getLname() {
-		return lname;
-	}
-
-	public void setLname(String lname) {
-		this.lname = lname;
 	}
 
 	public String getEmail() {
@@ -223,11 +203,9 @@ public class Visitor {
 		this.country = null;
 		this.destination = null;
 		this.email = null;
-		this.fname = null;
 		this.heard = null;
 		this.hotel = null;
 		this.latitude = null;
-		this.lname = null;
 		this.longitude = null;
 		this.metro = null;
 		this.party = null;

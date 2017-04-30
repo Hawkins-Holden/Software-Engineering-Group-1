@@ -1,37 +1,30 @@
 package adminApplication;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
-import application.Visitor;
-import javafx.beans.value.ObservableValue;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.util.Callback;
-import jxl.Workbook;
-import jxl.write.*;
-import jxl.write.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
-import javafx.util.converter.BooleanStringConverter;
 
 @SuppressWarnings("restriction")
 public class VisitorViewController implements Initializable {
@@ -48,10 +41,6 @@ public class VisitorViewController implements Initializable {
 	private DatePicker endDatePicker;
 	@FXML
 	private TableView<VisitorDetails> visitorTable;
-	@FXML
-	private TableColumn<VisitorDetails, String> fnameColumn;
-	@FXML
-	private TableColumn<VisitorDetails, String> lnameColumn;
 	@FXML
 	private TableColumn<VisitorDetails, String> emailColumn;
 	@FXML
@@ -90,8 +79,6 @@ public class VisitorViewController implements Initializable {
 	}
 
 	public void refreshTable() {
-		fnameColumn.setCellValueFactory(new PropertyValueFactory<>("fname"));
-		lnameColumn.setCellValueFactory(new PropertyValueFactory<>("lname"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 		metroColumn.setCellValueFactory(new PropertyValueFactory<>("metro"));
 		cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
@@ -110,10 +97,6 @@ public class VisitorViewController implements Initializable {
 		visitorTable.setItems(data);
 		visitorTable.setEditable(true);
 
-		fnameColumn.setOnEditCommit(e -> fname_OnEditCommit(e));
-		fnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-		lnameColumn.setOnEditCommit(e -> lname_OnEditCommit(e));
-		lnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		emailColumn.setOnEditCommit(e -> email_OnEditCommit(e));
 		emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		metroColumn.setOnEditCommit(e -> metro_OnEditCommit(e));
@@ -141,23 +124,7 @@ public class VisitorViewController implements Initializable {
 
 		visitorTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	}
-
-	private void fname_OnEditCommit(CellEditEvent<VisitorDetails, String> e) {
-		TableColumn.CellEditEvent<VisitorDetails, String> cellEditEvent;
-		cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, String>) e;
-		VisitorDetails visitor = cellEditEvent.getRowValue();
-		visitor.setFname(cellEditEvent.getNewValue());
-		AdminJDBC.updateVisitorDetails(visitor);
-	}
-
-	private void lname_OnEditCommit(CellEditEvent<VisitorDetails, String> e) {
-		TableColumn.CellEditEvent<VisitorDetails, String> cellEditEvent;
-		cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, String>) e;
-		VisitorDetails visitor = cellEditEvent.getRowValue();
-		visitor.setLname(cellEditEvent.getNewValue());
-		AdminJDBC.updateVisitorDetails(visitor);
-	}
-
+	
 	private void email_OnEditCommit(CellEditEvent<VisitorDetails, String> e) {
 		TableColumn.CellEditEvent<VisitorDetails, String> cellEditEvent;
 		cellEditEvent = (TableColumn.CellEditEvent<VisitorDetails, String>) e;

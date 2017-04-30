@@ -24,11 +24,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
+@SuppressWarnings("restriction")
 public class IdleTimer
 {
 	private Boolean isTimerRunning;
-    private Timeline timeline;
+	private Timeline timeline;
 
 	public void runTimer(Stage Stage) throws Exception
 	{
@@ -40,6 +40,7 @@ public class IdleTimer
 	    	
 	    	try 
 	    	{
+	    		JDBC.addVisitor(VisitorContext.getInstance().currentVisitor());
 	    		Parent root = FXMLLoader.load(getClass().getResource("Map.fxml"));
 	    		Stage.setTitle("Welcome to Monroe-West Monroe CVB!!!");
 	    		Stage.setScene(new Scene(root));

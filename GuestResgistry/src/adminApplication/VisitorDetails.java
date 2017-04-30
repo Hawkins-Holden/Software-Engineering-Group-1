@@ -4,8 +4,6 @@ import java.util.Date;
 
 public class VisitorDetails {
 	private int id;
-	private String fname;
-	private String lname;
 	private String email;
 	private String latitude;
 	private String longitude;
@@ -27,8 +25,6 @@ public class VisitorDetails {
 			String city, String metro, String state, String country, Integer party, String heard, String hotel,
 			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(id);
-		this.setFname(fname);
-		this.setLname(lname);
 		this.setEmail(email);
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
@@ -49,8 +45,6 @@ public class VisitorDetails {
 			String country, Integer party, String heard, String hotel, String destination, boolean repeatVisit,
 			String travelingFor, Date visitingDay) {
 		this.setId(AdminJDBC.generateID());
-		this.setFname(fname);
-		this.setLname(lname);
 		this.setEmail(email);
 		this.setLatitude("");
 		this.setLongitude("");
@@ -71,10 +65,7 @@ public class VisitorDetails {
 			String country, Integer zip, Integer party, String heard, String hotel, String destination,
 			boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(AdminJDBC.generateID());
-		this.setFname(fname);
-		this.setLname(lname);
 		this.setEmail(email);
-
 		this.setCity(city);
 		this.setMetro(metro);
 		this.setState(state);
@@ -106,8 +97,6 @@ public class VisitorDetails {
 			String heard, String hotel, String destination, boolean repeatVisit, String travelingFor,
 			Date visitingDay) {
 		this.setId(AdminJDBC.generateID());
-		this.setFname(fname);
-		this.setLname(lname);
 		this.setEmail(email);
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
@@ -128,8 +117,6 @@ public class VisitorDetails {
 			String city, String metro, String state, String country, int zip, int party, String heard, String hotel,
 			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(id);
-		this.setFname(fname);
-		this.setLname(lname);
 		this.setEmail(email);
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
@@ -154,23 +141,7 @@ public class VisitorDetails {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getFname() {
-		return fname;
-	}
-
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-
-	public String getLname() {
-		return lname;
-	}
-
-	public void setLname(String lname) {
-		this.lname = lname;
-	}
-
+	
 	public String getEmail() {
 		return email;
 	}

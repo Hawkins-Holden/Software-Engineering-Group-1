@@ -142,10 +142,6 @@ public class AnalyticsController implements Initializable {
 	@FXML
 	private TableView<VisitorDetails> visitorTable;
 	@FXML
-	private TableColumn<VisitorDetails, String> fnameColumn;
-	@FXML
-	private TableColumn<VisitorDetails, String> lnameColumn;
-	@FXML
 	private TableColumn<VisitorDetails, String> emailColumn;
 	@FXML
 	private TableColumn<VisitorDetails, String> metroColumn;
@@ -213,6 +209,7 @@ public class AnalyticsController implements Initializable {
 
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		refreshMenus();
@@ -359,8 +356,6 @@ public class AnalyticsController implements Initializable {
 	}
 
 	public void refreshTable() {
-		fnameColumn.setCellValueFactory(new PropertyValueFactory<>("fname"));
-		lnameColumn.setCellValueFactory(new PropertyValueFactory<>("lname"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 		metroColumn.setCellValueFactory(new PropertyValueFactory<>("metro"));
 		cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
@@ -525,7 +520,6 @@ public class AnalyticsController implements Initializable {
 		return visitors;
 	}
 
-	
 	public ObservableList<VisitorDetails> getFilteredLatLongs() {
 		Date startDate = Date.valueOf(startDatePicker.getValue());
 		Date endDate = Date.valueOf(endDatePicker.getValue().plusDays(1));
@@ -661,7 +655,8 @@ public class AnalyticsController implements Initializable {
 				}
 			}
 		}
-		query.append("AND (Latitude IS NOT NULL AND Latitude != '' AND Latitude != 'null' AND Longitude IS NOT NULL AND Longitude != '' AND Longitude != 'null') ORDER BY Visiting_Day");
+		query.append(
+				"AND (Latitude IS NOT NULL AND Latitude != '' AND Latitude != 'null' AND Longitude IS NOT NULL AND Longitude != '' AND Longitude != 'null') ORDER BY Visiting_Day");
 
 		System.out.println(query);
 		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
@@ -697,10 +692,10 @@ public class AnalyticsController implements Initializable {
 					saveXLSFile(file);
 				} catch (WriteException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ErrorAlert.showError(e);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ErrorAlert.showError(e);
 				}
 			}
 		} else {
@@ -722,10 +717,10 @@ public class AnalyticsController implements Initializable {
 					saveEmailList(file);
 				} catch (WriteException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ErrorAlert.showError(e);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ErrorAlert.showError(e);
 				}
 			}
 			/*
@@ -770,16 +765,13 @@ public class AnalyticsController implements Initializable {
 			FileChooser chooser = new FileChooser();
 			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
 			chooser.getExtensionFilters().add(filter);
-			// Show save dialog
 			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
 			try {
 				generateImportTemplate(file);
 			} catch (WriteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ErrorAlert.showError(e);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ErrorAlert.showError(e);
 			}
 		} else if (result.get() == buttonTypeTwo) {
 			FileChooser chooser = new FileChooser();
@@ -791,15 +783,7 @@ public class AnalyticsController implements Initializable {
 				File file = chooser.showOpenDialog(exportButton.getScene().getWindow());
 				readXLSFile(file);
 			} catch (Exception e) {
-				Alert errorAlert = new Alert(Alert.AlertType.CONFIRMATION);
-				errorAlert.setTitle("Error");
-				errorAlert.setHeaderText("A " + e.getClass().getName()
-						+ " was thrown. Details are shown below. Please contact an administrator for assistance.");
-				errorAlert.setContentText(e.getMessage());
-				ButtonType cancelButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-				errorAlert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, cancelButton);
-				errorAlert.showAndWait();
+				ErrorAlert.showError(e);
 			}
 		} else {
 
@@ -907,7 +891,7 @@ public class AnalyticsController implements Initializable {
 			}
 			AdminJDBC.addVisitors(newData);
 		} catch (Exception e) {
-			e.printStackTrace();
+			ErrorAlert.showError(e);
 		}
 	}
 
@@ -915,13 +899,8 @@ public class AnalyticsController implements Initializable {
 		WritableWorkbook myexcel = Workbook.createWorkbook(file);
 		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
 
-		// TODO: set this up with only the checked columns in the table
 		mysheet.addCell(new Label(0, 0, "This report was generated on " + getDate() + " at " + getTime() + "."));
 		int x = 0;
-		mysheet.addCell(new Label(x, 1, "First"));
-		x++;
-		mysheet.addCell(new Label(x, 1, "Last"));
-		x++;
 		mysheet.addCell(new Label(x, 1, "Email"));
 		x++;
 		mysheet.addCell(new Label(x, 1, "From (City)"));
@@ -950,10 +929,6 @@ public class AnalyticsController implements Initializable {
 
 		for (int i = 0; i < data.size(); i++) {
 			int j = 0;
-			mysheet.addCell(formatData(i, j, data.get(i).getFname()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getLname()));
-			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getEmail()));
 			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getCity()));
@@ -981,33 +956,28 @@ public class AnalyticsController implements Initializable {
 			mysheet.addCell(formatData(i, j, data.get(i).getVisitingDay().toString()));
 			j++;
 		}
-		myexcel.write();
-		myexcel.close();
+		try {
+			myexcel.write();
+		} catch (Exception e) {
+			ErrorAlert.showError(e);
+		} finally {
+			myexcel.close();
+		}
 	}
 
 	public void saveEmailList(File file) throws IOException, WriteException {
 		WritableWorkbook myexcel = Workbook.createWorkbook(file);
 		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
+		try {
+			for (int i = 1; i < data.size() - 1; i++) {
+				mysheet.addCell(formatData(i - 1, 0, data.get(i).getEmail()));
+			}
+		} catch (WriteException e) {
 
-		// TODO: set this up with only the checked columns in the table
-		int x = 0;
-		mysheet.addCell(new Label(x, 1, "First"));
-		x++;
-		mysheet.addCell(new Label(x, 1, "Last"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Email"));
-		x++;
-		for (int i = 0; i < data.size() - 1; i++) {
-			int j = 0;
-			mysheet.addCell(formatData(i - 1, j, data.get(i).getFname()));
-			j++;
-			mysheet.addCell(formatData(i - 1, j, data.get(i).getLname()));
-			j++;
-			mysheet.addCell(formatData(i - 1, j, data.get(i).getEmail()));
-			j++;
+		} finally {
+			myexcel.write();
+			myexcel.close();
 		}
-		myexcel.write();
-		myexcel.close();
 	}
 
 	private Label formatData(int i, int j, String data) {
@@ -1136,39 +1106,35 @@ public class AnalyticsController implements Initializable {
 		try {
 			response = httpclient.execute(httppost);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorAlert.showError(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorAlert.showError(e);
 		}
 		final HttpEntity resEntity = response.getEntity();
 
 		try {
 			EntityUtils.consume(resEntity);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorAlert.showError(e);
 		}
 		int code = response.getStatusLine().getStatusCode();
 		try {
 			httpclient.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorAlert.showError(e);
 		}
 		return code;
 	}
 
 	public static ArrayList<String[]> getLatLongData() {
 		ArrayList<String[]> locations = new ArrayList<String[]>();
-		
+
 		for (VisitorDetails vd : data) {
 			String[] latlng = new String[2];
-			if(!(vd.getLatitude()==null || vd.getLatitude().isEmpty() || vd.getLatitude().equals("null"))){
-			latlng[0] = vd.getLatitude();
-			latlng[1] = vd.getLongitude();
-			locations.add(latlng);
+			if (!(vd.getLatitude() == null || vd.getLatitude().isEmpty() || vd.getLatitude().equals("null"))) {
+				latlng[0] = vd.getLatitude();
+				latlng[1] = vd.getLongitude();
+				locations.add(latlng);
 			}
 		}
 		return locations;
