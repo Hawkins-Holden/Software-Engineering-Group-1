@@ -514,7 +514,9 @@ public class AnalyticsController implements Initializable {
 
 		System.out.println(query);
 		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
-		for (VisitorDetails v : AdminJDBC.getVisitorDetailsFromQuery(query.toString())) {
+		String queryString = query.toString();
+		List<VisitorDetails> stuffReturnedfromQuery = AdminJDBC.getVisitorDetailsFromQuery(queryString);
+		for (VisitorDetails v : stuffReturnedfromQuery) {
 			visitors.add(v);
 		}
 		return visitors;
@@ -795,22 +797,32 @@ public class AnalyticsController implements Initializable {
 	public void generateImportTemplate(File file) throws IOException, WriteException {
 		WritableWorkbook myexcel = Workbook.createWorkbook(file);
 		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
-
-		mysheet.addCell(new Label(0, 0, "First"));
-		mysheet.addCell(new Label(1, 0, "Last"));
-		mysheet.addCell(new Label(2, 0, "Email"));
-		mysheet.addCell(new Label(3, 0, "From (City)"));
-		mysheet.addCell(new Label(4, 0, "From (Metro)"));
-		mysheet.addCell(new Label(5, 0, "From (State)"));
-		mysheet.addCell(new Label(6, 0, "From (Country)"));
-		mysheet.addCell(new Label(7, 0, "From (Zip)"));
-		mysheet.addCell(new Label(8, 0, "Number in Party"));
-		mysheet.addCell(new Label(9, 0, "How Referred"));
-		mysheet.addCell(new Label(10, 0, "Stayed in M/WM Hotel"));
-		mysheet.addCell(new Label(11, 0, "Destination"));
-		mysheet.addCell(new Label(12, 0, "Repeat Visitor?"));
-		mysheet.addCell(new Label(13, 0, "Reason For Travelling"));
-		mysheet.addCell(new Label(14, 0, "Date of Visit"));
+		int x = 0;
+		mysheet.addCell(new Label(x, 0, "Email"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "From (City)"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "From (Metro)"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "From (State)"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "From (Country)"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "From (Zip)"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "Number in Party"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "How Referred"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "Stayed in M/WM Hotel"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "Destination"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "Repeat Visitor?"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "Reason For Travelling"));
+		x++;
+		mysheet.addCell(new Label(x, 0, "Date of Visit"));
 
 		myexcel.write();
 		myexcel.close();
@@ -824,18 +836,24 @@ public class AnalyticsController implements Initializable {
 			Sheet sheet = w.getSheet(0);
 
 			for (int i = 1; i < sheet.getRows(); i++) {
-				String firstName = sheet.getCell(0, i).getContents();
-				String lastName = sheet.getCell(1, i).getContents();
-				String email = sheet.getCell(2, i).getContents();
-				String city = sheet.getCell(3, 1).getContents();
-				String metro = sheet.getCell(4, i).getContents();
-				String state = sheet.getCell(5, i).getContents();
-				String country = sheet.getCell(6, i).getContents();
-				String zipString = sheet.getCell(7, i).getContents();
+				int x = 0;
+				String email = sheet.getCell(x, i).getContents();
+				x++;
+				String city = sheet.getCell(x, i).getContents();
+				x++;
+				String metro = sheet.getCell(x, i).getContents();
+				x++;
+				String state = sheet.getCell(x, i).getContents();
+				x++;
+				String country = sheet.getCell(x, i).getContents();
+				x++;
+				String zipString = sheet.getCell(x, i).getContents();
 				Integer zip = (zipString.isEmpty() ? null : Integer.parseInt(zipString));
-				String partyString = sheet.getCell(8, i).getContents();
+				x++;
+				String partyString = sheet.getCell(x, i).getContents();
 				Integer party = (partyString.isEmpty() ? null : Integer.parseInt(partyString));
-				String referred = sheet.getCell(9, i).getContents();
+				x++;
+				String referred = sheet.getCell(x, i).getContents();
 				if (referred.equalsIgnoreCase("Billboard")) {
 					referred = "Billboard";
 				} else if (referred.equalsIgnoreCase("Interstate Sign")) {
@@ -845,7 +863,8 @@ public class AnalyticsController implements Initializable {
 				} else {
 					referred = "No Response";
 				}
-				String hotel = sheet.getCell(10, i).getContents();
+				x++;
+				String hotel = sheet.getCell(x, i).getContents();
 				if (hotel.equalsIgnoreCase("Yes") || hotel.equalsIgnoreCase("Y")) {
 					hotel = "Yes";
 				} else if (hotel.equalsIgnoreCase("No") || hotel.equalsIgnoreCase("N")) {
@@ -853,14 +872,17 @@ public class AnalyticsController implements Initializable {
 				} else {
 					hotel = "No Response";
 				}
-				String destination = sheet.getCell(11, i).getContents();
-				String repeatString = sheet.getCell(12, i).getContents();
+				x++;
+				String destination = sheet.getCell(x, i).getContents();
+				x++;
+				String repeatString = sheet.getCell(x, i).getContents();
 				boolean repeat = false;
 				if (repeatString.equalsIgnoreCase("Yes") || repeatString.equalsIgnoreCase("Y")
 						|| repeatString.equalsIgnoreCase("True") || repeatString.equalsIgnoreCase("T")) {
 					repeat = true;
 				}
-				String travelingFor = sheet.getCell(13, i).getContents();
+				x++;
+				String travelingFor = sheet.getCell(x, i).getContents();
 				if (travelingFor.equalsIgnoreCase("Business")) {
 					travelingFor = "Business";
 				} else if (travelingFor.equalsIgnoreCase("Pleasure")) {
@@ -872,7 +894,8 @@ public class AnalyticsController implements Initializable {
 				} else {
 					travelingFor = "No Response";
 				}
-				String dateString = sheet.getCell(14, i).getContents();
+				x++;
+				String dateString = sheet.getCell(x, i).getContents();
 				java.util.Date visitingDay;
 				if (!dateString.isEmpty()) {
 					DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
@@ -886,7 +909,7 @@ public class AnalyticsController implements Initializable {
 				} else {
 					visitingDay = null;
 				}
-				newData.add(new VisitorDetails(firstName, lastName, email, city, metro, state, country, zip, party,
+				newData.add(new VisitorDetails(email, city, metro, state, country, zip, party,
 						referred, hotel, destination, repeat, travelingFor, visitingDay));
 			}
 			AdminJDBC.addVisitors(newData);
@@ -899,33 +922,32 @@ public class AnalyticsController implements Initializable {
 		WritableWorkbook myexcel = Workbook.createWorkbook(file);
 		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
 
-		mysheet.addCell(new Label(0, 0, "This report was generated on " + getDate() + " at " + getTime() + "."));
 		int x = 0;
-		mysheet.addCell(new Label(x, 1, "Email"));
+		mysheet.addCell(new Label(x, 0, "Email"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "From (City)"));
+		mysheet.addCell(new Label(x, 0, "From (City)"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "From (Metro)"));
+		mysheet.addCell(new Label(x, 0, "From (Metro)"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "From (State)"));
+		mysheet.addCell(new Label(x, 0, "From (State)"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "From (Country)"));
+		mysheet.addCell(new Label(x, 0, "From (Country)"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "From (Zip)"));
+		mysheet.addCell(new Label(x, 0, "From (Zip)"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "Number in Party"));
+		mysheet.addCell(new Label(x, 0, "Number in Party"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "How Referred"));
+		mysheet.addCell(new Label(x, 0, "How Referred"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "Stayed in M/WM Hotel"));
+		mysheet.addCell(new Label(x, 0, "Stayed in M/WM Hotel"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "Destination"));
+		mysheet.addCell(new Label(x, 0, "Destination"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "Repeat Visitor?"));
+		mysheet.addCell(new Label(x, 0, "Repeat Visitor?"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "Reason For Travelling"));
+		mysheet.addCell(new Label(x, 0, "Reason For Travelling"));
 		x++;
-		mysheet.addCell(new Label(x, 1, "Date of Visit"));
+		mysheet.addCell(new Label(x, 0, "Date of Visit"));
 
 		for (int i = 0; i < data.size(); i++) {
 			int j = 0;
@@ -981,7 +1003,7 @@ public class AnalyticsController implements Initializable {
 	}
 
 	private Label formatData(int i, int j, String data) {
-		return new Label(j, i + 2, data);
+		return new Label(j, i + 1, data);
 	}
 
 	private String getTime() {

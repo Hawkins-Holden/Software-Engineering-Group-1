@@ -200,8 +200,6 @@
                   </TabPane>
                   <TableView fx:id="visitorTable" layoutX="-2.0" layoutY="480.0" prefHeight="400.0" prefWidth="1158.0" tableMenuButtonVisible="true">
                      <columns>
-                        <TableColumn fx:id="fnameColumn" prefWidth="75.0" text="First Name" />
-                        <TableColumn fx:id="lnameColumn" prefWidth="75.0" text="Last Name" />
                         <TableColumn fx:id="emailColumn" prefWidth="79.0" text="Email" />
                         <TableColumn fx:id="metroColumn" prefWidth="71.0" text="Metro Area" />
                         <TableColumn fx:id="cityColumn" prefWidth="75.0" text="City" />

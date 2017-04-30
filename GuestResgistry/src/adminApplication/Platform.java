@@ -15,9 +15,10 @@ import javafx.stage.Stage;
  *
  * @author admin
  */
+@SuppressWarnings("restriction")
 public class Platform extends Application {
     
-    @Override
+	@Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Platform.fxml"));
         Scene scene = new Scene(root, 1000, 1000);

@@ -168,7 +168,7 @@ public class AdminViewFormController implements Initializable {
 			
 
 			List<VisitorDetails> single = new ArrayList<VisitorDetails>();
-			single.add(new VisitorDetails(Fname.getText(), Lname.getText(), Email.getText(), City.getText(), "",
+			single.add(new VisitorDetails(Email.getText(), City.getText(), "",
 					State.getValue(), Country.getText(), party, Reason.getValue(), (rbYes.isSelected() ? "Yes" : "No"),
 					Destination.getText(), false, Purpose.getValue(), new Date()));
 			single.get(0).setHeard(Reason.getValue()==null ? "Other" : Reason.getValue());

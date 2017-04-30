@@ -44,7 +44,7 @@ public class AdminJDBC {
 				ResultSet res = stmt.executeQuery(query);
 
 				while (res.next()) {
-					resultSet.add(new VisitorDetails(res.getInt("VisitorID"), "", "", res.getString("Email"),
+					resultSet.add(new VisitorDetails(res.getInt("VisitorID"), res.getString("Email"),
 							res.getString("Latitude"), res.getString("Longitude"), res.getString("City"),
 							res.getString("Metro"), res.getString("State"), res.getString("Country"), res.getInt("zip"),
 							res.getInt("Party"), res.getString("Heard"), res.getString("Hotel"),
@@ -97,7 +97,7 @@ public class AdminJDBC {
 								+ startDate + " AND " + endDate + " ORDER BY Visiting_Day");
 
 				while (res.next()) {
-					resultSet.add(new VisitorDetails(res.getInt("VisitorID"), "", "", res.getString("Email"),
+					resultSet.add(new VisitorDetails(res.getInt("VisitorID"), res.getString("Email"),
 							res.getString("Latitude"), res.getString("Longitude"), res.getString("City"),
 							res.getString("Metro"), res.getString("State"), res.getString("Country"),
 							res.getInt("Party"), res.getString("Heard"), res.getString("Hotel"),
@@ -426,7 +426,7 @@ public class AdminJDBC {
 						System.out.println("lng" + latlng[0]);
 					}
 					String visitorLocationsQuery = "INSERT INTO visitorlocations (VisitorID, Latitude, Longitude, City, Metro, State, Country, Zip) VALUES ";
-					String visitorsQuery = "INSERT INTO visitors (VisitorID, Fname, Lname, Email) VALUES ";
+					String visitorsQuery = "INSERT INTO visitors (VisitorID, Email) VALUES ";
 					String visitsQuery = "INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES ";
 
 					visitorLocationsQuery += "(" + visitorID + ", '" + vd.getLatitude() + "', '" + vd.getLongitude()

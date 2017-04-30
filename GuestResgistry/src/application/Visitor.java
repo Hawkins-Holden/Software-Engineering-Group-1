@@ -24,7 +24,7 @@ public class Visitor {
 	 * Constructor for visitor object
 	 */
 
-	public Visitor(int id, String fname, String lname, String email, String latitude, String longitude, String city,
+	public Visitor(int id, String email, String latitude, String longitude, String city,
 			String metro, String state, String country, int zip, int party, String heard, String hotel,
 			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.id = id;

@@ -1,0 +1,7 @@
+1232 Hollywood Ave
+Dallas
+TX
+USA
+types=[street_address],
+ 75208
+Dallas-Fort Worth

@@ -233,7 +233,7 @@ public class JDBC {
 				System.out.println(newDate.toString());
 				Timestamp visitingDay = new Timestamp(newDate.getTime());
 				String visitorLocationsQuery = "INSERT INTO visitorlocations (VisitorID, Latitude, Longitude, City, Metro, State, Country, Zip) VALUES ";
-				String visitorsQuery = "INSERT INTO visitors (VisitorID, Fname, Lname, Email) VALUES ";
+				String visitorsQuery = "INSERT INTO visitors (VisitorID, Email) VALUES ";
 				String visitsQuery = "INSERT INTO visits (VisitorID, Party, Heard, Hotel, Destination, RepeatVisit, TravelingFor, Visiting_Day) VALUES ";
 
 				visitorLocationsQuery += "(" + visitorID + ", '" + vd.getLatitude() + "', '" + vd.getLongitude()
@@ -241,7 +241,7 @@ public class JDBC {
 						+ vd.getCountry() + "', " + vd.getZip() + ")";
 				visitorsQuery += "(" + visitorID + ", '" + vd.getEmail() + "')";
 				visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \"" + vd.getHeard() + "\", \""
-						+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + vd.getParty() + ", '"
+						+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + (!vd.getRepeatVisit() ? 1 : 0) + ", '"
 						+ vd.getTravelingFor() + "', '" + visitingDay + "')";
 				System.out.println(visitorLocationsQuery);
 				System.out.println(visitorsQuery);
