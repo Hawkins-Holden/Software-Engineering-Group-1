@@ -51,6 +51,9 @@ public class EndFormController implements Initializable, ControlledScreen {
 	private Label Email_error;
 	private Visitor visitor;
 
+	private boolean partyError;
+	private boolean emailError;
+	
 	ObservableList<String> list = FXCollections.observableArrayList("Business", "Pleasure", "Other");
 
 	/**
@@ -85,26 +88,46 @@ public class EndFormController implements Initializable, ControlledScreen {
 		}
 	}
 
-	public void partyValidate(TextField Party, Label Party_error) {
-
-		if (Party.getText() != null && !Party.getText().matches("[1-9][0-9]*") && !Party.getText().isEmpty()) {
+	public boolean partyValidate(TextField Party, Label Party_error) 
+	{
+		if (Party.getText() != null && !Party.getText().matches("[1-9][0-9]*") && !Party.getText().isEmpty())
+		{
 			Party_error.setText("Please enter a valid number!");
-		} else {
-			Party_error.setText("");
+			partyError = true;
+			return partyError;
+		} 
+		if (Party.getText() != null && !Party.getText().isEmpty() && Party.getText().length() > 3)
+		{
+			Party_error.setText("Please give a number between 1 and 999");
+			partyError = true;
+			return partyError;
 		}
-
+		else 
+		{
+			Party_error.setText("");
+			partyError = false;
+		}
+		return partyError;
 	}
 
-	public void emailValidate(TextField Email, Label Email_error) {
+	public boolean emailValidate(TextField Email, Label Email_error) 
+	{
 		if (Email.getText() != null && !Email.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")
-				&& !Email.getText().isEmpty()) {
+				&& !Email.getText().isEmpty()) 
+		{
 			Email_error.setText("Please enter a valid email address!");
-		} else {
+			emailError = true;
+		} 
+		else 
+		{
 			Email_error.setText("");
+			emailError = false;
 		}
+		return emailError;
 	}
 	
-	public void goBack(ActionEvent event) throws IOException {
+	public void goBack(ActionEvent event) throws IOException
+	{
 		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
@@ -119,29 +142,43 @@ public class EndFormController implements Initializable, ControlledScreen {
 	 */
 
 	@FXML
-	private void onSubmit(ActionEvent event) throws IOException {
+	private void onSubmit(ActionEvent event) throws IOException 
+	{
 
+		partyValidate(Party, Party_error);
+		
+		if (partyError == false)
+		{
+			System.out.println(partyError);
+			String partyText = Party.getText();
+			Integer party = (partyText.isEmpty() ? 1 : Integer.parseInt(partyText));
+			visitor.setParty(party.intValue());
+		}
+		
 		String reason = Reason.getValue();
 		reason = (reason==null ? "No Response": reason);
 		visitor.setTravelingFor(reason);		
-		String partyText = Party.getText();
-		Integer party = (partyText.isEmpty() ? 1 : Integer.parseInt(partyText));
-		visitor.setParty(party.intValue());
-
-		if (Email.getText() != null) {
-			visitor.setEmail(Email.getText());
-		}
-
-		// partyValidate(Party, Party_error);
+		
 		emailValidate(Email, Email_error);
+		
+		if (emailError == false)
+		{
+			if (Email.getText() != null) 
+			{
+				visitor.setEmail(Email.getText());
+			}
+		}
+		
 
-		if (rbYes.isSelected() && Email.getText().isEmpty()) {
+		if (rbYes.isSelected() && Email.getText().isEmpty())
+		{
 			Email_error.setText("Please Provide your email address.");
 		}
 		
+		System.out.println(partyError + " " + emailError);//this is just used for testing.
 		
-
-		if (Email_error.getText().isEmpty() || !rbYes.isSelected()) {
+		if ((Email_error.getText().isEmpty() || !rbYes.isSelected()) && partyError == false && emailError == false) 
+		{
 			System.out.println(visitor.getZip());
 			JDBC.addVisitor(visitor);
 			Parent newScene = FXMLLoader.load(getClass().getResource("Gratitude.fxml"));
@@ -149,8 +186,7 @@ public class EndFormController implements Initializable, ControlledScreen {
 			new_Stage.setTitle("Your Information");
 			new_Stage.setScene(new Scene(newScene, 1680, 1200));
 			new_Stage.show();
-
-		}
-
-	}
-}
+			
+		}//end if
+	}//end method
+}//end class
