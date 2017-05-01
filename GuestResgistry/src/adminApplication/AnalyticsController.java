@@ -286,7 +286,9 @@ public class AnalyticsController implements Initializable {
 		List<String> countries = AdminJDBC.getCountries();
 		ObservableList<CheckMenuItem> countryItems = FXCollections.observableArrayList();
 		for (String country : countries) {
+			if(country != null && !country.isEmpty()) {
 			countryItems.add(new CheckMenuItem(country));
+			}
 		}
 		countriesMenuButton.getItems().clear();
 		countriesMenuButton.getItems().addAll(countryItems);
@@ -318,7 +320,9 @@ public class AnalyticsController implements Initializable {
 		List<String> states = AdminJDBC.getStates();
 		ObservableList<CheckMenuItem> stateItems = FXCollections.observableArrayList();
 		for (String state : states) {
+			if (state!=null && !state.isEmpty()) {
 			stateItems.add(new CheckMenuItem(state));
+			}
 		}
 		statesMenuButton.getItems().clear();
 		statesMenuButton.getItems().addAll(stateItems);
