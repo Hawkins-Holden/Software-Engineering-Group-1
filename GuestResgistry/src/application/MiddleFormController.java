@@ -57,6 +57,7 @@ public class MiddleFormController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		visitor = VisitorContext.getInstance().currentVisitor();
 		Hear.setItems(slist);
+		
 		if (visitor.getHeard() != null && !visitor.getHeard().equals("No Response")) {
 			Hear.getSelectionModel().select(visitor.getHeard());
 		}
@@ -129,6 +130,10 @@ public class MiddleFormController implements Initializable {
 		visitor.setDestination(TravelCity.getText());
 		if (Hear.getSelectionModel().getSelectedItem() != null) {
 			visitor.setHeard(Hear.getSelectionModel().getSelectedItem().toString());
+		}
+		else 
+		{
+			visitor.setHeard("No Response");
 		}
 
 		if (rbYes.isSelected()) {

@@ -128,8 +128,12 @@ public class Visitor {
 		else if (heard.equals("Billboard")) {
 			this.heard = "Billboard";
 		}
-		else {
+		else if (heard.equals("Other"))
+		{
 			this.heard = "Other";
+		}
+		else {
+			this.heard = "No Response";
 		}
 	}
 
