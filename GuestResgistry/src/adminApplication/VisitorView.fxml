@@ -38,9 +38,9 @@
          </font></Label>
       <Button fx:id="refreshButton" layoutX="631.0" layoutY="871.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="27.0" prefWidth="92.0" text="Refresh Table" />
       <Button fx:id="back_btn" layoutX="52.0" layoutY="909.0" mnemonicParsing="false" onAction="#goBack" prefHeight="49.0" prefWidth="92.0" style="-fx-background-color: orange;" text="BACK" />
-      <Button fx:id="importButton" layoutX="1251.0" layoutY="884.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" text="Import from Excel" />
-      <Button fx:id="excelButton" layoutX="1106.0" layoutY="884.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" text="Export to Excel" />
-      <Button fx:id="emailButton" layoutX="960.0" layoutY="884.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" text="Create Mailing List" />
+      <Button fx:id="importButton" layoutX="1251.0" layoutY="884.0" mnemonicParsing="false" onAction="#ImportAction" prefHeight="65.0" prefWidth="130.0" text="Import from Excel" />
+      <Button fx:id="excelButton" layoutX="1106.0" layoutY="884.0" mnemonicParsing="false" onAction="#ExportAction" prefHeight="65.0" prefWidth="130.0" text="Export to Excel" />
+      <Button fx:id="emailButton" layoutX="960.0" layoutY="884.0" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="65.0" prefWidth="130.0" text="Create Mailing List" />
       <Button fx:id="deleteButton" layoutX="1728.0" layoutY="884.0" mnemonicParsing="false" onAction="#deleteAgedData" prefHeight="65.0" prefWidth="157.0" text="Delete Aged Data" />
       <Button fx:id="helpButton" layoutX="152.0" layoutY="909.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="81.0" text="HELP" />
    </children>

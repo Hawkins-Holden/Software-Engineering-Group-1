@@ -11,6 +11,7 @@ import java.util.Set;
 import application.APIClient;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AdminJDBC {
 	/*
@@ -166,7 +167,7 @@ public class AdminJDBC {
 						cities.add(city);
 					}
 					cities.sort(Comparator.naturalOrder());
-
+					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -302,6 +303,7 @@ public class AdminJDBC {
 				while (res.next()) {
 					ids.add(res.getInt("VisitorID"));
 				}
+				con.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -332,7 +334,7 @@ public class AdminJDBC {
 				stmt.executeUpdate("DELETE FROM visitors WHERE VisitorID=" + visitorID);
 				stmt.executeUpdate("DELETE FROM visits WHERE VisitorID=" + visitorID);
 				stmt.executeUpdate("DELETE FROM visitorlocations WHERE VisitorID=" + visitorID);
-
+				con.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -378,7 +380,7 @@ public class AdminJDBC {
 						+ "";
 				System.out.println(visitorsQuery);
 				stmt.executeUpdate(visitorsQuery);
-
+				con.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -410,8 +412,9 @@ public class AdminJDBC {
 
 					int visitorID = vd.getId();
 					Date newDate = vd.getVisitingDay();
-					System.out.println(newDate.toString());
-					Timestamp visitingDay = new Timestamp(newDate.getTime());
+
+					Timestamp visitingDay = (newDate == null ? Timestamp.valueOf(LocalDateTime.now())
+							: new Timestamp(newDate.getTime()));
 					Integer zip = vd.getZip();
 					if (zip != null) {
 						String[] latlng = APIClient.geocodingRequest(zip.toString());
@@ -427,7 +430,7 @@ public class AdminJDBC {
 					visitorLocationsQuery += "(" + visitorID + ", '" + vd.getLatitude() + "', '" + vd.getLongitude()
 							+ "', '" + vd.getCity() + "', '" + vd.getMetro() + "', '" + vd.getState() + "', '"
 							+ vd.getCountry() + "', " + vd.getZip() + ")";
-					visitorsQuery += "(" + visitorID + "', '" + vd.getEmail() + "')";
+					visitorsQuery += "(" + visitorID + ", '" + vd.getEmail() + "')";
 					visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \"" + vd.getHeard() + "\", \""
 							+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + vd.getParty() + ", '"
 							+ vd.getTravelingFor() + "', '" + visitingDay + "')";
@@ -438,7 +441,7 @@ public class AdminJDBC {
 					stmt.executeUpdate(visitorsQuery);
 					stmt.executeUpdate(visitsQuery);
 				}
-
+				con.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -467,6 +470,7 @@ public class AdminJDBC {
 				stmt.executeUpdate("DELETE FROM visitors WHERE Timestamp < " + ageTimestamp);
 				stmt.executeUpdate("DELETE FROM visitorlocations WHERE Timestamp < " + ageTimestamp);
 				stmt.executeUpdate("DELETE FROM visits WHERE Timestamp < " + ageTimestamp);
+				con.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

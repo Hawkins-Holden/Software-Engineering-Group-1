@@ -105,6 +105,7 @@ public class VisitorViewController implements Initializable {
 		dateColumn.setCellValueFactory(new PropertyValueFactory<>("visitingDay"));
 
 		visitorTable.setItems(null);
+		data = getVisitors(startDatePicker.getValue(), endDatePicker.getValue());
 		visitorTable.setItems(data);
 		visitorTable.setEditable(true);
 

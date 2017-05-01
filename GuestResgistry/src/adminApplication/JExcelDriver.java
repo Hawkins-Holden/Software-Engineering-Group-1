@@ -72,7 +72,7 @@ public  class JExcelDriver {
 				Integer zip = (zipString.isEmpty() ? null : Integer.parseInt(zipString));
 				x++;
 				String partyString = sheet.getCell(x, i).getContents();
-				Integer party = (partyString.isEmpty() ? null : Integer.parseInt(partyString));
+				Integer party = (partyString.isEmpty() ? 1 : Integer.parseInt(partyString));
 				x++;
 				String referred = sheet.getCell(x, i).getContents();
 				if (referred.equalsIgnoreCase("Billboard")) {

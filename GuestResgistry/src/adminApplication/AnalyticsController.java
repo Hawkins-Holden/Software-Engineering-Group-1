@@ -7,11 +7,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -765,26 +763,39 @@ public class AnalyticsController implements Initializable {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private Series getChartData() {
 		XYChart.Series series = new XYChart.Series();
-		Set<int[]> months = new HashSet<int[]>();
 		Calendar cal = Calendar.getInstance();
+		java.util.Date minDate = null, maxDate = null;
+		if (data.isEmpty() || data.get(0) == null) {
+			minDate = cal.getTime();
+			maxDate = cal.getTime();
+		} else {
+			cal.setTime(data.get(0).getVisitingDay());
+			minDate = cal.getTime();
+			maxDate = cal.getTime();
+		}
+
 		for (VisitorDetails datum : data) {
-			int[] monthYear = new int[2];
-			Date dat = (Date) datum.getVisitingDay();
-			if (dat != null) {
-				cal.setTime(dat);
-				monthYear[0] = cal.get(Calendar.MONTH);
-				monthYear[1] = cal.get(Calendar.YEAR);
-				months.add(monthYear);
+			if (datum.getVisitingDay() != null) {
+				if (datum.getVisitingDay().compareTo(minDate) < 0) {
+					cal.setTime(datum.getVisitingDay());
+					minDate = cal.getTime();
+				} else if (datum.getVisitingDay().compareTo(maxDate) > 0) {
+					cal.setTime(datum.getVisitingDay());
+					minDate = cal.getTime();
+				}
 			}
 		}
 
-		for (int[] monthYear : months) {
+		java.util.Date date = minDate;
+		while (date.compareTo(maxDate) <= 0) {
+			Calendar dateCal = Calendar.getInstance();
+			dateCal.setTime(date);
 			int count = 0;
 			for (VisitorDetails datum : data) {
-				Date dat = (Date) datum.getVisitingDay();
-				if (dat != null) {
+				if (datum.getVisitingDay() != null) {
 					cal.setTime(datum.getVisitingDay());
-					if (monthYear[0] == cal.get(Calendar.MONTH) && monthYear[1] == cal.get(Calendar.YEAR)) {
+					if (dateCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH)
+							&& dateCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
 						if (datum.getParty() != null || datum.getParty() > 0) {
 							count += datum.getParty();
 						} else {
@@ -794,7 +805,7 @@ public class AnalyticsController implements Initializable {
 				}
 			}
 			String monthString;
-			switch (monthYear[0]) {
+			switch (dateCal.get(Calendar.MONTH)) {
 			case Calendar.JANUARY:
 				monthString = "January ";
 				break;
@@ -835,10 +846,14 @@ public class AnalyticsController implements Initializable {
 				monthString = "Invalid month";
 				break;
 			}
-			monthString += monthYear[1];
+			cal.setTime(date);
+			cal.roll(Calendar.MONTH, 1);
+			date = cal.getTime();
+			monthString += dateCal.get(Calendar.YEAR);
 			series.getData().add(new XYChart.Data(monthString, count));
 		}
 		return series;
+
 	}
 
 	public static ArrayList<String[]> getLatLongData() {

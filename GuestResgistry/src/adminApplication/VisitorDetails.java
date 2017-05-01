@@ -21,9 +21,9 @@ public class VisitorDetails {
 	private String travelingFor;
 	private Date visitingDay;
 
-	public VisitorDetails(int id, String email, String latitude, String longitude,
-			String city, String metro, String state, String country, Integer party, String heard, String hotel,
-			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
+	public VisitorDetails(int id, String email, String latitude, String longitude, String city, String metro,
+			String state, String country, Integer party, String heard, String hotel, String destination,
+			boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(id);
 		this.setEmail(email);
 		this.setLatitude(latitude);
@@ -41,9 +41,9 @@ public class VisitorDetails {
 		this.setVisitingDay(visitingDay);
 	}
 
-	public VisitorDetails(String email, String city, String metro, String state,
-			String country, Integer party, String heard, String hotel, String destination, boolean repeatVisit,
-			String travelingFor, Date visitingDay) {
+	public VisitorDetails(String email, String city, String metro, String state, String country, Integer party,
+			String heard, String hotel, String destination, boolean repeatVisit, String travelingFor,
+			Date visitingDay) {
 		this.setId(AdminJDBC.generateID());
 		this.setEmail(email);
 		this.setLatitude("");
@@ -61,9 +61,9 @@ public class VisitorDetails {
 		this.setVisitingDay(visitingDay);
 	}
 
-	public VisitorDetails(String email, String city, String metro, String state,
-			String country, Integer zip, Integer party, String heard, String hotel, String destination,
-			boolean repeatVisit, String travelingFor, Date visitingDay) {
+	public VisitorDetails(String email, String city, String metro, String state, String country, Integer zip,
+			Integer party, String heard, String hotel, String destination, boolean repeatVisit, String travelingFor,
+			Date visitingDay) {
 		this.setId(AdminJDBC.generateID());
 		this.setEmail(email);
 		this.setCity(city);
@@ -93,9 +93,8 @@ public class VisitorDetails {
 		this.setVisitingDay(visitingDay);
 	}
 
-	public VisitorDetails(String email, String latitude, String longitude, Integer party,
-			String heard, String hotel, String destination, boolean repeatVisit, String travelingFor,
-			Date visitingDay) {
+	public VisitorDetails(String email, String latitude, String longitude, Integer party, String heard, String hotel,
+			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(AdminJDBC.generateID());
 		this.setEmail(email);
 		this.setLatitude(latitude);
@@ -113,9 +112,9 @@ public class VisitorDetails {
 		this.setVisitingDay(visitingDay);
 	}
 
-	public VisitorDetails(int id, String email, String latitude, String longitude,
-			String city, String metro, String state, String country, int zip, int party, String heard, String hotel,
-			String destination, boolean repeatVisit, String travelingFor, Date visitingDay) {
+	public VisitorDetails(int id, String email, String latitude, String longitude, String city, String metro,
+			String state, String country, int zip, int party, String heard, String hotel, String destination,
+			boolean repeatVisit, String travelingFor, Date visitingDay) {
 		this.setId(id);
 		this.setEmail(email);
 		this.setLatitude(latitude);
@@ -141,13 +140,13 @@ public class VisitorDetails {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
-		if(!email.equals("null"))
+		if (!email.equals("null"))
 			this.email = email;
 	}
 
@@ -156,7 +155,7 @@ public class VisitorDetails {
 	}
 
 	public void setLatitude(String latitude) {
-		if(!latitude.equals("null"))
+		if (!latitude.equals("null"))
 			this.latitude = latitude;
 	}
 
@@ -165,7 +164,7 @@ public class VisitorDetails {
 	}
 
 	public void setLongitude(String longitude) {
-		if(!longitude.equals("null"))
+		if (!longitude.equals("null"))
 			this.longitude = longitude;
 	}
 
@@ -174,7 +173,7 @@ public class VisitorDetails {
 	}
 
 	public void setCity(String city) {
-		if(!city.equals("null"))
+		if (city != null && !city.equals("null"))
 			this.city = city;
 	}
 
@@ -183,7 +182,7 @@ public class VisitorDetails {
 	}
 
 	public void setState(String state) {
-		if(!state.equals("null"))
+		if (state != null && !state.equals("null"))
 			this.state = state;
 	}
 
@@ -192,8 +191,8 @@ public class VisitorDetails {
 	}
 
 	public void setCountry(String country) {
-		if(!country.equals("null"))
-				this.country = country;
+		if (country != null && !country.equals("null"))
+			this.country = country;
 	}
 
 	public Integer getParty() {
@@ -201,7 +200,7 @@ public class VisitorDetails {
 	}
 
 	public void setParty(Integer party) {
-		if(!party.equals("null"))
+		if (party != null && !party.equals("null"))
 			this.party = party;
 	}
 
@@ -210,7 +209,7 @@ public class VisitorDetails {
 	}
 
 	public void setHeard(String heard) {
-		if(!heard.equals("null"))
+		if (heard != null && !heard.equals("null"))
 			this.heard = heard;
 	}
 
@@ -219,7 +218,7 @@ public class VisitorDetails {
 	}
 
 	public void setHotel(String hotel) {
-		if(!hotel.equals("null"))
+		if (hotel != null & !hotel.equals("null"))
 			this.hotel = hotel;
 	}
 
@@ -228,7 +227,7 @@ public class VisitorDetails {
 	}
 
 	public void setDestination(String destination) {
-		if(!destination.equals("null"))
+		if (destination != null && !destination.equals("null"))
 			this.destination = destination;
 	}
 
@@ -246,7 +245,7 @@ public class VisitorDetails {
 	}
 
 	public void setTravelingFor(String travelingFor) {
-		if(!travelingFor.equals("null"))
+		if (travelingFor != null && !travelingFor.equals("null"))
 			this.travelingFor = travelingFor;
 	}
 
@@ -263,7 +262,7 @@ public class VisitorDetails {
 	}
 
 	public void setMetro(String metro) {
-		if(!metro.equals("null"))
+		if (metro != null && !metro.equals("null"))
 			this.metro = metro;
 	}
 
@@ -272,7 +271,7 @@ public class VisitorDetails {
 	}
 
 	public void setZip(Integer zip) {
-		if(zip > 0)
+		if (zip != null && zip > 0)
 			this.zip = zip;
 	}
 
