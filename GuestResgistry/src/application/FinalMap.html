@@ -57,18 +57,26 @@ html, body {
 	
 	// A function to create the marker and set up the event window function 
 	function createUserMarker(latlng) {
+
+		if(marker != null){
+			marker.setMap(null);
+		}
+		
 		nums = latlng;
-		var marker = new google.maps.Marker({
+		marker = new google.maps.Marker({
 			position : latlng,
 			map : map,
 			icon : "SmallUserMarker.png",
 			animation : google.maps.Animation.DROP,
 			zIndex : Math.round(latlng.lat() * -100000) << 5
 		});
+
 		google.maps.event.trigger(marker, 'click');
 		nums = latlng;
+
 		//markers[i] = marker;
 		//i = i + 1;
+
 		return marker;
 	}
 	

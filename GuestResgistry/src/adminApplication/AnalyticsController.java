@@ -776,17 +776,19 @@ public class AnalyticsController implements Initializable {
 
 		for (VisitorDetails datum : data) {
 			if (datum.getVisitingDay() != null) {
-				if (datum.getVisitingDay().compareTo(minDate) < 0) {
-					cal.setTime(datum.getVisitingDay());
-					minDate = cal.getTime();
-				} else if (datum.getVisitingDay().compareTo(maxDate) > 0) {
-					cal.setTime(datum.getVisitingDay());
-					minDate = cal.getTime();
+				Calendar compCal = Calendar.getInstance();
+				compCal.setTime(datum.getVisitingDay());
+				if (compCal.getTime().compareTo(minDate) < 0) {
+					minDate = compCal.getTime();
+				} else if (compCal.getTime().compareTo(maxDate) > 0) {
+					maxDate = compCal.getTime();
 				}
 			}
 		}
 
-		java.util.Date date = minDate;
+		Calendar initCal = Calendar.getInstance();
+		initCal.setTime(minDate);
+		java.util.Date date = initCal.getTime();
 		while (date.compareTo(maxDate) <= 0) {
 			Calendar dateCal = Calendar.getInstance();
 			dateCal.setTime(date);
@@ -846,11 +848,18 @@ public class AnalyticsController implements Initializable {
 				monthString = "Invalid month";
 				break;
 			}
-			cal.setTime(date);
-			cal.roll(Calendar.MONTH, 1);
-			date = cal.getTime();
+
+			
 			monthString += dateCal.get(Calendar.YEAR);
 			series.getData().add(new XYChart.Data(monthString, count));
+			cal.setTime(date);
+			if (cal.get(Calendar.MONTH) == Calendar.DECEMBER) {
+				cal.roll(Calendar.MONTH, 1);
+				cal.roll(Calendar.YEAR, 1);
+			} else {
+				cal.roll(Calendar.MONTH, 1);
+			}
+			date = cal.getTime();
 		}
 		return series;
 
