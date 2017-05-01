@@ -52,13 +52,13 @@ private ArrayList<String> latLongArray = new ArrayList<String>();
 		latLongPair = GeoCoding.getLatLong(coords);
 		TestArray.sendLatLongs(latLongPair);
 		addressElements = LocationInfoExtractor.extractLocationInfo(SerializeJson.getAddress(GeoCoding.reverseGeoCode(coords)));
-		addressElements[8] = latLongPair[0];
-		addressElements[9] = latLongPair[1];
+		addressElements[7] = latLongPair[0];
+		addressElements[8] = latLongPair[1];
 		WriteToFile writerFile = new WriteToFile();
 		
 		//writerFile.write(addressElements);
 		
-		while(i < addressElements.length && addressElements[i] != null){
+		while(i < addressElements.length ){
 			System.out.println("Printing " + addressElements[i] + " to file.");
 			writer.println(addressElements[i]);
 			i++;

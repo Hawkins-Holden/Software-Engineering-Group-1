@@ -240,9 +240,10 @@ public class JDBC {
 						+ "', '" + vd.getCity() + "', '" + vd.getMetro() + "', '" + vd.getState() + "', '"
 						+ vd.getCountry() + "', " + vd.getZip() + ")";
 				visitorsQuery += "(" + visitorID + ", '" + vd.getEmail() + "')";
-				visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \"" + vd.getHeard() + "\", \""
-						+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + (vd.getRepeatVisit() ? 1 : 0) + ", '"
-						+ vd.getTravelingFor() + "', '" + visitingDay + "')";
+				visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \""
+						+ (vd.getHeard() == null ? "No Response" : vd.getHeard()) + "\", \"" + vd.getHotel() + "\", '"
+						+ vd.getDestination() + "', " + (vd.getRepeatVisit() ? 1 : 0) + ", '" + vd.getTravelingFor()
+						+ "', '" + visitingDay + "')";
 				System.out.println(visitorLocationsQuery);
 				System.out.println(visitorsQuery);
 				System.out.println(visitsQuery);

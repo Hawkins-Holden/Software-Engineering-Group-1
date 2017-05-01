@@ -138,20 +138,12 @@
                                     <Font size="18.0" />
                                  </font>
                               </CheckBox>
-                              <MenuButton fx:id="hotelMenuButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" text="Choice" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                                 <contextMenu>
-                                    <ContextMenu fx:id="hotelMenu" />
-                                 </contextMenu>
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </MenuButton>
                               <CheckBox fx:id="destinationCheck" mnemonicParsing="false" text="Destination / Interest:" GridPane.rowIndex="5">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </CheckBox>
-                              <MenuButton fx:id="destinationMenuButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="152.0" text="Choice" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <MenuButton fx:id="destinationMenuButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="152.0" text="Interests" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <contextMenu>
                                     <ContextMenu fx:id="destinationMenu" />
                                  </contextMenu>
@@ -164,21 +156,11 @@
                                     <Font size="18.0" />
                                  </font>
                               </CheckBox>
-                              <MenuButton fx:id="repeatMenuButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" text="Choice" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </MenuButton>
                               <CheckBox fx:id="emailCheck" mnemonicParsing="false" text="Subscribed to Emails:" GridPane.rowIndex="11">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </CheckBox>
-                              <MenuButton fx:id="emailMenuButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="159.0" text="Choice" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </MenuButton>
                            </children>
                         </GridPane>
                         <GridPane prefHeight="90.0" prefWidth="449.0">

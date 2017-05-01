@@ -133,10 +133,13 @@ public class BeginFormController implements Initializable {
 
 			System.out.println("This is begin controller " + locationInfo[0] + ",  " + locationInfo[1]);
 			i = 0;
-			scan.close();
 			
-			visitor.setLatitude(locationInfo[8]);
-			visitor.setLongitude(locationInfo[9]);
+			
+			visitor.setLatitude(locationInfo[7]);
+			visitor.setLongitude(locationInfo[8]);
+			System.out.println("Lat: " + locationInfo[7]);
+			System.out.println("Lon: " + locationInfo[8]);
+			scan.close();
 			// Check if location is inside the US
 			if (locationInfo[3].equals("USA")) {
 
@@ -160,8 +163,8 @@ public class BeginFormController implements Initializable {
 				visitor.setMetro(metro);
 				visitor.setCountry("USA");
 				
+				System.out.println("Begin Form Lat: " + locationInfo[7]);
 				System.out.println("Begin Form Lat: " + locationInfo[8]);
-				System.out.println("Begin Form Lat: " + locationInfo[9]);
 
 				CIty.setText(city);
 				Country.setText("USA");
@@ -278,7 +281,7 @@ public class BeginFormController implements Initializable {
 	
 	public void noButton(ActionEvent event) throws IOException {
 		
-		    //System.out.println("No button clicked");
+		    System.out.println("No button clicked");
              Alert backAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm", ButtonType.YES, ButtonType.NO);
              backAlert.setContentText("Are you sure you want to go home?\n\nWe would love to know about y'all.");
              backAlert.showAndWait();

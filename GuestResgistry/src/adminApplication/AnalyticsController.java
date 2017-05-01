@@ -116,13 +116,7 @@ public class AnalyticsController implements Initializable {
 	@FXML
 	private MenuButton destinationMenuButton;
 	@FXML
-	private MenuButton emailMenuButton;
-	@FXML
-	private MenuButton hotelMenuButton;
-	@FXML
 	private MenuButton referenceMenuButton;
-	@FXML
-	private MenuButton repeatMenuButton;
 	@FXML
 	private MenuButton statesMenuButton;
 	@FXML
@@ -277,7 +271,7 @@ public class AnalyticsController implements Initializable {
 	}
 
 	public void refreshMenus() {
-		
+
 		areaCheck.setSelected(false);
 		dateCheck.setSelected(false);
 		destinationCheck.setSelected(false);
@@ -286,7 +280,7 @@ public class AnalyticsController implements Initializable {
 		referredCheck.setSelected(false);
 		repeatCheck.setSelected(false);
 		travelingCheck.setSelected(false);
-		
+
 		List<String> cities = AdminJDBC.getCitiesandMetros();
 		ObservableList<CheckMenuItem> cityItems = FXCollections.observableArrayList();
 		for (String city : cities) {
@@ -299,8 +293,8 @@ public class AnalyticsController implements Initializable {
 		List<String> countries = AdminJDBC.getCountries();
 		ObservableList<CheckMenuItem> countryItems = FXCollections.observableArrayList();
 		for (String country : countries) {
-			if(country != null && !country.isEmpty()) {
-			countryItems.add(new CheckMenuItem(country));
+			if (country != null && !country.isEmpty()) {
+				countryItems.add(new CheckMenuItem(country));
 			}
 		}
 		countriesMenuButton.getItems().clear();
@@ -308,15 +302,13 @@ public class AnalyticsController implements Initializable {
 
 		List<String> destinations = AdminJDBC.getDestinations();
 		Set<String> destinationSet = new HashSet<String>();
-		for(String dest : destinations)
-		{
-			for(String interest: dest.split(","))
-			{
+		for (String dest : destinations) {
+			for (String interest : dest.split(",")) {
 				destinationSet.add(interest);
 			}
 		}
 		destinations = new ArrayList<String>();
-		for(String destination : destinationSet) {
+		for (String destination : destinationSet) {
 			destinations.add(destination);
 		}
 		destinations.sort(Comparator.naturalOrder());
@@ -332,8 +324,6 @@ public class AnalyticsController implements Initializable {
 		for (String hotel : hotels) {
 			hotelItems.add(new CheckMenuItem(hotel));
 		}
-		hotelMenuButton.getItems().clear();
-		hotelMenuButton.getItems().addAll(hotelItems);
 
 		List<String> references = AdminJDBC.getReferences();
 		ObservableList<CheckMenuItem> referenceItems = FXCollections.observableArrayList();
@@ -346,8 +336,8 @@ public class AnalyticsController implements Initializable {
 		List<String> states = AdminJDBC.getStates();
 		ObservableList<CheckMenuItem> stateItems = FXCollections.observableArrayList();
 		for (String state : states) {
-			if (state!=null && !state.isEmpty()) {
-			stateItems.add(new CheckMenuItem(state));
+			if (state != null && !state.isEmpty()) {
+				stateItems.add(new CheckMenuItem(state));
 			}
 		}
 		statesMenuButton.getItems().clear();
@@ -360,12 +350,10 @@ public class AnalyticsController implements Initializable {
 		}
 		travelingMenuButton.getItems().clear();
 		travelingMenuButton.getItems().addAll(reasonItems);
-		
+
 		ObservableList<CheckMenuItem> emailItems = FXCollections.observableArrayList();
 		emailItems.add(new CheckMenuItem("Provided"));
 		emailItems.add(new CheckMenuItem("Not Provided"));
-		emailMenuButton.getItems().clear();
-		emailMenuButton.getItems().addAll(emailItems);
 	}
 
 	public void refreshData() {
@@ -470,18 +458,7 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (hotelCheck.isSelected()) {
-			for (MenuItem hotelItem : hotelMenuButton.getItems()) {
-				CheckMenuItem hotel = (CheckMenuItem) hotelItem;
-				boolean first = true;
-				if (hotel.isSelected()) {
-					if (first) {
-						query.append(" AND Hotel = '" + hotel.getText() + "'");
-						first = false;
-					} else {
-						query.append(" OR Hotel = '" + hotel.getText() + "'");
-					}
-				}
-			}
+			query.append(" AND Hotel = 'Yes'");
 		}
 		if (destinationCheck.isSelected()) {
 			for (MenuItem destinationItem : destinationMenuButton.getItems()) {
@@ -498,37 +475,10 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (repeatCheck.isSelected()) {
-			for (MenuItem repeatItem : repeatMenuButton.getItems()) {
-				CheckMenuItem repeat = (CheckMenuItem) repeatItem;
-				boolean first = true;
-				if (repeat.isSelected()) {
-					if (first) {
-						query.append(" AND RepeatVisitor = '" + repeat.getText() + "'");
-						first = false;
-					} else {
-						query.append(" OR RepeatVisitor = '" + repeat.getText() + "'");
-					}
-				}
-			}
+			query.append(" AND RepeatVisitor = 1");
 		}
 		if (emailCheck.isSelected()) {
-			boolean first = true;
-			if (providedMenuItem.isSelected()) {
-				if (first) {
-					query.append(" AND Email IS NOT NULL");
-					first = false;
-				} else {
-					query.append(" OR Email IS NOT NULL");
-				}
-			}
-			if (notProvidedMenuItem.isSelected()) {
-				if (first) {
-					query.append(" AND Email IS NULL");
-					first = false;
-				} else {
-					query.append(" OR Email IS NULL");
-				}
-			}
+			query.append(" AND Email IS NOT NULL");
 		}
 		query.append(" ORDER BY Visiting_Day");
 
@@ -617,18 +567,7 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (hotelCheck.isSelected()) {
-			for (MenuItem hotelItem : hotelMenuButton.getItems()) {
-				CheckMenuItem hotel = (CheckMenuItem) hotelItem;
-				boolean first = true;
-				if (hotel.isSelected()) {
-					if (first) {
-						query.append(" AND Hotel = '" + hotel.getText() + "'");
-						first = false;
-					} else {
-						query.append(" OR Hotel = '" + hotel.getText() + "'");
-					}
-				}
-			}
+			query.append(" AND Hotel = 'Yes'");
 		}
 		if (destinationCheck.isSelected()) {
 			for (MenuItem destinationItem : destinationMenuButton.getItems()) {
@@ -645,37 +584,10 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (repeatCheck.isSelected()) {
-			for (MenuItem repeatItem : repeatMenuButton.getItems()) {
-				CheckMenuItem repeat = (CheckMenuItem) repeatItem;
-				boolean first = true;
-				if (repeat.isSelected()) {
-					if (first) {
-						query.append(" AND RepeatVisitor = '" + repeat.getText() + "'");
-						first = false;
-					} else {
-						query.append(" OR RepeatVisitor = '" + repeat.getText() + "'");
-					}
-				}
-			}
+			query.append(" AND RepeatVisitor = 1");
 		}
 		if (emailCheck.isSelected()) {
-			boolean first = true;
-			if (providedMenuItem.isSelected()) {
-				if (first) {
-					query.append(" AND Email IS NOT NULL");
-					first = false;
-				} else {
-					query.append(" OR Email IS NOT NULL");
-				}
-			}
-			if (notProvidedMenuItem.isSelected()) {
-				if (first) {
-					query.append(" AND Email IS NULL");
-					first = false;
-				} else {
-					query.append(" OR Email IS NULL");
-				}
-			}
+			query.append(" AND Email IS NOT NULL");
 		}
 		query.append(
 				"AND (Latitude IS NOT NULL AND Latitude != '' AND Latitude != 'null' AND Longitude IS NOT NULL AND Longitude != '' AND Longitude != 'null') ORDER BY Visiting_Day");
@@ -885,7 +797,6 @@ public class AnalyticsController implements Initializable {
 				break;
 			}
 
-			
 			monthString += dateCal.get(Calendar.YEAR);
 			series.getData().add(new XYChart.Data(monthString, count));
 			cal.setTime(date);

@@ -1,7 +1,15 @@
-4402-4406 Bridlewood Dr
-Austin
-TX
-USA
-types=[street_address],
- 78727
-Austin
+null
+null
+null
+null
+null
+null
+null
+19.31114335506464
+-99.140625
+null
+null
+null
+null
+null
+null
