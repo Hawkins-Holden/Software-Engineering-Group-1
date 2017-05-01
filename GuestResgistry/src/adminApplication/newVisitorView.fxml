@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #E0FFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.VisitorViewController">
    <children>
-      <TableView fx:id="visitorTable" layoutX="52.0" layoutY="66.0" prefHeight="798.0" prefWidth="1833.0" style="-fx-background-color: yellow;" tableMenuButtonVisible="true">
+      <TableView fx:id="visitorTable" layoutX="52.0" layoutY="66.0" prefHeight="798.0" prefWidth="1833.0" style="-fx-background-color: ;" tableMenuButtonVisible="true">
         <columns>
             <TableColumn fx:id="emailColumn" prefWidth="218.0" text="Email" />
             <TableColumn fx:id="metroColumn" prefWidth="184.0" text="Metro Area" />
@@ -38,10 +38,13 @@
          </font></Label>
       <Button fx:id="refreshButton" layoutX="631.0" layoutY="871.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="27.0" prefWidth="92.0" text="Refresh Table" />
       <Button fx:id="back_btn" layoutX="52.0" layoutY="909.0" mnemonicParsing="false" onAction="#goBack" prefHeight="49.0" prefWidth="92.0" style="-fx-background-color: orange;" text="BACK" />
-      <Button fx:id="importButton" layoutX="1251.0" layoutY="884.0" mnemonicParsing="false" onAction="#ImportAction" prefHeight="65.0" prefWidth="130.0" text="Import from Excel" />
-      <Button fx:id="excelButton" layoutX="1106.0" layoutY="884.0" mnemonicParsing="false" onAction="#ExportAction" prefHeight="65.0" prefWidth="130.0" text="Export to Excel" />
-      <Button fx:id="emailButton" layoutX="960.0" layoutY="884.0" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="65.0" prefWidth="130.0" text="Create Mailing List" />
+      <Button fx:id="importButton" layoutX="1251.0" layoutY="884.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" text="Import from Excel" />
+      <Button fx:id="excelButton" layoutX="1106.0" layoutY="884.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" text="Export to Excel" />
+      <Button fx:id="emailButton" layoutX="960.0" layoutY="884.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="130.0" text="Create Mailing List" />
       <Button fx:id="deleteButton" layoutX="1728.0" layoutY="884.0" mnemonicParsing="false" onAction="#deleteAgedData" prefHeight="65.0" prefWidth="157.0" text="Delete Aged Data" />
       <Button fx:id="helpButton" layoutX="152.0" layoutY="909.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="81.0" text="HELP" />
+      <TextField fx:id="filterCity" layoutX="593.0" layoutY="17.0" prefHeight="49.0" prefWidth="219.0" promptText="City" />
+      <TextField fx:id="filterCountry" layoutX="900.0" layoutY="17.0" prefHeight="49.0" prefWidth="206.0" promptText="Country" />
+      <Label layoutX="849.0" layoutY="33.0" text="OR" />
    </children>
 </AnchorPane>

@@ -113,7 +113,6 @@ public class BeginFormController implements Initializable {
 		transition.setCycleCount(TranslateTransition.INDEFINITE);
 		transition.play();
 		
-		
 		visitor = VisitorContext.getInstance().currentVisitor();
 		visitor.generateNewID();
 		visitor.clearData();
@@ -287,7 +286,7 @@ public class BeginFormController implements Initializable {
              Parent newScene = FXMLLoader.load(getClass().getResource("Map.fxml"));
          		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
          		new_Stage.setTitle("Welcome to Monroe-West Monroe CVB");
-         		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+         		new_Stage.setScene(new Scene(newScene, 1920, 1080));
          		new_Stage.show();
              }
              else {

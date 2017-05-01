@@ -22,7 +22,7 @@ public class Main extends Application {
 			Parent root = loader.load();
 			//MapController controls = loader.getController();
 			primaryStage.setTitle("Map");
-			primaryStage.setScene(new Scene(root, 1680, 1200));
+			primaryStage.setScene(new Scene(root, 1920, 1080));
 			primaryStage.show();
 		
 

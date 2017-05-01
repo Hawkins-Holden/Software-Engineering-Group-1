@@ -1,7 +1,7 @@
-7016-7034 Sherwood Dr
-Houston
-TX
+Co Rd 34
+McDonald
+KS
 USA
-types=[street_address],
- 77021
-Houston
+types=[route],
+ 67745
+

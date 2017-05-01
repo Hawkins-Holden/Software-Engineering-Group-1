@@ -7,6 +7,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*; 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -51,6 +55,10 @@ public class VisitorViewController implements Initializable {
 	@FXML
 	private DatePicker endDatePicker;
 	@FXML
+	private TextField filterCity; 
+	@FXML
+	private TextField filterCountry; 
+	@FXML
 	private TableView<VisitorDetails> visitorTable;
 	@FXML
 	private TableColumn<VisitorDetails, String> emailColumn;
@@ -81,12 +89,25 @@ public class VisitorViewController implements Initializable {
 
 	private ObservableList<VisitorDetails> data;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		startDatePicker.setValue(LocalDate.now().minusWeeks(1));
 		endDatePicker.setValue(LocalDate.now());
 		data = getVisitors(startDatePicker.getValue(), endDatePicker.getValue());
 		refreshTable();
+		
+		filterCity.textProperty().addListener(new ChangeListener() {
+			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+				filterVisitorByCity((String) oldValue, (String) newValue);
+			}
+		});
+
+		filterCountry.textProperty().addListener(new ChangeListener() {
+			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+				filterVisitorByCountry((String) oldValue, (String) newValue);
+			}
+		});
 	}
 
 	public void refreshTable() {
@@ -276,6 +297,40 @@ public class VisitorViewController implements Initializable {
 			visitors.add(v);
 		}
 		return visitors;
+	}
+	
+	public void filterVisitorByCountry(String oldValue, String newValue) {
+		ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList();
+		if ((filterCountry == null) || (newValue.length() < oldValue.length()) || newValue == null) {
+			visitorTable.setItems(data);
+		} else {
+			newValue = newValue.toUpperCase();
+			for (VisitorDetails visitors : visitorTable.getItems()) {
+				String filterByCountry = visitors.getCountry();
+				if (filterByCountry.toUpperCase().contains(newValue)) {
+					filteredList.add(visitors);
+				}
+			}
+			visitorTable.setItems(filteredList);
+		}
+
+	}
+
+	public void filterVisitorByCity(String oldValue, String newValue) {
+		ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList();
+		if ((filterCity == null) || (newValue.length() < oldValue.length()) || newValue == null) {
+			visitorTable.setItems(data);
+		} else {
+			newValue = newValue.toUpperCase();
+			for (VisitorDetails visitors : visitorTable.getItems()) {
+				String filterByCity = visitors.getCity();
+				if (filterByCity.toUpperCase().contains(newValue)) {
+					filteredList.add(visitors);
+				}
+			}
+			visitorTable.setItems(filteredList);
+		}
+
 	}
 	
 	@FXML
