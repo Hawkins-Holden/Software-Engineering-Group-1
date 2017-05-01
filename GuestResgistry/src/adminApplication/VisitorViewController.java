@@ -19,7 +19,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*; 
+import javafx.scene.control.TextField;
+ 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -95,7 +96,7 @@ public class VisitorViewController implements Initializable {
 		startDatePicker.setValue(LocalDate.now().minusWeeks(1));
 		endDatePicker.setValue(LocalDate.now());
 		data = getVisitors(startDatePicker.getValue(), endDatePicker.getValue());
-		refreshTable();
+		
 		
 		filterCity.textProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -108,6 +109,8 @@ public class VisitorViewController implements Initializable {
 				filterVisitorByCountry((String) oldValue, (String) newValue);
 			}
 		});
+		
+		refreshTable();
 	}
 
 	public void refreshTable() {

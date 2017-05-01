@@ -16,7 +16,7 @@ public class PlatformController implements Initializable {
 
 	public void Visitor(ActionEvent event) throws IOException {
 
-		Parent newScene = FXMLLoader.load(getClass().getResource("newVisitorView.fxml"));
+		Parent newScene = FXMLLoader.load(getClass().getResource("VisitorView.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Visitor Table");
 		new_Stage.setScene(new Scene(newScene, 1920, 1080));

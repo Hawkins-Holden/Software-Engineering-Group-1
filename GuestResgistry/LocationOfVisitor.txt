@@ -1,7 +1,7 @@
-Co Rd 34
-McDonald
-KS
+Unnamed Road
+Karval
+CO
 USA
 types=[route],
- 67745
+ 80823
 

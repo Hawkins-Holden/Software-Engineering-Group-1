@@ -157,9 +157,13 @@ public class AdminJDBC {
 						String state = res.getString("State");
 						String metro = res.getString("Metro");
 						if (metro == null || metro.equals("") || metro.isEmpty()) {
-							fields.add(city + ", " + state);
+							if (city != null && !city.equals("null") && !city.isEmpty() && state != null && !state.isEmpty()) {
+								fields.add(city + ", " + state);
+							}
 						} else {
-							fields.add(metro + ", " + state);
+							if (state != null && !state.isEmpty()) {
+								fields.add(metro + ", " + state);
+							}
 						}
 					}
 					res.close();
@@ -172,7 +176,9 @@ public class AdminJDBC {
 					e.printStackTrace();
 				}
 			}
-		} catch (SQLException e) {
+		} catch (
+
+		SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e1) {
