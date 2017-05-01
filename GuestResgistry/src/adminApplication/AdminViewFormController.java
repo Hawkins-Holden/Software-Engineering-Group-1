@@ -16,12 +16,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
+
+@SuppressWarnings("restriction")
 public class AdminViewFormController implements Initializable {
 
-	@FXML
-	private TextField Fname;
-	@FXML
-	private TextField Lname;
 	@FXML
 	private TextField City;
 	@FXML
@@ -68,26 +66,6 @@ public class AdminViewFormController implements Initializable {
 	ObservableList<String> list = FXCollections.observableArrayList("Business", "Pleasure", "Other");
 	ObservableList<String> slist = FXCollections.observableArrayList("Billboard", "Interstate Sign", "Other");
 
-	public void fnameValidate(TextField Fname, Label FnameError) {
-
-		if (Fname.getText() != null && !Fname.getText().matches("[a-zA-Z]+") && !Fname.getText().isEmpty()) {
-			FnameError.setText("Please enter a valid First Name!");
-		} else {
-			FnameError.setText("");
-		}
-
-	}
-
-	public void LnameValidate(TextField Lname, Label LnameError) {
-
-		if (Lname.getText() != null && !Lname.getText().matches("[a-zA-Z]+") && !Lname.getText().isEmpty()) {
-			LnameError.setText("Please enter a valid First Name!");
-		} else {
-			LnameError.setText("");
-		}
-
-	}
-
 	public void destinationValidate(TextField Destination, Label DestinationError) {
 
 		if (Destination.getText() != null && !Destination.getText().matches("[a-zA-Z ]+")
@@ -131,7 +109,7 @@ public class AdminViewFormController implements Initializable {
 			Parent closeScene = FXMLLoader.load(getClass().getResource("VisitorView.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			new_Stage.setTitle("Visitor");
-			new_Stage.setScene(new Scene(closeScene, 1680, 1200));
+			new_Stage.setScene(new Scene(closeScene, 1920, 1080));
 			new_Stage.show();
 		}
 
@@ -151,8 +129,6 @@ public class AdminViewFormController implements Initializable {
 
 		if (result.get() == ButtonType.OK) {
 
-			fnameValidate(Fname, FnameError);
-			LnameValidate(Lname, LnameError);
 			emailValidate(Email, EmailError);
 			destinationValidate(Destination, DestinationError);
 			partyValidate(Party, PartyError);
@@ -178,7 +154,7 @@ public class AdminViewFormController implements Initializable {
 			Parent closeScene = FXMLLoader.load(getClass().getResource("VisitorView.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			new_Stage.setTitle("Map");
-			new_Stage.setScene(new Scene(closeScene, 1680, 1200));
+			new_Stage.setScene(new Scene(closeScene, 1920, 1800));
 			new_Stage.show();
 		}
 

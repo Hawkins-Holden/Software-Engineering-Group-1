@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -12,56 +13,102 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="639.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.AdminViewFormController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.AdminViewFormController">
    <bottom>
-      <AnchorPane prefHeight="91.0" prefWidth="724.0" style="-fx-background-color: yellow;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="175.0" prefWidth="1920.0" style="-fx-background-color: yellow;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="Update" layoutX="633.0" layoutY="16.0" mnemonicParsing="false" onAction="#updateButton" prefHeight="60.0" prefWidth="128.0" style="-fx-background-color: green;" text="UPDATE INFO" />
-            <Button fx:id="Exit" layoutX="468.0" layoutY="16.0" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="60.0" prefWidth="134.0" style="-fx-background-color: red;" text="EXIT" />
+            <Button fx:id="Update" layoutX="789.0" layoutY="43.0" mnemonicParsing="false" onAction="#updateButton" prefHeight="60.0" prefWidth="171.0" style="-fx-background-color: green;" text="Add Visitor Info">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <Button fx:id="Exit" layoutX="479.0" layoutY="43.0" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="60.0" prefWidth="164.0" style="-fx-background-color: red;" text="BACK">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
          </children>
       </AnchorPane>
    </bottom>
    <top>
-      <AnchorPane fx:id="FormBody" prefHeight="377.0" prefWidth="640.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="FormBody" prefHeight="934.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="Fname" layoutX="77.0" layoutY="14.0" promptText="First Name" />
-            <TextField fx:id="Lname" layoutX="260.0" layoutY="14.0" promptText="Last Name" />
-            <Label layoutX="25.0" layoutY="19.0" text="Name" />
-            <TextField fx:id="City" layoutX="77.0" layoutY="75.0" promptText="City" />
-            <TextField fx:id="Country" layoutX="78.0" layoutY="110.0" promptText="Country" />
-            <TextField fx:id="ZipCode" layoutX="260.0" layoutY="110.0" prefHeight="27.0" prefWidth="98.0" promptText="Zip-Code" />
-            <ComboBox fx:id="State" layoutX="267.0" layoutY="75.0" prefHeight="27.0" prefWidth="84.0" promptText="State" />
-            <Label layoutX="25.0" layoutY="58.0" text="Address" />
-            <Label layoutX="27.0" layoutY="163.0" text="Did you stay in Monroe and West Monroe hotel? " />
-            <RadioButton fx:id="rbYes" layoutX="28.0" layoutY="187.0" mnemonicParsing="false" text="Yes">
+            <TextField fx:id="City" layoutX="488.0" layoutY="227.0" promptText="City">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <TextField fx:id="Country" layoutX="488.0" layoutY="282.0" promptText="Country">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <TextField fx:id="ZipCode" layoutX="738.0" layoutY="282.0" prefHeight="27.0" prefWidth="98.0" promptText="Zip Code">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <ComboBox fx:id="State" layoutX="738.0" layoutY="225.0" prefHeight="43.0" prefWidth="149.0" promptText="State" />
+            <Label layoutX="348.0" layoutY="226.0" text="Visiting from:">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Label layoutX="136.0" layoutY="353.0" text="Stayed in Monroe / West Monroe Hotel:">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <RadioButton fx:id="rbYes" layoutX="491.0" layoutY="353.0" mnemonicParsing="false" text="Yes">
                <toggleGroup>
                   <ToggleGroup fx:id="toggleGroup" />
                </toggleGroup>
+               <font>
+                  <Font size="18.0" />
+               </font>
             </RadioButton>
-            <RadioButton fx:id="rbNo" layoutX="140.0" layoutY="187.0" mnemonicParsing="false" text="No" toggleGroup="$toggleGroup" />
-            <Label layoutX="28.0" layoutY="212.0" text="How did you hear about Monroe and West-Monroe CVB?" />
-            <ComboBox fx:id="Reason" layoutX="27.0" layoutY="229.0" prefWidth="150.0" promptText="Choose One" />
-            <Label layoutX="26.0" layoutY="266.0" text="Where are you travelling?" />
-            <TextField fx:id="Destination" layoutX="25.0" layoutY="287.0" promptText="Enter City" />
-            <Label layoutX="28.0" layoutY="338.0" text="Why are you travelling? " />
-            <ComboBox fx:id="Purpose" layoutX="29.0" layoutY="361.0" prefWidth="150.0" promptText="Choose One" />
-            <Label layoutX="33.0" layoutY="393.0" text="How many people are travelling with you?" />
-            <TextField fx:id="Party" layoutX="304.0" layoutY="388.0" prefHeight="27.0" prefWidth="124.0" promptText="Enter a number" />
-            <Label layoutX="30.0" layoutY="425.0" text="Are you interested to learn more about Monroe and West Monroe ?" />
-            <RadioButton fx:id="rbYY" layoutX="27.0" layoutY="450.0" mnemonicParsing="false" text="Yes">
-               <toggleGroup>
-                  <ToggleGroup fx:id="toggleUp" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="rbNN" layoutX="135.0" layoutY="450.0" mnemonicParsing="false" text="No" toggleGroup="$toggleUp" />
-            <TextField fx:id="Email" layoutX="132.0" layoutY="484.0" prefHeight="27.0" prefWidth="387.0" promptText="Email Address" />
-            <Label layoutX="30.0" layoutY="489.0" text="Email Address" />
+            <RadioButton fx:id="rbNo" layoutX="580.0" layoutY="353.0" mnemonicParsing="false" text="No" toggleGroup="$toggleGroup">
+               <font>
+                  <Font size="18.0" />
+               </font></RadioButton>
+            <Label layoutX="355.0" layoutY="421.0" text="Referred via:">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <ComboBox fx:id="Reason" layoutX="488.0" layoutY="410.0" prefHeight="49.0" prefWidth="158.0" promptText="Choose One" />
+            <Label layoutX="275.0" layoutY="495.0" text="Destination / Interests:">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <TextField fx:id="Destination" layoutX="491.0" layoutY="489.0" promptText="Enter City">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <Label layoutX="349.0" layoutY="564.0" text="Traveling for:">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <ComboBox fx:id="Purpose" layoutX="491.0" layoutY="552.0" prefHeight="50.0" prefWidth="178.0" promptText="Choose One" />
+            <Label layoutX="374.0" layoutY="636.0" text="Party size:">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <TextField fx:id="Party" layoutX="491.0" layoutY="625.0" prefHeight="49.0" prefWidth="143.0" promptText="Enter a number">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <TextField fx:id="Email" layoutX="491.0" layoutY="709.0" prefHeight="50.0" prefWidth="479.0" promptText="Email Address">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <Label layoutX="337.0" layoutY="721.0" text="Email Address:">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
             <Label fx:id="FnameError" layoutX="74.0" layoutY="41.0" />
             <Label fx:id="EmailError" layoutX="136.0" layoutY="517.0" />
             <Label fx:id="PartyError" layoutX="440.0" layoutY="393.0" />
             <Label fx:id="DestinationError" layoutX="34.0" layoutY="314.0" />
             <Label fx:id="AddressError" layoutX="74.0" layoutY="137.0" />
             <Label fx:id="LnameError" layoutX="260.0" layoutY="50.0" />
+            <Label layoutX="136.0" layoutY="146.0" text="Adding New Visitor Information">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </top>

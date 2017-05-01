@@ -4,15 +4,24 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Worker.State;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,48 +30,30 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.*;
-import javafx.concurrent.Worker.State;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import netscape.javascript.JSObject;
-import java.util.Set;
-
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-
-import java.util.HashSet;
 
 @SuppressWarnings("restriction")
 public class AnalyticsController implements Initializable {
 
-	final String accessToken = "f90e380a-300b-4a62-822e-5517f9887be3";
-	// filterControls
 	@FXML
 	private TextField citiesMenuText;
 	@FXML
@@ -188,8 +179,6 @@ public class AnalyticsController implements Initializable {
 		URL urlHello = getClass().getResource(hellohtml);
 		engine.load(urlHello.toExternalForm());
 
-		// ----------------------------------------------
-
 		engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
 
 			@Override
@@ -205,11 +194,9 @@ public class AnalyticsController implements Initializable {
 
 		});
 
-		// ----------------------------------------------
-
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		refreshMenus();
@@ -369,7 +356,6 @@ public class AnalyticsController implements Initializable {
 		repeatColumn.setCellValueFactory(new PropertyValueFactory<>("repeatVisit"));
 		reasonColumn.setCellValueFactory(new PropertyValueFactory<>("travelingFor"));
 		dateColumn.setCellValueFactory(new PropertyValueFactory<>("visitingDay"));
-		// partyColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		visitorTable.setItems(null);
 		visitorTable.setItems(data);
@@ -676,28 +662,26 @@ public class AnalyticsController implements Initializable {
 		Parent newScene = FXMLLoader.load(getClass().getResource("Platform.fxml"));
 		Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Visitor Table");
-		new_Stage.setScene(new Scene(newScene, 1000, 1000));
+		new_Stage.setScene(new Scene(newScene, 1920, 1800));
 		new_Stage.show();
 	}
 
 	@FXML
 	private void ExportAction(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
-		// Set extension filter
 		if (!data.isEmpty()) {
 			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
 			chooser.getExtensionFilters().add(filter);
-			// Show save dialog
 			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
 			if (file != null) {
 				try {
-					saveXLSFile(file);
+					JExcelDriver.saveXLSFile(file, data);
 				} catch (WriteException e) {
 					// TODO Auto-generated catch block
-					ErrorAlert.showError(e);
+					e.printStackTrace();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					ErrorAlert.showError(e);
+					e.printStackTrace();
 				}
 			}
 		} else {
@@ -716,34 +700,15 @@ public class AnalyticsController implements Initializable {
 			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
 			if (file != null) {
 				try {
-					saveEmailList(file);
+					JExcelDriver.saveEmailList(file, data);
 				} catch (WriteException e) {
 					// TODO Auto-generated catch block
-					ErrorAlert.showError(e);
+					e.printStackTrace();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					ErrorAlert.showError(e);
+					e.printStackTrace();
 				}
 			}
-			/*
-			 * Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			 * alert.setTitle("Export to Constant Contact"); alert.
-			 * setHeaderText("Would you like to export this mailing list to Constant Contact?"
-			 * ); alert.setContentText("");
-			 * 
-			 * ButtonType buttonTypeOne = new ButtonType("Yes"); ButtonType
-			 * buttonTypeCancel = new ButtonType("Cancel",
-			 * ButtonBar.ButtonData.CANCEL_CLOSE);
-			 * 
-			 * alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-			 * 
-			 * Optional<ButtonType> result = alert.showAndWait(); if
-			 * (result.get() == buttonTypeOne) {
-			 * if(exportToConstantContact(file) != 404){
-			 * System.out.println("Successfully exported emails."); } } else {
-			 * // ... user chose CANCEL or closed the dialog }
-			 */
-
 		} else {
 
 		}
@@ -751,7 +716,7 @@ public class AnalyticsController implements Initializable {
 
 	public void ImportAction() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Export to Constant Contact");
+		alert.setTitle("Export mailing list to Excel");
 		alert.setHeaderText(
 				"An import template file must be used for importing visitor information. Would you like to generate a template file?");
 		alert.setContentText("");
@@ -769,253 +734,26 @@ public class AnalyticsController implements Initializable {
 			chooser.getExtensionFilters().add(filter);
 			File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
 			try {
-				generateImportTemplate(file);
+				JExcelDriver.generateImportTemplate(file);
 			} catch (WriteException e) {
-				ErrorAlert.showError(e);
+				e.printStackTrace();
 			} catch (IOException e) {
-				ErrorAlert.showError(e);
+				e.printStackTrace();
 			}
 		} else if (result.get() == buttonTypeTwo) {
 			FileChooser chooser = new FileChooser();
 			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
 			chooser.getExtensionFilters().add(filter);
-			// Show save dialog
-
 			try {
 				File file = chooser.showOpenDialog(exportButton.getScene().getWindow());
-				readXLSFile(file);
+				JExcelDriver.readXLSFile(file);
 			} catch (Exception e) {
-				ErrorAlert.showError(e);
+				e.printStackTrace();
 			}
 		} else {
 
 		}
-		// ... user chose CANCEL or closed the dialog }
 		refreshData();
-	}
-
-	public void generateImportTemplate(File file) throws IOException, WriteException {
-		WritableWorkbook myexcel = Workbook.createWorkbook(file);
-		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
-		int x = 0;
-		mysheet.addCell(new Label(x, 0, "Email"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (City)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (Metro)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (State)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (Country)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (Zip)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Number in Party"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "How Referred"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Stayed in M/WM Hotel"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Destination"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Repeat Visitor?"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Reason For Travelling"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Date of Visit"));
-
-		myexcel.write();
-		myexcel.close();
-	}
-
-	public void readXLSFile(File file) {
-		Workbook w;
-		List<VisitorDetails> newData = new ArrayList<VisitorDetails>();
-		try {
-			w = Workbook.getWorkbook(file);
-			Sheet sheet = w.getSheet(0);
-
-			for (int i = 1; i < sheet.getRows(); i++) {
-				int x = 0;
-				String email = sheet.getCell(x, i).getContents();
-				x++;
-				String city = sheet.getCell(x, i).getContents();
-				x++;
-				String metro = sheet.getCell(x, i).getContents();
-				x++;
-				String state = sheet.getCell(x, i).getContents();
-				x++;
-				String country = sheet.getCell(x, i).getContents();
-				x++;
-				String zipString = sheet.getCell(x, i).getContents();
-				Integer zip = (zipString.isEmpty() ? null : Integer.parseInt(zipString));
-				x++;
-				String partyString = sheet.getCell(x, i).getContents();
-				Integer party = (partyString.isEmpty() ? null : Integer.parseInt(partyString));
-				x++;
-				String referred = sheet.getCell(x, i).getContents();
-				if (referred.equalsIgnoreCase("Billboard")) {
-					referred = "Billboard";
-				} else if (referred.equalsIgnoreCase("Interstate Sign")) {
-					referred = "Interstate Sign";
-				} else if (referred.equalsIgnoreCase("Other")) {
-					referred = "Other";
-				} else {
-					referred = "No Response";
-				}
-				x++;
-				String hotel = sheet.getCell(x, i).getContents();
-				if (hotel.equalsIgnoreCase("Yes") || hotel.equalsIgnoreCase("Y")) {
-					hotel = "Yes";
-				} else if (hotel.equalsIgnoreCase("No") || hotel.equalsIgnoreCase("N")) {
-					hotel = "No";
-				} else {
-					hotel = "No Response";
-				}
-				x++;
-				String destination = sheet.getCell(x, i).getContents();
-				x++;
-				String repeatString = sheet.getCell(x, i).getContents();
-				boolean repeat = false;
-				if (repeatString.equalsIgnoreCase("Yes") || repeatString.equalsIgnoreCase("Y")
-						|| repeatString.equalsIgnoreCase("True") || repeatString.equalsIgnoreCase("T")) {
-					repeat = true;
-				}
-				x++;
-				String travelingFor = sheet.getCell(x, i).getContents();
-				if (travelingFor.equalsIgnoreCase("Business")) {
-					travelingFor = "Business";
-				} else if (travelingFor.equalsIgnoreCase("Pleasure")) {
-					travelingFor = "Pleasure";
-				} else if (travelingFor.equalsIgnoreCase("Convention")) {
-					travelingFor = "Convention";
-				} else if (travelingFor.equalsIgnoreCase("Other")) {
-					travelingFor = "Other";
-				} else {
-					travelingFor = "No Response";
-				}
-				x++;
-				String dateString = sheet.getCell(x, i).getContents();
-				java.util.Date visitingDay;
-				if (!dateString.isEmpty()) {
-					DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
-					visitingDay = (java.util.Date) formatter.parse(dateString);
-
-					// cal.set(Integer.parseInt(times[2]),
-					// Integer.parseInt(times[0]) - 1,
-					// Integer.parseInt(times[1]));
-
-					// visitingDay = cal.getTime();
-				} else {
-					visitingDay = null;
-				}
-				newData.add(new VisitorDetails(email, city, metro, state, country, zip, party,
-						referred, hotel, destination, repeat, travelingFor, visitingDay));
-			}
-			AdminJDBC.addVisitors(newData);
-		} catch (Exception e) {
-			ErrorAlert.showError(e);
-		}
-	}
-
-	public void saveXLSFile(File file) throws IOException, WriteException {
-		WritableWorkbook myexcel = Workbook.createWorkbook(file);
-		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
-
-		int x = 0;
-		mysheet.addCell(new Label(x, 0, "Email"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (City)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (Metro)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (State)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (Country)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "From (Zip)"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Number in Party"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "How Referred"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Stayed in M/WM Hotel"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Destination"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Repeat Visitor?"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Reason For Travelling"));
-		x++;
-		mysheet.addCell(new Label(x, 0, "Date of Visit"));
-
-		for (int i = 0; i < data.size(); i++) {
-			int j = 0;
-			mysheet.addCell(formatData(i, j, data.get(i).getEmail()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getCity()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getMetro()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getState()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getCountry()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getZip().toString()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getParty().toString()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getHeard()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getHotel()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getDestination()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getRepeatVisit().toString()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getTravelingFor()));
-			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getVisitingDay().toString()));
-			j++;
-		}
-		try {
-			myexcel.write();
-		} catch (Exception e) {
-			ErrorAlert.showError(e);
-		} finally {
-			myexcel.close();
-		}
-	}
-
-	public void saveEmailList(File file) throws IOException, WriteException {
-		WritableWorkbook myexcel = Workbook.createWorkbook(file);
-		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
-		try {
-			for (int i = 1; i < data.size() - 1; i++) {
-				mysheet.addCell(formatData(i - 1, 0, data.get(i).getEmail()));
-			}
-		} catch (WriteException e) {
-
-		} finally {
-			myexcel.write();
-			myexcel.close();
-		}
-	}
-
-	private Label formatData(int i, int j, String data) {
-		return new Label(j, i + 1, data);
-	}
-
-	private String getTime() {
-		Calendar timestamp = Calendar.getInstance();
-		return timestamp.get(Calendar.HOUR) + ":" + timestamp.get(Calendar.MINUTE) + ":"
-				+ timestamp.get(Calendar.SECOND) + timestamp.get(Calendar.AM_PM);
-	}
-
-	private String getDate() {
-		Calendar timestamp = Calendar.getInstance();
-		return (timestamp.get(Calendar.MONTH) + 1) + "/" + timestamp.get(Calendar.DATE) + "/"
-				+ timestamp.get(Calendar.YEAR);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1101,51 +839,6 @@ public class AnalyticsController implements Initializable {
 			series.getData().add(new XYChart.Data(monthString, count));
 		}
 		return series;
-	}
-
-	public int exportToConstantContact(File fileToUse) {
-		CloseableHttpClient httpclient = HttpClients.createDefault();
-		final HttpPost httppost = new HttpPost("https://api.constantcontact.com/v2/activities/addcontacts");
-
-		httppost.addHeader("Authorization", "Bearer " + this.accessToken);
-		httppost.addHeader("Accept", "application/json");
-		httppost.addHeader("content-type", "multipart/form-data");
-
-		final FileBody data = new FileBody(fileToUse);
-		final String listIds = "1";
-		StringBody lists = null;
-		lists = new StringBody(listIds, ContentType.APPLICATION_JSON);
-		StringBody fileName = null;
-		fileName = new StringBody(fileToUse.getName(), ContentType.APPLICATION_JSON);
-		final MultipartEntityBuilder reqEntity = MultipartEntityBuilder.create();
-		reqEntity.addPart("file_name", fileName);
-		reqEntity.addPart("lists", lists);
-		reqEntity.addPart("data", data);
-
-		httppost.setEntity(reqEntity.build());
-
-		HttpResponse response = null;
-		try {
-			response = httpclient.execute(httppost);
-		} catch (ClientProtocolException e) {
-			ErrorAlert.showError(e);
-		} catch (IOException e) {
-			ErrorAlert.showError(e);
-		}
-		final HttpEntity resEntity = response.getEntity();
-
-		try {
-			EntityUtils.consume(resEntity);
-		} catch (IOException e) {
-			ErrorAlert.showError(e);
-		}
-		int code = response.getStatusLine().getStatusCode();
-		try {
-			httpclient.close();
-		} catch (IOException e) {
-			ErrorAlert.showError(e);
-		}
-		return code;
 	}
 
 	public static ArrayList<String[]> getLatLongData() {

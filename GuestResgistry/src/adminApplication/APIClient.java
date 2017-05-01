@@ -6,12 +6,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 public class APIClient {
-	/*
-	 * public static void main(String[] args) { String[] latlng =
-	 * geocodingRequest("GB"); System.out.println(latlng[0] + ", " + latlng[1]);
-	 * }
-	 */
-
 	public static String[] geocodingRequest(String zip) {
 		Client client = ClientBuilder.newClient();
 		String url = "https://maps.googleapis.com/maps/api/geocode/xml?address="+zip+"&key=AIzaSyBuT9VzPqnYSaB5Os0U4mkI8C7CiuFzwao";

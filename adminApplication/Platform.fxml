@@ -6,56 +6,52 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="828.0" prefWidth="1172.0" style="-fx-background-color: #20B2AA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.PlatformController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #20B2AA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.PlatformController">
    <children>
-      <Label layoutX="346.0" layoutY="30.0" text="Welcome to Admin Platform. ">
+      <Label layoutX="699.0" layoutY="43.0" text="Welcome to Admin Platform ">
          <font>
             <Font name="System Bold" size="38.0" />
          </font>
       </Label>
-      <Label layoutX="412.0" layoutY="104.0" text="What do you like to do today?">
+      <Label layoutX="797.0" layoutY="98.0" text="What do you like to do today?">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="61.0" layoutY="151.0" mnemonicParsing="false" onAction="#Visitor" prefHeight="397.0" prefWidth="520.0" style="-fx-background-color: green;">
+      <Button layoutX="160.0" layoutY="258.0" mnemonicParsing="false" onAction="#Visitor" prefHeight="499.0" prefWidth="637.0" style="-fx-background-color: green;">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
          <graphic>
             <ImageView fitHeight="375.0" fitWidth="498.0">
                <image>
-                  <Image url="@../../../../visitor.PNG" />
+                  <Image url="@../../visitor.PNG" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="655.0" layoutY="151.0" mnemonicParsing="false" onAction="#Analytics" prefHeight="397.0" prefWidth="487.0" style="-fx-background-color: green;">
+      <Button layoutX="1136.0" layoutY="258.0" mnemonicParsing="false" onAction="#Analytics" prefHeight="499.0" prefWidth="637.0" style="-fx-background-color: green;">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
          <graphic>
             <ImageView fitHeight="370.0" fitWidth="467.0">
                <image>
-                  <Image url="@../../../../analytics.PNG" />
+                  <Image url="@../../analytics.PNG" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="879.0" layoutY="686.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="101.0" prefWidth="193.0" style="-fx-background-color: red;" text="Log-Out">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Button>
-      <Label layoutX="158.0" layoutY="561.0" text="See the Visitor Details">
+      <Label layoutX="313.0" layoutY="778.0" text="View / Edit Visitor Information">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="761.0" layoutY="561.0" text="See the Analytics">
+      <Label layoutX="1376.0" layoutY="778.0" text="View Analytics">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
+      <Button layoutX="1692.0" layoutY="984.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="81.0" text="HELP" />
    </children>
 </AnchorPane>

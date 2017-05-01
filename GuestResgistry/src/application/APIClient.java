@@ -6,17 +6,13 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 public class APIClient {
-	/*public static void main(String[] args) {
-		String[] latlng = geocodingRequest("GB");
-		System.out.println(latlng[0] + ", " + latlng[1]);
-	}*/
-
 	public static String[] geocodingRequest(String zip) {
 		Client client = ClientBuilder.newClient();
-		String url = "https://maps.googleapis.com/maps/api/geocode/xml?address="+zip+"&key=AIzaSyBuT9VzPqnYSaB5Os0U4mkI8C7CiuFzwao";
+		String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + zip
+				+ "&key=AIzaSyBuT9VzPqnYSaB5Os0U4mkI8C7CiuFzwao";
 		System.out.println(url);
 		WebTarget target = client.target(url);
-				String output = (target.request(MediaType.APPLICATION_JSON_TYPE).get(String.class));
+		String output = (target.request(MediaType.APPLICATION_JSON_TYPE).get(String.class));
 		String[] latlng = new String[2];
 		System.out.println(output);
 		int latStart = output.indexOf("<lat>") + 5;

@@ -65,6 +65,7 @@ private static String lon;
 		lat = latlong[0];
 		lon = latlong[1];
 		System.out.println("This is from GeoCode: " + latlong[0] + " " + latlong[1]);
+		scan.close();
 		return latlong;
 	}
 	public static String getLat()

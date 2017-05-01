@@ -1,9 +1,11 @@
 package adminApplication;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -23,8 +26,10 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import jxl.write.WriteException;
 
 @SuppressWarnings("restriction")
 public class VisitorViewController implements Initializable {
@@ -33,6 +38,12 @@ public class VisitorViewController implements Initializable {
 	private Button addButton;
 	@FXML
 	private Button deleteButton;
+	@FXML
+	private Button excelButton;
+	@FXML
+	private Button emailButton;
+	@FXML
+	private Button importButton;
 	@FXML
 	private Button refreshButton;
 	@FXML
@@ -72,7 +83,7 @@ public class VisitorViewController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		startDatePicker.setValue(LocalDate.now().minusYears(1));
+		startDatePicker.setValue(LocalDate.now().minusWeeks(1));
 		endDatePicker.setValue(LocalDate.now());
 		data = getVisitors(startDatePicker.getValue(), endDatePicker.getValue());
 		refreshTable();
@@ -225,7 +236,7 @@ public class VisitorViewController implements Initializable {
 		Parent newScene = FXMLLoader.load(getClass().getResource("Platform.fxml"));
 		Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Visitor Table");
-		new_Stage.setScene(new Scene(newScene, 1000, 1000));
+		new_Stage.setScene(new Scene(newScene, 1920, 1080));
 		new_Stage.show();
 	}
 
@@ -233,13 +244,12 @@ public class VisitorViewController implements Initializable {
 		Parent newScene = FXMLLoader.load(getClass().getResource("AdminViewForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Form");
-		new_Stage.setScene(new Scene(newScene, 1000, 1000));
+		new_Stage.setScene(new Scene(newScene, 1920, 1080));
 		new_Stage.show();
 	}
 
 	public void deleteVisitor() {
 		VisitorDetails visitorToDelete = visitorTable.getSelectionModel().getSelectedItem();
-		// if (!data.isEmpty()) {
 		System.out.println("Delete Button Clicked!");
 		Alert deleteAlert = new Alert(Alert.AlertType.WARNING, "Confirm", ButtonType.OK, ButtonType.CANCEL);
 		deleteAlert.setContentText("Are you sure you want to delete this?\n\nTHIS CANNOT BE UNDONE.");
@@ -251,7 +261,6 @@ public class VisitorViewController implements Initializable {
 		} else {
 			deleteAlert.close();
 		}
-		// }
 	}
 
 	private ObservableList<VisitorDetails> getVisitors(LocalDate startDate, LocalDate endDate) {
@@ -266,6 +275,107 @@ public class VisitorViewController implements Initializable {
 			visitors.add(v);
 		}
 		return visitors;
+	}
+	
+	@FXML
+	private void ExportAction(ActionEvent event) {
+		FileChooser chooser = new FileChooser();
+		if (!data.isEmpty()) {
+			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
+			chooser.getExtensionFilters().add(filter);
+			File file = chooser.showSaveDialog(excelButton.getScene().getWindow());
+			if (file != null) {
+				try {
+					JExcelDriver.saveXLSFile(file, data);
+				} catch (WriteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} else {
+
+		}
+	}
+
+	@FXML
+	private void ExportEmailAction(ActionEvent event) {
+		FileChooser chooser = new FileChooser();
+		// Set extension filter
+		if (!data.isEmpty()) {
+			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
+			chooser.getExtensionFilters().add(filter);
+			// Show save dialog
+			File file = chooser.showSaveDialog(emailButton.getScene().getWindow());
+			if (file != null) {
+				try {
+					JExcelDriver.saveEmailList(file, data);
+				} catch (WriteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} else {
+
+		}
+	}
+
+	public void ImportAction() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Export mailing list to Excel");
+		alert.setHeaderText(
+				"An import template file must be used for importing visitor information. Would you like to generate a template file?");
+		alert.setContentText("");
+
+		ButtonType buttonTypeOne = new ButtonType("Generate Template");
+		ButtonType buttonTypeTwo = new ButtonType("Import from File");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne) {
+			FileChooser chooser = new FileChooser();
+			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
+			chooser.getExtensionFilters().add(filter);
+			File file = chooser.showSaveDialog(excelButton.getScene().getWindow());
+			try {
+				JExcelDriver.generateImportTemplate(file);
+			} catch (WriteException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (result.get() == buttonTypeTwo) {
+			FileChooser chooser = new FileChooser();
+			FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel Files(*.xls)", "*.xls");
+			chooser.getExtensionFilters().add(filter);
+			try {
+				File file = chooser.showOpenDialog(importButton.getScene().getWindow());
+				JExcelDriver.readXLSFile(file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+
+		}
+		refreshTable();
+	}
+	
+	public void deleteAgedData() {
+		Alert deleteAlert = new Alert(Alert.AlertType.WARNING, "Delete Aged Data", ButtonType.OK, ButtonType.CANCEL);
+		deleteAlert.setContentText("This will delete data which was created before "+ LocalDate.now().minusYears(2)+". Are you sure you want to delete this?\n\nTHIS CANNOT BE UNDONE.");
+		deleteAlert.showAndWait();
+		if (deleteAlert.getResult() == ButtonType.OK) {
+			AdminJDBC.deleteVisitors(Date.valueOf(LocalDate.now().minusYears(2)));
+		} else {
+			deleteAlert.close();
+		}
 	}
 
 }

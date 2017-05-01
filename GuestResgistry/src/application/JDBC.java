@@ -241,7 +241,7 @@ public class JDBC {
 						+ vd.getCountry() + "', " + vd.getZip() + ")";
 				visitorsQuery += "(" + visitorID + ", '" + vd.getEmail() + "')";
 				visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \"" + vd.getHeard() + "\", \""
-						+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + (!vd.getRepeatVisit() ? 1 : 0) + ", '"
+						+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + (vd.getRepeatVisit() ? 1 : 0) + ", '"
 						+ vd.getTravelingFor() + "', '" + visitingDay + "')";
 				System.out.println(visitorLocationsQuery);
 				System.out.println(visitorsQuery);

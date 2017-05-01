@@ -1,7 +1,7 @@
-1232 Hollywood Ave
-Dallas
+7016-7034 Sherwood Dr
+Houston
 TX
 USA
 types=[street_address],
- 75208
-Dallas-Fort Worth
+ 77021
+Houston

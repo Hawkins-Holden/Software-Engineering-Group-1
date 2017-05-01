@@ -21,7 +21,7 @@ public class Platform extends Application {
 	@Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Platform.fxml"));
-        Scene scene = new Scene(root, 1000, 1000);
+        Scene scene = new Scene(root, 1920, 1080);
         stage.setScene(scene);
         stage.show();
     }

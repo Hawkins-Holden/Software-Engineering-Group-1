@@ -121,7 +121,7 @@ public class AdminJDBC {
 		}
 		return null;
 	}
-	
+
 	public static List<String> getCitiesandMetros() {
 		List<String> cities = new LinkedList<String>();
 
@@ -155,7 +155,7 @@ public class AdminJDBC {
 						String city = res.getString("City");
 						String state = res.getString("State");
 						String metro = res.getString("Metro");
-						if (metro != null || metro.equals("") || metro.isEmpty()) {
+						if (metro == null || metro.equals("") || metro.isEmpty()) {
 							fields.add(city + ", " + state);
 						} else {
 							fields.add(metro + ", " + state);
@@ -168,7 +168,6 @@ public class AdminJDBC {
 					cities.sort(Comparator.naturalOrder());
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -407,10 +406,6 @@ public class AdminJDBC {
 				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
 				stmt.execute("USE visitordb");
 
-				/**
-				 * Query entries with the Zip '71467'
-				 */
-				int count = 0;
 				for (VisitorDetails vd : newData) {
 
 					int visitorID = vd.getId();
@@ -444,6 +439,34 @@ public class AdminJDBC {
 					stmt.executeUpdate(visitsQuery);
 				}
 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void deleteVisitors(java.sql.Date ageTimestamp) {
+		Connection con = null;
+		Statement stmt;
+
+		String url = "jdbc:mysql://localhost:3306/test";
+		String user = "root";
+		String password = "";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, password);
+
+			if (!con.isClosed()) {
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+				stmt = con.createStatement();
+
+				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
+				stmt.execute("USE visitordb");
+
+				stmt.executeUpdate("DELETE FROM visitors WHERE Timestamp < " + ageTimestamp);
+				stmt.executeUpdate("DELETE FROM visitorlocations WHERE Timestamp < " + ageTimestamp);
+				stmt.executeUpdate("DELETE FROM visits WHERE Timestamp < " + ageTimestamp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

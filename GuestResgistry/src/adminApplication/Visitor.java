@@ -23,29 +23,6 @@ public class Visitor
 		this.email = email;
 	}
 	
-	/*
-	  This is the 'real' constructor... for now
-	*/
-	
-
-	public Visitor (String fname, String lname, String email, boolean hasVisited, String reasonForVisit, String heard, 
-			String latitude, String longitude, String destination)
-	{
-		id = idCount;
-		idCount++;
-		this.fname = fname;
-		this.lname = lname;
-		this.email = email;
-		this.hasVisited = hasVisited;
-		this.reasonForVisit = reasonForVisit;
-		this.heard = heard;
-		this.latitude = latitude;
-		this.longitude = longitude; 
-		this.destination = destination;
-		this.hotel = hotel;
-		this.party = party;
-	}
-	
 	public Visitor() {
 		id = idCount;
 		idCount++;
@@ -158,4 +135,4 @@ public class Visitor
 	public void setID(int visitorID) {
 		this.id = visitorID;	
 	}
-}//end class
+}
