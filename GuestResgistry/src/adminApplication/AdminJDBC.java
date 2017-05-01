@@ -156,9 +156,12 @@ public class AdminJDBC {
 						String city = res.getString("City");
 						String state = res.getString("State");
 						String metro = res.getString("Metro");
-						if (metro == null || metro.equals("") || metro.isEmpty()) {
+						if (metro == null || metro.equals("") || metro.equals("null") || metro.isEmpty()) {
 							if (city != null && !city.equals("null") && !city.isEmpty() && state != null && !state.isEmpty()) {
 								fields.add(city + ", " + state);
+							}
+							else if (city != null && !city.equals("null") && !city.isEmpty()){
+								fields.add(city);
 							}
 						} else {
 							if (state != null && !state.isEmpty()) {
@@ -243,6 +246,7 @@ public class AdminJDBC {
 				 * Query entries with the Zip '71467'
 				 */
 				List<String> fields = new LinkedList<String>();
+				System.out.println(field + " from " + tableName);
 				ResultSet res = stmt.executeQuery("SELECT DISTINCT " + field + " FROM " + tableName);
 				while (res.next()) {
 					fields.add(res.getString(field));

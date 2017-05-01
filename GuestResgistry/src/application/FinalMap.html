@@ -213,7 +213,6 @@ html, body {
 				myOptions);
 		//Add "click on map" listener
 		google.maps.event.addListener(map, 'click', function(event) {
-			marker = null;
 			DropUserPin(event.latLng);
 		});
 		//Add manual input (text box) listener

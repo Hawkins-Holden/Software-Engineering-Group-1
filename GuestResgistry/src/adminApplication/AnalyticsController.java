@@ -7,9 +7,12 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -274,6 +277,16 @@ public class AnalyticsController implements Initializable {
 	}
 
 	public void refreshMenus() {
+		
+		areaCheck.setSelected(false);
+		dateCheck.setSelected(false);
+		destinationCheck.setSelected(false);
+		emailCheck.setSelected(false);
+		hotelCheck.setSelected(false);
+		referredCheck.setSelected(false);
+		repeatCheck.setSelected(false);
+		travelingCheck.setSelected(false);
+		
 		List<String> cities = AdminJDBC.getCitiesandMetros();
 		ObservableList<CheckMenuItem> cityItems = FXCollections.observableArrayList();
 		for (String city : cities) {
@@ -294,6 +307,19 @@ public class AnalyticsController implements Initializable {
 		countriesMenuButton.getItems().addAll(countryItems);
 
 		List<String> destinations = AdminJDBC.getDestinations();
+		Set<String> destinationSet = new HashSet<String>();
+		for(String dest : destinations)
+		{
+			for(String interest: dest.split(","))
+			{
+				destinationSet.add(interest);
+			}
+		}
+		destinations = new ArrayList<String>();
+		for(String destination : destinationSet) {
+			destinations.add(destination);
+		}
+		destinations.sort(Comparator.naturalOrder());
 		ObservableList<CheckMenuItem> destinationItems = FXCollections.observableArrayList();
 		for (String destination : destinations) {
 			destinationItems.add(new CheckMenuItem(destination));
@@ -334,6 +360,12 @@ public class AnalyticsController implements Initializable {
 		}
 		travelingMenuButton.getItems().clear();
 		travelingMenuButton.getItems().addAll(reasonItems);
+		
+		ObservableList<CheckMenuItem> emailItems = FXCollections.observableArrayList();
+		emailItems.add(new CheckMenuItem("Provided"));
+		emailItems.add(new CheckMenuItem("Not Provided"));
+		emailMenuButton.getItems().clear();
+		emailMenuButton.getItems().addAll(emailItems);
 	}
 
 	public void refreshData() {

@@ -1,7 +1,7 @@
-Unnamed Road
-Karval
-CO
+4402-4406 Bridlewood Dr
+Austin
+TX
 USA
-types=[route],
- 80823
-
+types=[street_address],
+ 78727
+Austin
