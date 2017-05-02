@@ -16,6 +16,7 @@ import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -290,10 +292,35 @@ public class BeginFormController implements Initializable {
 			new_Stage.setTitle("Welcome to Monroe-West Monroe CVB");
 			new_Stage.setScene(new Scene(newScene, 1920, 1080));
 			new_Stage.show();
+			
+			Form.timer.restartIdleTimer();
+			
+			newScene.setOnMouseClicked(mouseHandler);
+		    newScene.setOnMouseDragged(mouseHandler);
+		    newScene.setOnMouseEntered(mouseHandler);
+		    newScene.setOnMouseExited(mouseHandler);
+		    newScene.setOnMouseMoved(mouseHandler);
+		    newScene.setOnMousePressed(mouseHandler);
+		    newScene.setOnMouseReleased(mouseHandler);	
+			
 		} else {
 			backAlert.close();
 		}
 	}
+	
+	/***************************************************************************
+	 *********************** Mouse Handler *************************************
+	 **************************************************************************/
+	
+	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() 
+	{
+		 
+        @Override
+        public void handle(MouseEvent mouseEvent)
+        {
+        	Form.timer.restartIdleTimer();
+        }
+    };
 
 	/****************************************************************
 	 * Checks to see if any of the text box's have more than 32 characters.
