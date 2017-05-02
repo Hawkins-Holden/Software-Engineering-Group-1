@@ -128,6 +128,22 @@ public class EndFormController implements Initializable, ControlledScreen {
 	
 	public void goBack(ActionEvent event) throws IOException
 	{
+		if (partyError == false)
+		{
+			System.out.println(partyError);
+			String partyText = Party.getText();
+			Integer party = (partyText.isEmpty() ? 1 : Integer.parseInt(partyText));
+			visitor.setParty(party.intValue());
+		}
+		if (Email.getText() != null) 
+		{
+			visitor.setEmail(Email.getText());
+		}
+		
+		String reason = Reason.getValue();
+		reason = (reason==null ? "No Response": reason);
+		visitor.setTravelingFor(reason);
+		
 		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");

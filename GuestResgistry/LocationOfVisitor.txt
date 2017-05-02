@@ -1,12 +1,12 @@
-null
-null
-null
-null
-null
-null
-null
-24.86650252692691
-118.58642578125
+144 S Amherst St
+Castle Rock
+CO
+USA
+types=[street_address],
+ 80104
+Denver
+39.36827914916011
+-104.8095703125
 null
 null
 null
