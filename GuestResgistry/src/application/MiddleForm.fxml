@@ -46,7 +46,7 @@
                <font>
                   <Font size="24.0" />
                </font></Button>
-            <Button fx:id="home_btn" layoutX="943.0" layoutY="15.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="123.0" text="HOME">
+            <Button fx:id="home_btn" onAction="#goHome" layoutX="943.0" layoutY="15.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="123.0" text="HOME">
                <font>
                   <Font size="24.0" />
                </font></Button>

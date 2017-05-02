@@ -170,4 +170,14 @@ public class MiddleFormController implements Initializable {
 		new_Stage.show();
 	}
 
+	public void goHome(ActionEvent event) throws IOException{
+		
+		JDBC.addVisitor(visitor);
+		
+		Parent newScene = FXMLLoader.load(getClass().getResource("Map.fxml"));
+		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		new_Stage.setTitle("Your Information");
+		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.show();	
+	}
 }

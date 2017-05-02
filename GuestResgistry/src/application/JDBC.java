@@ -241,9 +241,11 @@ public class JDBC {
 						+ vd.getCountry() + "', " + vd.getZip() + ")";
 				visitorsQuery += "(" + visitorID + ", '" + vd.getEmail() + "')";
 				visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \""
-						+ (vd.getHeard() == null ? "No Response" : vd.getHeard()) + "\", \"" + vd.getHotel() + "\", '"
-						+ vd.getDestination() + "', " + (vd.getRepeatVisit() ? 1 : 0) + ", '" + vd.getTravelingFor()
-						+ "', '" + visitingDay + "')";
+						+ (vd.getHeard() == null ? "No Response" : vd.getHeard()) + "\", \""
+						+ (vd.getHotel() == null ? "No Response" : vd.getHotel()) + "\", '" + vd.getDestination()
+						+ "', " + (vd.getRepeatVisit() == null ? 0 : (vd.getRepeatVisit() ? 1 : 0)) + ", '"
+						+ (vd.getTravelingFor() == null ? "No Response" : vd.getTravelingFor()) + "', '" + visitingDay
+						+ "')";
 				System.out.println(visitorLocationsQuery);
 				System.out.println(visitorsQuery);
 				System.out.println(visitsQuery);
