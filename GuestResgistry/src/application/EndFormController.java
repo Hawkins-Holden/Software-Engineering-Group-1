@@ -63,6 +63,22 @@ public class EndFormController implements Initializable, ControlledScreen {
 	public void initialize(URL url, ResourceBundle rb) {
 		visitor = VisitorContext.getInstance().currentVisitor();
 		Reason.setItems(list);
+		
+		if(visitor.getParty()!=null)
+		{
+			Party.setText(visitor.getParty().toString());
+		}
+		if(visitor.getTravelingFor()!=null && !visitor.getTravelingFor().equals("No Response"))
+		{
+				Reason.getSelectionModel().select(visitor.getHeard());		
+		}
+		if (visitor.getEmail()!=null) {
+			rbYes.setSelected(true);
+			email_pop_label.setVisible(true);
+			Email.setVisible(true);
+			Email.setText(visitor.getEmail());
+
+		}
 
 		System.out.println("End Form Lat: " + visitor.getLatitude());
 		System.out.println("End Form Lat: " + visitor.getLongitude());

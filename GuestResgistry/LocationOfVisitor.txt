@@ -1,12 +1,12 @@
-144 S Amherst St
-Castle Rock
-CO
+2824 Mastil St
+Grand Prairie
+TX
 USA
 types=[street_address],
- 80104
-Denver
-39.36827914916011
--104.8095703125
+ 75054
+Dallas-Fort Worth
+32.602361666817515
+-97.05322265625
 null
 null
 null
