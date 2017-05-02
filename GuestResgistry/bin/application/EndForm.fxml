@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -54,11 +55,20 @@
                <font>
                   <Font size="24.0" />
                </font></Button>
+            <Button layoutX="178.0" layoutY="31.0" mnemonicParsing="false" onAction="#helpButton" style="-fx-background-color: pink;">
+               <graphic>
+                  <ImageView fitHeight="58.0" fitWidth="50.0">
+                     <image>
+                        <Image url="@question.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </bottom>
    <center>
-      <Pane fx:id="third_body" prefHeight="458.0" prefWidth="820.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="third_body" prefHeight="567.0" prefWidth="820.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="14.0" layoutY="32.0" />
             <Label fx:id="reason_label" layoutX="14.0" layoutY="22.0" text="Would y'all call this a trip for business or pleasure?">
@@ -105,6 +115,24 @@
             <Label fx:id="Email_error" layoutX="17.0" layoutY="457.0" textFill="RED">
                <font>
                   <Font size="24.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="rbRepeatN" layoutX="567.0" layoutY="168.0" mnemonicParsing="false" onAction="#radioSelect" text="No">
+               <toggleGroup>
+                  <ToggleGroup fx:id="toggleGroup1" />
+               </toggleGroup>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="rbRepeatY" layoutX="464.0" layoutY="168.0" mnemonicParsing="false" onAction="#radioSelect" text="Yes" toggleGroup="$toggleGroup1">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </RadioButton>
+            <Label fx:id="email_label1" layoutX="443.0" layoutY="139.0" text="Have y'all visited us before?">
+               <font>
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </children>

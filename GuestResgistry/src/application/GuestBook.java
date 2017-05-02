@@ -13,7 +13,7 @@ public class GuestBook extends Application {
 
 		Parent root = FXMLLoader.load(getClass().getResource("GuestBook.fxml"));
 		Stage.setTitle("Guest Book Registry");
-		Stage.setScene(new Scene(root, 1680, 1200));
+		Stage.setScene(new Scene(root, 1920, 1080));
 		Stage.show();
 
 	}

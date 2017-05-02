@@ -1,12 +1,12 @@
-2824 Mastil St
-Grand Prairie
-TX
+700 Peavine Creek Rd NE
+Atlanta
+GA
 USA
 types=[street_address],
- 75054
-Dallas-Fort Worth
-32.602361666817515
--97.05322265625
+ 30322
+Atlanta
+33.797408767572485
+-84.3310546875
 null
 null
 null

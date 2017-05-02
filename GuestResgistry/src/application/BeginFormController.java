@@ -33,6 +33,8 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javafx.scene.input.MouseEvent;
+import javafx.event.EventHandler;
 
 /**
  *
@@ -242,7 +244,7 @@ public class BeginFormController implements Initializable {
 		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
-		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.setScene(new Scene(newScene, 1920, 1080));
 		new_Stage.show();
 	}
 	public void setFields() {
@@ -281,8 +283,34 @@ public class BeginFormController implements Initializable {
 			new_Stage.setTitle("Welcome to Monroe-West Monroe CVB");
 			new_Stage.setScene(new Scene(newScene, 1920, 1080));
 			new_Stage.show();
+			
+			Form.timer.restartIdleTimer();
+			 			
+			 			newScene.setOnMouseClicked(mouseHandler);
+			 		    newScene.setOnMouseDragged(mouseHandler);
+			 		    newScene.setOnMouseEntered(mouseHandler);
+			 		    newScene.setOnMouseExited(mouseHandler);
+			 		    newScene.setOnMouseMoved(mouseHandler);
+			 		    newScene.setOnMousePressed(mouseHandler);
+			 		    newScene.setOnMouseReleased(mouseHandler);	
+			
 		} else {
 			backAlert.close();
 		}
 	}
+	
+	/***************************************************************************
+	 +	 *********************** Mouse Handler *************************************
+	 +	 **************************************************************************/
+	 	
+	 	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() 
+	 	{
+	 		 
+	         @Override
+	         public void handle(MouseEvent mouseEvent)
+	         {
+	         	Form.timer.restartIdleTimer();
+	         }
+	     };
+	
 }

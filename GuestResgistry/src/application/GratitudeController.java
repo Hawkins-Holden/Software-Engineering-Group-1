@@ -14,9 +14,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -52,7 +54,30 @@ public class GratitudeController implements Initializable {
 		new_Stage.setTitle("Your Information");
 		new_Stage.setScene(new Scene(newScene, 1680, 1200));
 		new_Stage.show();
-
+		
+		Form.timer.restartIdleTimer();
+			
+			newScene.setOnMouseClicked(mouseHandler);
+		    newScene.setOnMouseDragged(mouseHandler);
+		    newScene.setOnMouseEntered(mouseHandler);
+		    newScene.setOnMouseExited(mouseHandler);
+		    newScene.setOnMouseMoved(mouseHandler);
+		    newScene.setOnMousePressed(mouseHandler);
+		    newScene.setOnMouseReleased(mouseHandler);
 	}
+	
+	/***************************************************************************
+	 +	 *********************** Mouse Handler *************************************
+	 +	 **************************************************************************/
+	 	
+	 	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() 
+	 	{
+	 		 
+	         @Override
+	         public void handle(MouseEvent mouseEvent)
+	         {
+	         	Form.timer.restartIdleTimer();
+	         }
+	     };
 
 }

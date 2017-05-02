@@ -85,7 +85,7 @@ public class HotelController implements Initializable {
 		Parent newScene = FXMLLoader.load(getClass().getResource("Name.fxml"));
 		Stage new_Stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
-		new_Stage.setScene(new Scene(newScene,1680, 1200));
+		new_Stage.setScene(new Scene(newScene,1920, 1080));
 		new_Stage.show();
 		
 	}

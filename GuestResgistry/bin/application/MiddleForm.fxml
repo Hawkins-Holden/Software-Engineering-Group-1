@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.net.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -54,6 +55,15 @@
                <font>
                   <Font size="24.0" />
                </font></Button>
+            <Button layoutX="72.0" layoutY="16.0" mnemonicParsing="false" onAction="#helpButton" style="-fx-background-color: pink;">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="47.0">
+                     <image>
+                        <Image url="@question.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </bottom>

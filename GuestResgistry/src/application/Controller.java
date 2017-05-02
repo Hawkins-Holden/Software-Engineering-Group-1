@@ -107,7 +107,7 @@ public class Controller implements Initializable {
 			Parent closeScene = FXMLLoader.load(getClass().getResource("Confirmation.fxml"));
 			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			new_Stage.setTitle("Success!");
-			new_Stage.setScene(new Scene(closeScene, 1680, 1200));
+			new_Stage.setScene(new Scene(closeScene, 1920, 1080));
 			new_Stage.show();
 			
 			

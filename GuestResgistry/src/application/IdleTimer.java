@@ -44,8 +44,8 @@ public class IdleTimer
 	    		Parent root = FXMLLoader.load(getClass().getResource("Map.fxml"));
 	    		Stage.setTitle("Welcome to Monroe-West Monroe CVB!!!");
 	    		Stage.setScene(new Scene(root));
-	    		Stage.setHeight(900);
-	    		Stage.setWidth(1200);
+	    		Stage.setHeight(1080);
+	    		Stage.setWidth(1920);
 				Stage.show();	
 				
 				restartIdleTimer();

@@ -23,6 +23,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.input.MouseEvent;
+import javafx.event.EventHandler;
+
 
 /**
  * FXML Controller class
@@ -110,7 +113,7 @@ public class MiddleFormController implements Initializable {
 		Parent newScene = FXMLLoader.load(getClass().getResource("BeginForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
-		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.setScene(new Scene(newScene, 1920, 1080));
 		new_Stage.show();
 
 	}
@@ -180,7 +183,7 @@ public class MiddleFormController implements Initializable {
 		Parent newScene = FXMLLoader.load(getClass().getResource("EndForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
-		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.setScene(new Scene(newScene, 1920, 1080));
 		new_Stage.show();
 	}
 
@@ -191,7 +194,34 @@ public class MiddleFormController implements Initializable {
 		Parent newScene = FXMLLoader.load(getClass().getResource("Map.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
-		new_Stage.setScene(new Scene(newScene, 1680, 1200));
-		new_Stage.show();	
+		new_Stage.setScene(new Scene(newScene, 1920, 1080));
+		new_Stage.show();
+		
+		Form.timer.restartIdleTimer();
+		 			
+		 			newScene.setOnMouseClicked(mouseHandler);
+		 		    newScene.setOnMouseDragged(mouseHandler);
+		 		    newScene.setOnMouseEntered(mouseHandler);
+		 		    newScene.setOnMouseExited(mouseHandler);
+		 		    newScene.setOnMouseMoved(mouseHandler);
+		 		    newScene.setOnMousePressed(mouseHandler);
+		 		    newScene.setOnMouseReleased(mouseHandler);	
+		
 	}
+	
+	/***************************************************************************
+	 +	 *********************** Mouse Handler *************************************
+	 +	 **************************************************************************/
+	 	
+	 	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() 
+	 	{
+	 		 
+	         @Override
+	         public void handle(MouseEvent mouseEvent)
+	         {
+	         	Form.timer.restartIdleTimer();
+	         }
+	     };
+	
+	
 }

@@ -21,7 +21,7 @@ public class ConfirmationController implements Initializable {
 		Parent setScene = FXMLLoader.load(getClass().getResource("Map.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Welcome to Monroe-West Monroe CVB!!!");
-		new_Stage.setScene(new Scene(setScene,1680, 1200));
+		new_Stage.setScene(new Scene(setScene,1920, 1080));
 		new_Stage.show();
 		
 	}
