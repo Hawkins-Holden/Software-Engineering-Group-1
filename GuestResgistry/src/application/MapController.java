@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import javafx.animation.PathTransition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
@@ -21,12 +23,15 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Label;
+import javafx.scene.shape.Line;
 
 public class MapController implements Initializable {
 	
@@ -37,6 +42,8 @@ public class MapController implements Initializable {
 	private WebView webView;
 	private WebEngine engine;
 	private Visitor visitor;
+	@FXML
+	private Label heading;
 	JSObject window;
 
 	@SuppressWarnings("restriction")
@@ -71,6 +78,22 @@ public class MapController implements Initializable {
 	@SuppressWarnings("restriction")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		PathTransition transition = new PathTransition();
+
+		Line line = new Line();
+		line.setStartX(-50);
+		line.setEndX(800);
+		line.setStartY(25);
+		line.setEndY(25);
+		transition.setDuration(Duration.seconds(12));
+		transition.setNode(heading);
+		transition.setPath(line);
+		transition.setAutoReverse(true);
+		transition.setCycleCount(TranslateTransition.INDEFINITE);
+		transition.play();
+		
+
 		visitor = VisitorContext.getInstance().currentVisitor();
 		engine = webView.getEngine();
 		displayWeb();

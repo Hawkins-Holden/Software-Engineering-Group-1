@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class Form extends Application 
 {
-	static IdleTimer timer = new IdleTimer();
+	IdleTimer timer = new IdleTimer();
 	
 	public void start(Stage Stage) throws Exception {
 		

@@ -16,7 +16,6 @@ import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,7 +27,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -42,12 +40,16 @@ import javafx.util.Duration;
 @SuppressWarnings("restriction")
 public class BeginFormController implements Initializable {
 
-	// ScreensController myController;
-
 	@FXML
 	private BorderPane mainBody;
 	@FXML
-	private Label Textbox_Error;// originally Fname_error.
+	private TextField Fname;
+	@FXML
+	private TextField Lname;
+	@FXML
+	private Label Fname_error;
+	@FXML
+	private Label Lname_error;
 	@FXML
 	private Label empty_field;
 	@FXML
@@ -68,32 +70,17 @@ public class BeginFormController implements Initializable {
 	private Button home_btn;
 
 	@FXML
-	private TextField CIty; // This must be a TextField, not a Label, or it WILL
-							// NOT WORK
+	private TextField CIty; 
 	@FXML
-	private TextField Country; // This must be a TextField, not a Label, or it
-								// WILL NOT WORK
+	private TextField Country; 
 	@FXML
-	private TextField ZipC; // This must be a TextField, not a Label, or it WILL
-							// NOT WORK
+	private TextField ZipC;
 
-	private String firstName;
-	private String lastName;
 	ObservableList<String> state_list = FXCollections.observableArrayList("AL", "AK", "AZ", "AR", "CA", "CO", "CT",
 			"DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
 			"MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN",
 			"TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY");
 	private Visitor visitor;
-	private boolean error;
-
-	/**
-	 * Initializes the controller class.
-	 */
-
-	/*
-	 * public void setScreenParent(ScreensController screenParent) {
-	 * //myController = screenParent; }
-	 */
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -114,14 +101,10 @@ public class BeginFormController implements Initializable {
 		visitor = VisitorContext.getInstance().currentVisitor();
 		visitor.generateNewID();
 		visitor.clearData();
-		// State.setItems(state_list);
-		// ----------------------------------------------
 		String[] locationInfo = new String[25];
 		int i = 0;
 
 		try {
-
-			// Get visitor location to perform analytics on it
 			System.out.println("file read attempted");
 			Scanner scan = new Scanner(new File("LocationOfVisitor.txt"));
 			while (scan.hasNext() && i < 15) {
@@ -153,6 +136,7 @@ public class BeginFormController implements Initializable {
 				if (zip != null && !zip.isEmpty()) {
 					Scanner scanner = new Scanner(zip);
 					int newZip = scanner.nextInt();
+					scanner.close();
 					System.out.println(zip);
 					visitor.setZip(newZip);
 				}
@@ -185,11 +169,6 @@ public class BeginFormController implements Initializable {
 					welcomeLabel.textProperty().setValue("Welcome to the Monroe - West Monroe area! Y'all are the "
 							+ numberVisitor + " group to visit from the " + area + " area!");
 				}
-				// State.setAccessibleText(state);
-
-				// String message = checkDataBase(city, state);//
-				// messageLabel.setText(message);
-
 			}
 
 		} catch (Exception e) {
@@ -223,46 +202,34 @@ public class BeginFormController implements Initializable {
 	public void wrongAddress(ActionEvent e) {
 		address_label.setText("Feel free to modify your address.");
 		address_label.setTextFill(Color.web("#0076a3"));
+
 	}
 
 	@FXML
 	public void goToScreen2(ActionEvent event) throws IOException {
-
-		// fnameValidate(Fname, Fname_error);
-		// lnameValidate(Lname, Lname_error);
-
-		// visitor.setFname(Fname.getText());
-		// visitor.setLname(Lname.getText());
-		// System.out.println("Form1 visitor: " + visitor.getFname());
-
-		// myController.setScreen(SoftwareEngineering.screen2ID);
-
-		error = false;
-		textBoxValidate(CIty, Country, State, ZipC, Textbox_Error);
-
-		if (!CIty.getText().isEmpty()) {
+		if(!CIty.getText().isEmpty()){
 			visitor.setCity(CIty.getText());
 		}
-		if (!Country.getText().isEmpty()) {
+		if(!Country.getText().isEmpty()){
 			visitor.setCountry(Country.getText());
 		}
-		if (!ZipC.getText().isEmpty()) {
-			visitor.setZip(Integer.parseInt(ZipC.getText()));
+		if(!ZipC.getText().isEmpty()){
+			Scanner scan = new Scanner(ZipC.getText());
+			Integer vzip = scan.nextInt();
+			if (vzip!=null) {
+				visitor.setZip(vzip);
+			}
+			scan.close();
 		}
-		if (!State.getText().isEmpty()) {
+		if(!State.getText().isEmpty()){
 			visitor.setState(State.getText());
 		}
-
-		if (error == false) {
-			Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
-			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			new_Stage.setTitle("Your Information");
-			new_Stage.setScene(new Scene(newScene, 1680, 1200));
-			new_Stage.show();
-		}
-		error = false;// resets error to false
+		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
+		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		new_Stage.setTitle("Your Information");
+		new_Stage.setScene(new Scene(newScene, 1680, 1200));
+		new_Stage.show();
 	}
-
 	public void setFields() {
 
 	}
@@ -274,16 +241,23 @@ public class BeginFormController implements Initializable {
 		backAlert.setContentText("Are you sure you want to go home?\n\nWe would love to know about y'all.");
 		backAlert.showAndWait();
 		if (backAlert.getResult() == ButtonType.YES) {
-			if (!CIty.getText().isEmpty()) {
+			if(!CIty.getText().isEmpty()){
 				visitor.setCity(CIty.getText());
 			}
-			if (!Country.getText().isEmpty()) {
+			if(!Country.getText().isEmpty()){
 				visitor.setCountry(Country.getText());
 			}
-			if (!ZipC.getText().isEmpty()) {
-				visitor.setZip(Integer.parseInt(ZipC.getText()));
+			
+			if(!ZipC.getText().isEmpty()){
+				Scanner scan = new Scanner(ZipC.getText());
+				Integer vzip = scan.nextInt();
+				if (vzip!=null) {
+					visitor.setZip(vzip);
+				}
+				scan.close();
 			}
-			if (!State.getText().isEmpty()) {
+			
+			if(!State.getText().isEmpty()){
 				visitor.setState(State.getText());
 			}
 			JDBC.addVisitor(visitor);
@@ -292,45 +266,8 @@ public class BeginFormController implements Initializable {
 			new_Stage.setTitle("Welcome to Monroe-West Monroe CVB");
 			new_Stage.setScene(new Scene(newScene, 1920, 1080));
 			new_Stage.show();
-			
-			Form.timer.restartIdleTimer();
-			
-			newScene.setOnMouseClicked(mouseHandler);
-		    newScene.setOnMouseDragged(mouseHandler);
-		    newScene.setOnMouseEntered(mouseHandler);
-		    newScene.setOnMouseExited(mouseHandler);
-		    newScene.setOnMouseMoved(mouseHandler);
-		    newScene.setOnMousePressed(mouseHandler);
-		    newScene.setOnMouseReleased(mouseHandler);	
-			
 		} else {
 			backAlert.close();
 		}
 	}
-	
-	/***************************************************************************
-	 *********************** Mouse Handler *************************************
-	 **************************************************************************/
-	
-	EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() 
-	{
-		 
-        @Override
-        public void handle(MouseEvent mouseEvent)
-        {
-        	Form.timer.restartIdleTimer();
-        }
-    };
-
-	/****************************************************************
-	 * Checks to see if any of the text box's have more than 32 characters.
-	 ****************************************************************/
-
-	public void textBoxValidate(TextField CIty, TextField Country, TextField State, TextField zip, Label City_Error) {
-		if ((CIty.getText().length() > 32) || (Country.getText().length() > 32) || (State.getText().length() > 32)
-				|| zip.getText().length() > 32) {
-			City_Error.setText("Please use less than 32 characters for each field");
-			error = true;
-		}
-	}
-}// end class
+}
