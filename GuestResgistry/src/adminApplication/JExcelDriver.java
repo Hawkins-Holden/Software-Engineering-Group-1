@@ -14,7 +14,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
-public  class JExcelDriver {
+public class JExcelDriver {
 	public static void generateImportTemplate(File file) throws IOException, WriteException {
 		WritableWorkbook myexcel = Workbook.createWorkbook(file);
 		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
@@ -124,8 +124,8 @@ public  class JExcelDriver {
 				} else {
 					visitingDay = null;
 				}
-				newData.add(new VisitorDetails(email, city, metro, state, country, zip, party,
-						referred, hotel, destination, repeat, travelingFor, visitingDay));
+				newData.add(new VisitorDetails(email, city, metro, state, country, zip, party, referred, hotel,
+						destination, repeat, travelingFor, visitingDay));
 			}
 			AdminJDBC.addVisitors(newData);
 		} catch (Exception e) {
@@ -176,9 +176,10 @@ public  class JExcelDriver {
 			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getCountry()));
 			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getZip().toString()));
+			mysheet.addCell(formatData(i, j, (data.get(i).getZip() != null ? data.get(i).getZip().toString() : "")));
 			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getParty().toString()));
+			mysheet.addCell(
+					formatData(i, j, (data.get(i).getParty() != null ? data.get(i).getParty().toString() : "1")));
 			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getHeard()));
 			j++;
@@ -186,11 +187,13 @@ public  class JExcelDriver {
 			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getDestination()));
 			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getRepeatVisit().toString()));
+			mysheet.addCell(formatData(i, j,
+					(data.get(i).getRepeatVisit() != null ? data.get(i).getRepeatVisit().toString() : "false")));
 			j++;
 			mysheet.addCell(formatData(i, j, data.get(i).getTravelingFor()));
 			j++;
-			mysheet.addCell(formatData(i, j, data.get(i).getVisitingDay().toString()));
+			mysheet.addCell(formatData(i, j,
+					(data.get(i).getVisitingDay() != null ? data.get(i).getVisitingDay().toString() : "")));
 			j++;
 		}
 		try {

@@ -40,8 +40,6 @@ import javafx.util.Duration;
 @SuppressWarnings("restriction")
 public class BeginFormController implements Initializable {
 
-	// ScreensController myController;
-
 	@FXML
 	private BorderPane mainBody;
 	@FXML
@@ -72,14 +70,11 @@ public class BeginFormController implements Initializable {
 	private Button home_btn;
 
 	@FXML
-	private TextField CIty; // This must be a TextField, not a Label, or it WILL
-							// NOT WORK
+	private TextField CIty; 
 	@FXML
-	private TextField Country; // This must be a TextField, not a Label, or it
-								// WILL NOT WORK
+	private TextField Country; 
 	@FXML
-	private TextField ZipC; // This must be a TextField, not a Label, or it WILL
-							// NOT WORK
+	private TextField ZipC;
 
 	ObservableList<String> state_list = FXCollections.observableArrayList("AL", "AK", "AZ", "AR", "CA", "CO", "CT",
 			"DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
