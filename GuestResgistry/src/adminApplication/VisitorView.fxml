@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -42,11 +43,19 @@
       <Button fx:id="excelButton" layoutX="1335.0" layoutY="843.0" mnemonicParsing="false" onAction="#ExportAction" prefHeight="65.0" prefWidth="172.0" text="Export to Excel" />
       <Button fx:id="emailButton" layoutX="1153.0" layoutY="843.0" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="65.0" prefWidth="165.0" text="Create Mailing List" />
       <Button fx:id="DeleteButton" layoutX="1724.0" layoutY="921.0" mnemonicParsing="false" onAction="#deleteAgedData" prefHeight="65.0" prefWidth="165.0" text="Delete Aged Data" />
-      <Button fx:id="helpButton" layoutX="179.0" layoutY="943.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="108.0" text="HELP" />
       <TextField fx:id="filterCity" layoutX="216.0" layoutY="886.0" prefHeight="49.0" prefWidth="206.0" promptText="Filter by City" />
       <TextField fx:id="filterCountry" layoutX="469.0" layoutY="886.0" prefHeight="49.0" prefWidth="206.0" promptText="Filter by Country" />
       <Label layoutX="437.0" layoutY="900.0" text="OR" />
       <Label layoutX="683.0" layoutY="900.0" text="OR" />
       <TextField fx:id="filterState" layoutX="713.0" layoutY="886.0" prefHeight="49.0" prefWidth="206.0" promptText="Filter by State" />
+      <Button layoutX="192.0" layoutY="943.0" mnemonicParsing="false" onAction="#helpButton" prefHeight="49.0" prefWidth="20.0" style="-fx-background-color: #7ec0ee;">
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="42.0">
+               <image>
+                  <Image url="@question.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

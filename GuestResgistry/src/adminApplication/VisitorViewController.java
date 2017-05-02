@@ -34,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.converter.IntegerStringConverter;
 import jxl.write.WriteException;
 
@@ -463,5 +464,19 @@ public class VisitorViewController implements Initializable {
 			deleteAlert.close();
 		}
 	}
+	
+	public void helpButton(ActionEvent event) throws IOException {
+		
+		
+	    // Load the fxml file and create a new stage for the popup
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("Manual.fxml"));
+	    Parent root = (Parent) loader.load();
+	    Stage stage = new Stage();
+	    stage.initStyle(StageStyle.DECORATED);
+	    stage.setTitle("Help Alert");
+	    stage.setScene(new Scene(root));
+	    stage.show();
+
+}
 
 }

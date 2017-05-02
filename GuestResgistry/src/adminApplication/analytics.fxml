@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.scene.effect.*?>
@@ -208,6 +209,15 @@
                      <font>
                         <Font size="14.0" />
                      </font>
+                  </Button>
+                  <Button layoutX="212.0" layoutY="908.0" mnemonicParsing="false" onAction="#helpButton" prefHeight="39.0" prefWidth="65.0" style="-fx-background-color: #7ec0ee;">
+                     <graphic>
+                        <ImageView fitHeight="46.0" fitWidth="43.0">
+                           <image>
+                              <Image url="@question.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
             </AnchorPane>

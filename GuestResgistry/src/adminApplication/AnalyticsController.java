@@ -49,6 +49,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import jxl.write.WriteException;
 import netscape.javascript.JSObject;
 
@@ -660,6 +661,20 @@ public class AnalyticsController implements Initializable {
 		}
 	}
 
+	
+	public void helpButton(ActionEvent event) throws IOException {
+		
+		
+	    // Load the fxml file and create a new stage for the popup
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("Manual.fxml"));
+	    Parent root = (Parent) loader.load();
+	    Stage stage = new Stage();
+	    stage.initStyle(StageStyle.DECORATED);
+	    stage.setTitle("Help Alert");
+	    stage.setScene(new Scene(root));
+	    stage.show();
+
+}
 	public void ImportAction() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Export mailing list to Excel");

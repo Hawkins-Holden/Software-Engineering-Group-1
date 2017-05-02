@@ -43,15 +43,14 @@ public class AdminJDBC {
 				stmt.execute("USE visitordb");
 
 				ResultSet res = stmt.executeQuery(query);
-				if (res != null) {
-					while (res.next()) {
-						resultSet.add(new VisitorDetails(res.getInt("VisitorID"), res.getString("Email"),
-								res.getString("Latitude"), res.getString("Longitude"), res.getString("City"),
-								res.getString("Metro"), res.getString("State"), res.getString("Country"),
-								res.getInt("zip"), res.getInt("Party"), res.getString("Heard"), res.getString("Hotel"),
-								res.getString("Destination"), (res.getInt("RepeatVisit") == 1 ? true : false),
-								res.getString("TravelingFor"), (Date) res.getDate("Visiting_Day")));
-					}
+
+				while (res.next()) {
+					resultSet.add(new VisitorDetails(res.getInt("VisitorID"), res.getString("Email"),
+							res.getString("Latitude"), res.getString("Longitude"), res.getString("City"),
+							res.getString("Metro"), res.getString("State"), res.getString("Country"), res.getInt("zip"),
+							res.getInt("Party"), res.getString("Heard"), res.getString("Hotel"),
+							res.getString("Destination"), (res.getInt("RepeatVisit") == 1 ? true : false),
+							res.getString("TravelingFor"), (Date) res.getDate("Visiting_Day")));
 				}
 			}
 
@@ -158,10 +157,10 @@ public class AdminJDBC {
 						String state = res.getString("State");
 						String metro = res.getString("Metro");
 						if (metro == null || metro.equals("") || metro.equals("null") || metro.isEmpty()) {
-							if (city != null && !city.equals("null") && !city.isEmpty() && state != null
-									&& !state.isEmpty()) {
+							if (city != null && !city.equals("null") && !city.isEmpty() && state != null && !state.isEmpty()) {
 								fields.add(city + ", " + state);
-							} else if (city != null && !city.equals("null") && !city.isEmpty()) {
+							}
+							else if (city != null && !city.equals("null") && !city.isEmpty()){
 								fields.add(city);
 							}
 						} else {
@@ -243,6 +242,9 @@ public class AdminJDBC {
 				stmt.execute("CREATE DATABASE IF NOT EXISTS visitordb");
 				stmt.execute("USE visitordb");
 
+				/**
+				 * Query entries with the Zip '71467'
+				 */
 				List<String> fields = new LinkedList<String>();
 				System.out.println(field + " from " + tableName);
 				ResultSet res = stmt.executeQuery("SELECT DISTINCT " + field + " FROM " + tableName);
@@ -440,8 +442,8 @@ public class AdminJDBC {
 							+ vd.getCountry() + "', " + vd.getZip() + ")";
 					visitorsQuery += "(" + visitorID + ", '" + vd.getEmail() + "')";
 					visitsQuery += "(" + visitorID + ", " + vd.getParty() + ", \"" + vd.getHeard() + "\", \""
-							+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + (vd.getRepeatVisit() ? 1 : 0)
-							+ ", '" + vd.getTravelingFor() + "', '" + visitingDay + "')";
+							+ vd.getHotel() + "\", '" + vd.getDestination() + "', " + vd.getParty() + ", '"
+							+ vd.getTravelingFor() + "', '" + visitingDay + "')";
 					System.out.println(visitorLocationsQuery);
 					System.out.println(visitorsQuery);
 					System.out.println(visitsQuery);

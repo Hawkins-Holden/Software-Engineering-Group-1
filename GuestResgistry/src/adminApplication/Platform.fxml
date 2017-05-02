@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #20B2AA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.PlatformController">
+<AnchorPane id="mainBody" prefHeight="1080.0" prefWidth="1920.0" style="-: #20B2AA;" stylesheets="@Platform.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.PlatformController">
    <children>
       <Label layoutX="699.0" layoutY="43.0" text="Welcome to Admin Platform ">
          <font>
@@ -18,39 +19,52 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="160.0" layoutY="258.0" mnemonicParsing="false" onAction="#Visitor" prefHeight="499.0" prefWidth="637.0" style="-fx-background-color: green;">
+      <Button fx:id="visitor" layoutX="160.0" layoutY="258.0" mnemonicParsing="false" onAction="#Visitor" prefHeight="499.0" prefWidth="637.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
          <graphic>
-            <ImageView fitHeight="375.0" fitWidth="498.0">
-               <image>
-                  <Image url="@../../../../visitor.PNG" />
-               </image>
-            </ImageView>
+            <Label text="View / Edit Visitor Information">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@edit-find-replace.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
          </graphic>
       </Button>
-      <Button layoutX="1136.0" layoutY="258.0" mnemonicParsing="false" onAction="#Analytics" prefHeight="499.0" prefWidth="637.0" style="-fx-background-color: green;">
+      <Button fx:id="analytics" layoutX="1136.0" layoutY="258.0" mnemonicParsing="false" onAction="#Analytics" prefHeight="499.0" prefWidth="637.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
          <graphic>
-            <ImageView fitHeight="370.0" fitWidth="467.0">
+            <Label prefHeight="184.0" prefWidth="505.0" text="View Analytics">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="196.0" fitWidth="232.0">
+                     <image>
+                        <Image url="@13043iF58F9B0F9194D915.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </graphic>
+      </Button>
+      <Button layoutX="160.0" layoutY="902.0" mnemonicParsing="false" onAction="#helpButton" style="-fx-background-color: #7ec0ee;">
+         <graphic>
+            <ImageView fitHeight="55.0" fitWidth="60.0">
                <image>
-                  <Image url="@../../../../analytics.PNG" />
+                  <Image url="@question.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="313.0" layoutY="778.0" text="View / Edit Visitor Information">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="1376.0" layoutY="778.0" text="View Analytics">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>
