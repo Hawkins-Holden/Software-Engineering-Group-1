@@ -58,7 +58,9 @@ public class VisitorViewController implements Initializable {
 	@FXML
 	private TextField filterCity; 
 	@FXML
-	private TextField filterCountry; 
+	private TextField filterCountry;
+	@FXML
+	private TextField filterState;
 	@FXML
 	private TableView<VisitorDetails> visitorTable;
 	@FXML
@@ -109,6 +111,13 @@ public class VisitorViewController implements Initializable {
 				filterVisitorByCountry((String) oldValue, (String) newValue);
 			}
 		});
+		
+		filterState.textProperty().addListener(new ChangeListener() {
+			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+				filterVisitorByState((String) oldValue, (String) newValue);
+			}
+		});
+	
 		
 		refreshTable();
 	}
@@ -328,6 +337,23 @@ public class VisitorViewController implements Initializable {
 			for (VisitorDetails visitors : visitorTable.getItems()) {
 				String filterByCity = visitors.getCity();
 				if (filterByCity.toUpperCase().contains(newValue)) {
+					filteredList.add(visitors);
+				}
+			}
+			visitorTable.setItems(filteredList);
+		}
+
+	}
+	
+	public void filterVisitorByState(String oldValue, String newValue) {
+		ObservableList<VisitorDetails> filteredList = FXCollections.observableArrayList();
+		if ((filterState == null) || (newValue.length() < oldValue.length()) || newValue == null) {
+			visitorTable.setItems(data);
+		} else {
+			newValue = newValue.toUpperCase();
+			for (VisitorDetails visitors : visitorTable.getItems()) {
+				String filterByState = visitors.getState();
+				if (filterByState.toUpperCase().contains(newValue)) {
 					filteredList.add(visitors);
 				}
 			}

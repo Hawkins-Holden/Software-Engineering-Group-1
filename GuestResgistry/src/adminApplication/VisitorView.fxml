@@ -5,9 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #E0FFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.VisitorViewController">
+<AnchorPane id="mainBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@visitorStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adminApplication.VisitorViewController">
    <children>
-      <TableView fx:id="visitorTable" layoutX="52.0" layoutY="66.0" prefHeight="798.0" prefWidth="1833.0" style="-fx-background-color: #E0FFFF;" tableMenuButtonVisible="true">
+      <TableView fx:id="visitorTable" layoutX="52.0" layoutY="36.0" prefHeight="798.0" prefWidth="1833.0" tableMenuButtonVisible="true">
         <columns>
             <TableColumn fx:id="emailColumn" prefWidth="218.0" text="Email" />
             <TableColumn fx:id="metroColumn" prefWidth="184.0" text="Metro Area" />
@@ -24,27 +24,29 @@
             <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="153.0" text="Date of Visit" />
         </columns>
       </TableView>
-      <DatePicker fx:id="endDatePicker" layoutX="437.0" layoutY="871.0" prefHeight="27.0" prefWidth="172.0" />
-      <DatePicker fx:id="startDatePicker" layoutX="233.0" layoutY="871.0" prefHeight="27.0" prefWidth="172.0" />
-      <Label layoutX="52.0" layoutY="871.0" text="Showing visitors from">
+      <DatePicker fx:id="endDatePicker" layoutX="452.0" layoutY="844.0" prefHeight="27.0" prefWidth="172.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="233.0" layoutY="842.0" prefHeight="27.0" prefWidth="172.0" />
+      <Label layoutX="52.0" layoutY="844.0" text="Showing visitors from">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="deleteButton" layoutX="1567.0" layoutY="884.0" mnemonicParsing="false" onAction="#deleteVisitor" prefHeight="65.0" prefWidth="142.0" style="-fx-background-color: red;" text="Delete Visitor" />
-      <Button fx:id="addButton" layoutX="1412.0" layoutY="884.0" mnemonicParsing="false" onAction="#addVisitor" prefHeight="65.0" prefWidth="142.0" style="-fx-background-color: green;" text="Add Visitor" />
-      <Label layoutX="411.0" layoutY="871.0" text="to">
+      <Button fx:id="deleteButton" layoutX="1571.0" layoutY="921.0" mnemonicParsing="false" onAction="#deleteVisitor" prefHeight="65.0" prefWidth="157.0" text="Delete Visitor" />
+      <Button fx:id="addButton" layoutX="1448.0" layoutY="841.0" mnemonicParsing="false" onAction="#addVisitor" prefHeight="65.0" prefWidth="142.0" text="Add Visitor" />
+      <Label layoutX="420.0" layoutY="844.0" text="to">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="refreshButton" layoutX="631.0" layoutY="871.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="27.0" prefWidth="92.0" text="Refresh Table" />
-      <Button fx:id="back_btn" layoutX="52.0" layoutY="909.0" mnemonicParsing="false" onAction="#goBack" prefHeight="49.0" prefWidth="92.0" style="-fx-background-color: orange;" text="BACK" />
-      <Button fx:id="importButton" layoutX="1251.0" layoutY="884.0" mnemonicParsing="false" onAction="#ImportAction" prefHeight="65.0" prefWidth="130.0" text="Import from Excel" />
-      <Button fx:id="excelButton" layoutX="1106.0" layoutY="884.0" mnemonicParsing="false" onAction="#ExportAction" prefHeight="65.0" prefWidth="130.0" text="Export to Excel" />
-      <Button fx:id="emailButton" layoutX="960.0" layoutY="884.0" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="65.0" prefWidth="130.0" text="Create Mailing List" />
-      <Button fx:id="deleteButton" layoutX="1728.0" layoutY="884.0" mnemonicParsing="false" onAction="#deleteAgedData" prefHeight="65.0" prefWidth="157.0" text="Delete Aged Data" />
-      <Button fx:id="helpButton" layoutX="152.0" layoutY="909.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="81.0" text="HELP" />
-      <TextField fx:id="filterCity" layoutX="365.0" layoutY="918.0" prefHeight="49.0" prefWidth="219.0" promptText="City" />
-      <TextField fx:id="filterCountry" layoutX="691.0" layoutY="918.0" prefHeight="49.0" prefWidth="206.0" promptText="Country" />
-      <Label layoutX="623.0" layoutY="934.0" text="OR" />
+      <Button fx:id="refreshButton" layoutX="648.0" layoutY="844.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="31.0" prefWidth="130.0" text="Refresh Table" />
+      <Button fx:id="back_btn" layoutX="52.0" layoutY="943.0" mnemonicParsing="false" onAction="#goBack" prefHeight="49.0" prefWidth="108.0" text="BACK" />
+      <Button fx:id="importButton" layoutX="1261.0" layoutY="841.0" mnemonicParsing="false" onAction="#ImportAction" prefHeight="65.0" prefWidth="172.0" text="Import from Excel" />
+      <Button fx:id="excelButton" layoutX="1105.0" layoutY="843.0" mnemonicParsing="false" onAction="#ExportAction" prefHeight="65.0" prefWidth="142.0" text="Export to Excel" />
+      <Button fx:id="emailButton" layoutX="926.0" layoutY="843.0" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="65.0" prefWidth="165.0" text="Create Mailing List" />
+      <Button fx:id="DeleteButton" layoutX="1741.0" layoutY="921.0" mnemonicParsing="false" onAction="#deleteAgedData" prefHeight="65.0" prefWidth="157.0" text="Delete Aged Data" />
+      <Button fx:id="helpButton" layoutX="179.0" layoutY="943.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="108.0" text="HELP" />
+      <TextField fx:id="filterCity" layoutX="216.0" layoutY="886.0" prefHeight="49.0" prefWidth="206.0" promptText="Filter by City" />
+      <TextField fx:id="filterCountry" layoutX="469.0" layoutY="886.0" prefHeight="49.0" prefWidth="206.0" promptText="Filter by Country" />
+      <Label layoutX="437.0" layoutY="900.0" text="OR" />
+      <Label layoutX="683.0" layoutY="900.0" text="OR" />
+      <TextField fx:id="filterState" layoutX="713.0" layoutY="886.0" prefHeight="49.0" prefWidth="206.0" promptText="Filter by State" />
    </children>
 </AnchorPane>
