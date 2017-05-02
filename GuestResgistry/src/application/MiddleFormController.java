@@ -28,6 +28,7 @@ import javafx.stage.Stage;
  *
  * @author admin
  */
+@SuppressWarnings("restriction")
 public class MiddleFormController implements Initializable {
 
 	ScreensController myController;
@@ -46,13 +47,11 @@ public class MiddleFormController implements Initializable {
 	private Label empty_field;
 	private Visitor visitor;
 
-	@SuppressWarnings("restriction")
 	ObservableList<String> slist = FXCollections.observableArrayList("Billboard", "Interstate Sign", "Other");
 
 	/**
 	 * Initializes the controller class.
 	 */
-	@SuppressWarnings("restriction")
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		visitor = VisitorContext.getInstance().currentVisitor();
@@ -98,13 +97,14 @@ public class MiddleFormController implements Initializable {
 	public void radioSelect(ActionEvent eve) {
 
 		if (rbYes.isSelected()) {
+			visitor.setRepeatVisit(true);
 		}
 
 		else if (rbNo.isSelected()) {
+			visitor.setRepeatVisit(false);
 		}
 	}
 
-	@SuppressWarnings("restriction")
 	public void goBack(ActionEvent event) throws IOException {
 		Parent newScene = FXMLLoader.load(getClass().getResource("BeginForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -121,7 +121,6 @@ public class MiddleFormController implements Initializable {
 	 * myController.setScreen(SoftwareEngineering.screen1ID); }
 	 */
 
-	@SuppressWarnings("restriction")
 	@FXML
 	private void goToScreen3(ActionEvent event) throws IOException {
 		// destinationValidate(TravelCity, Destination_error);

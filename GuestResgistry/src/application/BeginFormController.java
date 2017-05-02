@@ -40,7 +40,7 @@ import javafx.util.Duration;
 @SuppressWarnings("restriction")
 public class BeginFormController implements Initializable {
 
-	//ScreensController myController;
+	// ScreensController myController;
 
 	@FXML
 	private BorderPane mainBody;
@@ -63,7 +63,7 @@ public class BeginFormController implements Initializable {
 	@FXML
 	private Button rightAddress;
 	@FXML
-	private Button wrongAddress; 
+	private Button wrongAddress;
 	@FXML
 	private Label title_label1;
 	@FXML
@@ -81,26 +81,16 @@ public class BeginFormController implements Initializable {
 	private TextField ZipC; // This must be a TextField, not a Label, or it WILL
 							// NOT WORK
 
-	private String firstName;
-	private String lastName;
 	ObservableList<String> state_list = FXCollections.observableArrayList("AL", "AK", "AZ", "AR", "CA", "CO", "CT",
 			"DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
 			"MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN",
 			"TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY");
 	private Visitor visitor;
 
-	/**
-	 * Initializes the controller class.
-	 */
-
-	/*public void setScreenParent(ScreensController screenParent) {
-		//myController = screenParent;
-	}*/
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		PathTransition transition = new PathTransition(); 
-		
+		PathTransition transition = new PathTransition();
+
 		Line line = new Line();
 		line.setStartX(10);
 		line.setEndX(1000);
@@ -112,18 +102,14 @@ public class BeginFormController implements Initializable {
 		transition.setAutoReverse(true);
 		transition.setCycleCount(TranslateTransition.INDEFINITE);
 		transition.play();
-		
+
 		visitor = VisitorContext.getInstance().currentVisitor();
 		visitor.generateNewID();
 		visitor.clearData();
-		// State.setItems(state_list);
-		// ----------------------------------------------
 		String[] locationInfo = new String[25];
 		int i = 0;
 
 		try {
-
-			// Get visitor location to perform analytics on it
 			System.out.println("file read attempted");
 			Scanner scan = new Scanner(new File("LocationOfVisitor.txt"));
 			while (scan.hasNext() && i < 15) {
@@ -133,8 +119,7 @@ public class BeginFormController implements Initializable {
 
 			System.out.println("This is begin controller " + locationInfo[0] + ",  " + locationInfo[1]);
 			i = 0;
-			
-			
+
 			visitor.setLatitude(locationInfo[7]);
 			visitor.setLongitude(locationInfo[8]);
 			System.out.println("Lat: " + locationInfo[7]);
@@ -153,16 +138,17 @@ public class BeginFormController implements Initializable {
 				System.out.println("this is city: " + city);
 
 				visitor.setCity(city);
-				if(zip!=null && !zip.isEmpty()){
+				if (zip != null && !zip.isEmpty()) {
 					Scanner scanner = new Scanner(zip);
 					int newZip = scanner.nextInt();
+					scanner.close();
 					System.out.println(zip);
 					visitor.setZip(newZip);
 				}
 				visitor.setState(state);
 				visitor.setMetro(metro);
 				visitor.setCountry("USA");
-				
+
 				System.out.println("Begin Form Lat: " + locationInfo[7]);
 				System.out.println("Begin Form Lat: " + locationInfo[8]);
 
@@ -184,15 +170,10 @@ public class BeginFormController implements Initializable {
 				numberVisitor += suffix;
 				String area = (metro == null || metro.isEmpty()) ? city : metro;
 
-				if (!area.isEmpty()){
-				welcomeLabel.textProperty().setValue("Welcome to the Monroe - West Monroe area! Y'all are the "
-						+ numberVisitor + " group to visit from the " + area + " area!");
+				if (!area.isEmpty()) {
+					welcomeLabel.textProperty().setValue("Welcome to the Monroe - West Monroe area! Y'all are the "
+							+ numberVisitor + " group to visit from the " + area + " area!");
 				}
-				// State.setAccessibleText(state);
-
-				// String message = checkDataBase(city, state);//
-				// messageLabel.setText(message);
-
 			}
 
 		} catch (Exception e) {
@@ -200,9 +181,8 @@ public class BeginFormController implements Initializable {
 			System.out.println("file n");
 		}
 		// -------------------------------------------------
-		
-		if (State.getText().isEmpty()|| ZipC.getText().isEmpty())
-		{
+
+		if (State.getText().isEmpty() || ZipC.getText().isEmpty()) {
 			address_label.setText("Where are y'all visiting from?");
 			State.setVisible(false);
 			ZipC.setVisible(false);
@@ -213,7 +193,7 @@ public class BeginFormController implements Initializable {
 		}
 
 	}
-	
+
 	public void rightAddress(ActionEvent e) {
 		title_label1.setVisible(true);
 		nxt_btn.setVisible(true);
@@ -223,93 +203,64 @@ public class BeginFormController implements Initializable {
 		address_label.setText("Ok Great! Y'all are awesome.");
 		address_label.setTextFill(Color.web("#0076a3"));
 	}
+
 	public void wrongAddress(ActionEvent e) {
 		address_label.setText("Feel free to modify your address.");
 		address_label.setTextFill(Color.web("#0076a3"));
-		
+
 	}
 
 	@FXML
 	public void goToScreen2(ActionEvent event) throws IOException {
-
-		// fnameValidate(Fname, Fname_error);
-		// lnameValidate(Lname, Lname_error);
-
-		//visitor.setFname(Fname.getText());
-		//visitor.setLname(Lname.getText());
-		//System.out.println("Form1 visitor: " + visitor.getFname());
-
-		// myController.setScreen(SoftwareEngineering.screen2ID);
+		if(!CIty.getText().isEmpty()){
+			visitor.setCity(CIty.getText());
+		}
+		if(!Country.getText().isEmpty()){
+			visitor.setCountry(Country.getText());
+		}
+		if(!ZipC.getText().isEmpty()){
+			visitor.setZip(Integer.parseInt(ZipC.getText()));
+		}
+		if(!State.getText().isEmpty()){
+			visitor.setState(State.getText());
+		}
 		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
 		new_Stage.setScene(new Scene(newScene, 1680, 1200));
 		new_Stage.show();
-
-		/*
-		 * if ((Fname_error.getText().isEmpty() &&
-		 * Lname_error.getText().isEmpty()) && ((!Fname.getText().isEmpty() ||
-		 * !Lname.getText().isEmpty()))) {
-		 * 
-		 * }
-		 */
-
-		/*
-		 * else { if (Fname_error.getText().isEmpty() &&
-		 * Lname_error.getText().isEmpty()){ empty_field.
-		 * setText("Your information will not be shared. Please enter your name."
-		 * ); }
-		 * 
-		 */
 	}
-
-	// }
-
-	/*
-	 * public void fnameValidate(TextField Fname, Label Fname_error) {
-	 * 
-	 * if (Fname.getText() != null && !Fname.getText().matches("[a-zA-Z]+") &&
-	 * !Fname.getText().isEmpty()) {
-	 * Fname_error.setText("Please enter a valid First Name!"); } else {
-	 * Fname_error.setText(""); }
-	 * 
-	 * }
-	 */
 	public void setFields() {
 
 	}
-	
-	public void noButton(ActionEvent event) throws IOException {
-		
-		    System.out.println("No button clicked");
-             Alert backAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm", ButtonType.YES, ButtonType.NO);
-             backAlert.setContentText("Are you sure you want to go home?\n\nWe would love to know about y'all.");
-             backAlert.showAndWait();
-             if (backAlert.getResult() == ButtonType.YES) {
-             Parent newScene = FXMLLoader.load(getClass().getResource("Map.fxml"));
-         		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-         		new_Stage.setTitle("Welcome to Monroe-West Monroe CVB");
-         		new_Stage.setScene(new Scene(newScene, 1920, 1080));
-         		new_Stage.show();
-             }
-             else {
-            	 JDBC.addVisitor(visitor);
-                 backAlert.close();
-             }   
-	}	
 
-	/*
-	 * public void lnameValidate(TextField Lname, Label Lname_error) {
-	 * 
-	 * if (Lname.getText() != null && !Lname.getText().matches("[a-zA-Z]+") &&
-	 * !Lname.getText().isEmpty()) {
-	 * Lname_error.setText("Please enter a valid Last name!"); } else {
-	 * Lname_error.setText(""); }
-	 * 
-	 * }
-	 */
-	/*
-	 * @FXML private void goToScreen3(ActionEvent event){
-	 * myController.setScreen(SoftwareEngineering.screen3ID); }
-	 */
+	public void noButton(ActionEvent event) throws IOException {
+
+		System.out.println("No button clicked");
+		Alert backAlert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm", ButtonType.YES, ButtonType.NO);
+		backAlert.setContentText("Are you sure you want to go home?\n\nWe would love to know about y'all.");
+		backAlert.showAndWait();
+		if (backAlert.getResult() == ButtonType.YES) {
+			if(!CIty.getText().isEmpty()){
+				visitor.setCity(CIty.getText());
+			}
+			if(!Country.getText().isEmpty()){
+				visitor.setCountry(Country.getText());
+			}
+			if(!ZipC.getText().isEmpty()){
+				visitor.setZip(Integer.parseInt(ZipC.getText()));
+			}
+			if(!State.getText().isEmpty()){
+				visitor.setState(State.getText());
+			}
+			JDBC.addVisitor(visitor);
+			Parent newScene = FXMLLoader.load(getClass().getResource("Map.fxml"));
+			Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			new_Stage.setTitle("Welcome to Monroe-West Monroe CVB");
+			new_Stage.setScene(new Scene(newScene, 1920, 1080));
+			new_Stage.show();
+		} else {
+			backAlert.close();
+		}
+	}
 }
