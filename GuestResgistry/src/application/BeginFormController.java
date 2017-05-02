@@ -31,6 +31,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
@@ -188,6 +189,20 @@ public class BeginFormController implements Initializable {
 		}
 
 	}
+	
+	public void helpButton(ActionEvent event) throws IOException {
+		
+		
+	    // Load the fxml file and create a new stage for the popup
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("VisitorManual.fxml"));
+	    Parent root = (Parent) loader.load();
+	    Stage stage = new Stage();
+	    stage.initStyle(StageStyle.DECORATED);
+	    stage.setTitle("Help Alert");
+	    stage.setScene(new Scene(root));
+	    stage.show();
+
+}
 
 	public void rightAddress(ActionEvent e) {
 		title_label1.setVisible(true);

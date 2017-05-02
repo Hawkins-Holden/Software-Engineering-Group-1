@@ -22,7 +22,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import javafx.scene.chart.CategoryAxis;
@@ -31,6 +33,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 
 public class MapController implements Initializable {
@@ -72,6 +75,20 @@ public class MapController implements Initializable {
 		});
 
 		// ----------------------------------------------
+
+	}
+	
+	public void helpButton(ActionEvent event) throws IOException {
+		
+	
+			    // Load the fxml file and create a new stage for the popup
+			    FXMLLoader loader = new FXMLLoader(getClass().getResource("VisitorManual.fxml"));
+			    Parent root = (Parent) loader.load();
+			    Stage stage = new Stage();
+			    stage.initStyle(StageStyle.DECORATED);
+			    stage.setTitle("Help Alert");
+			    stage.setScene(new Scene(root));
+			    stage.show();
 
 	}
 
@@ -278,3 +295,4 @@ public class MapController implements Initializable {
 	*/
 
 }
+

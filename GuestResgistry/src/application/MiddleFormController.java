@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -113,6 +114,20 @@ public class MiddleFormController implements Initializable {
 		new_Stage.show();
 
 	}
+	
+	public void helpButton(ActionEvent event) throws IOException {
+		
+		
+	    // Load the fxml file and create a new stage for the popup
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("VisitorManual.fxml"));
+	    Parent root = (Parent) loader.load();
+	    Stage stage = new Stage();
+	    stage.initStyle(StageStyle.DECORATED);
+	    stage.setTitle("Help Alert");
+	    stage.setScene(new Scene(root));
+	    stage.show();
+
+}
 
 	/*
 	 * 

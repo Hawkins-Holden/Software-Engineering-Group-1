@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -27,6 +28,15 @@
          </children>
          <children>
             <Button fx:id="europe_btn" layoutX="320.0" layoutY="6.0" mnemonicParsing="false" onAction="#EuropeButton" opacity="0.79" prefHeight="50.0" prefWidth="141.0" text="I'm from Europe" />
+            <Button layoutX="23.0" layoutY="11.0" mnemonicParsing="false" onAction="#helpButton" prefHeight="18.0" prefWidth="4.0" style="-fx-background-color: pink;">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="43.0">
+                     <image>
+                        <Image url="@question.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </Pane>
    </bottom>

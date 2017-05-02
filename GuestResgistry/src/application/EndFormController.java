@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -63,22 +64,6 @@ public class EndFormController implements Initializable, ControlledScreen {
 	public void initialize(URL url, ResourceBundle rb) {
 		visitor = VisitorContext.getInstance().currentVisitor();
 		Reason.setItems(list);
-		
-		if(visitor.getParty()!=null)
-		{
-			Party.setText(visitor.getParty().toString());
-		}
-		if(visitor.getTravelingFor()!=null && !visitor.getTravelingFor().equals("No Response"))
-		{
-				Reason.getSelectionModel().select(visitor.getHeard());		
-		}
-		if (visitor.getEmail()!=null) {
-			rbYes.setSelected(true);
-			email_pop_label.setVisible(true);
-			Email.setVisible(true);
-			Email.setText(visitor.getEmail());
-
-		}
 
 		System.out.println("End Form Lat: " + visitor.getLatitude());
 		System.out.println("End Form Lat: " + visitor.getLongitude());
@@ -144,22 +129,6 @@ public class EndFormController implements Initializable, ControlledScreen {
 	
 	public void goBack(ActionEvent event) throws IOException
 	{
-		if (partyError == false)
-		{
-			System.out.println(partyError);
-			String partyText = Party.getText();
-			Integer party = (partyText.isEmpty() ? 1 : Integer.parseInt(partyText));
-			visitor.setParty(party.intValue());
-		}
-		if (Email.getText() != null) 
-		{
-			visitor.setEmail(Email.getText());
-		}
-		
-		String reason = Reason.getValue();
-		reason = (reason==null ? "No Response": reason);
-		visitor.setTravelingFor(reason);
-		
 		Parent newScene = FXMLLoader.load(getClass().getResource("MiddleForm.fxml"));
 		Stage new_Stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		new_Stage.setTitle("Your Information");
@@ -167,6 +136,21 @@ public class EndFormController implements Initializable, ControlledScreen {
 		new_Stage.show();
 
 	}
+	
+	
+	public void helpButton(ActionEvent event) throws IOException {
+		
+		
+	    // Load the fxml file and create a new stage for the popup
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("VisitorManual.fxml"));
+	    Parent root = (Parent) loader.load();
+	    Stage stage = new Stage();
+	    stage.initStyle(StageStyle.DECORATED);
+	    stage.setTitle("Help Alert");
+	    stage.setScene(new Scene(root));
+	    stage.show();
+
+}
 
 	/*
 	 * @FXML private void goToScreen2(ActionEvent event){

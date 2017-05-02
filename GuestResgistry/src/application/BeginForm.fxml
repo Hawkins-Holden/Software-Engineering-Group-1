@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -59,6 +60,15 @@
                   <Font size="24.0" />
                </font>
             </Button>
+            <Button layoutX="102.0" layoutY="27.0" mnemonicParsing="false" onAction="#helpButton" prefHeight="55.0" prefWidth="65.0" style="-fx-background-color: pink;">
+               <graphic>
+                  <ImageView fitHeight="42.0" fitWidth="49.0">
+                     <image>
+                        <Image url="@question.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </bottom>
@@ -95,8 +105,8 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="rightAddress" layoutX="424.0" layoutY="455.0" mnemonicParsing="false" onAction="#rightAddress" prefHeight="67.0" prefWidth="132.0" text="Sure!" visible="false"/>
-            <Button fx:id="wrongAddress" layoutX="268.0" layoutY="454.0" mnemonicParsing="false" onAction="#wrongAddress" prefHeight="69.0" prefWidth="133.0" text="No" visible="false"/>
+            <Button fx:id="rightAddress" layoutX="424.0" layoutY="455.0" mnemonicParsing="false" onAction="#rightAddress" prefHeight="67.0" prefWidth="132.0" text="Sure!" visible="false" />
+            <Button fx:id="wrongAddress" layoutX="268.0" layoutY="454.0" mnemonicParsing="false" onAction="#wrongAddress" prefHeight="69.0" prefWidth="133.0" text="No" visible="false" />
             <Label fx:id="address_label1" layoutX="140.0" layoutY="413.0" text="Would y'all like to take a second tell us more about your trip?">
                <font>
                   <Font name="System Bold" size="18.0" />
