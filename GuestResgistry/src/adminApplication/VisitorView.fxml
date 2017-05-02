@@ -30,18 +30,18 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="deleteButton" layoutX="1571.0" layoutY="921.0" mnemonicParsing="false" onAction="#deleteVisitor" prefHeight="65.0" prefWidth="157.0" text="Delete Visitor" />
-      <Button fx:id="addButton" layoutX="1448.0" layoutY="841.0" mnemonicParsing="false" onAction="#addVisitor" prefHeight="65.0" prefWidth="142.0" text="Add Visitor" />
+      <Button fx:id="deleteButton" layoutX="1523.0" layoutY="921.0" mnemonicParsing="false" onAction="#deleteVisitor" prefHeight="65.0" prefWidth="172.0" text="Delete Visitor" />
+      <Button fx:id="addButton" layoutX="1720.0" layoutY="843.0" mnemonicParsing="false" onAction="#addVisitor" prefHeight="65.0" prefWidth="165.0" text="Add Visitor" />
       <Label layoutX="420.0" layoutY="844.0" text="to">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button fx:id="refreshButton" layoutX="648.0" layoutY="844.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="31.0" prefWidth="130.0" text="Refresh Table" />
+      <Button fx:id="refreshButton" layoutX="648.0" layoutY="840.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="31.0" prefWidth="130.0" text="Refresh Table" />
       <Button fx:id="back_btn" layoutX="52.0" layoutY="943.0" mnemonicParsing="false" onAction="#goBack" prefHeight="49.0" prefWidth="108.0" text="BACK" />
-      <Button fx:id="importButton" layoutX="1261.0" layoutY="841.0" mnemonicParsing="false" onAction="#ImportAction" prefHeight="65.0" prefWidth="172.0" text="Import from Excel" />
-      <Button fx:id="excelButton" layoutX="1105.0" layoutY="843.0" mnemonicParsing="false" onAction="#ExportAction" prefHeight="65.0" prefWidth="142.0" text="Export to Excel" />
-      <Button fx:id="emailButton" layoutX="926.0" layoutY="843.0" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="65.0" prefWidth="165.0" text="Create Mailing List" />
-      <Button fx:id="DeleteButton" layoutX="1741.0" layoutY="921.0" mnemonicParsing="false" onAction="#deleteAgedData" prefHeight="65.0" prefWidth="157.0" text="Delete Aged Data" />
+      <Button fx:id="importButton" layoutX="1523.0" layoutY="843.0" mnemonicParsing="false" onAction="#ImportAction" prefHeight="65.0" prefWidth="172.0" text="Import from Excel" />
+      <Button fx:id="excelButton" layoutX="1335.0" layoutY="843.0" mnemonicParsing="false" onAction="#ExportAction" prefHeight="65.0" prefWidth="172.0" text="Export to Excel" />
+      <Button fx:id="emailButton" layoutX="1153.0" layoutY="843.0" mnemonicParsing="false" onAction="#ExportEmailAction" prefHeight="65.0" prefWidth="165.0" text="Create Mailing List" />
+      <Button fx:id="DeleteButton" layoutX="1724.0" layoutY="921.0" mnemonicParsing="false" onAction="#deleteAgedData" prefHeight="65.0" prefWidth="165.0" text="Delete Aged Data" />
       <Button fx:id="helpButton" layoutX="179.0" layoutY="943.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="108.0" text="HELP" />
       <TextField fx:id="filterCity" layoutX="216.0" layoutY="886.0" prefHeight="49.0" prefWidth="206.0" promptText="Filter by City" />
       <TextField fx:id="filterCountry" layoutX="469.0" layoutY="886.0" prefHeight="49.0" prefWidth="206.0" promptText="Filter by Country" />

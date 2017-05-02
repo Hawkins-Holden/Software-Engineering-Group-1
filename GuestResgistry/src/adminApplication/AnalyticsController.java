@@ -350,6 +350,10 @@ public class AnalyticsController implements Initializable {
 		}
 		travelingMenuButton.getItems().clear();
 		travelingMenuButton.getItems().addAll(reasonItems);
+
+		ObservableList<CheckMenuItem> emailItems = FXCollections.observableArrayList();
+		emailItems.add(new CheckMenuItem("Provided"));
+		emailItems.add(new CheckMenuItem("Not Provided"));
 	}
 
 	public void refreshData() {
@@ -426,9 +430,9 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (travelingCheck.isSelected()) {
-			boolean first = true;
 			for (MenuItem reasonItem : travelingMenuButton.getItems()) {
 				CheckMenuItem reason = (CheckMenuItem) reasonItem;
+				boolean first = true;
 				if (reason.isSelected()) {
 					if (first) {
 						query.append(" AND TravelingFor = '" + reason.getText() + "'");
@@ -440,9 +444,9 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (referredCheck.isSelected()) {
-			boolean first = true;
 			for (MenuItem referenceItem : referenceMenuButton.getItems()) {
 				CheckMenuItem reference = (CheckMenuItem) referenceItem;
+				boolean first = true;
 				if (reference.isSelected()) {
 					if (first) {
 						query.append(" AND Heard = '" + reference.getText() + "'");
@@ -457,24 +461,24 @@ public class AnalyticsController implements Initializable {
 			query.append(" AND Hotel = 'Yes'");
 		}
 		if (destinationCheck.isSelected()) {
-			boolean first = true;
 			for (MenuItem destinationItem : destinationMenuButton.getItems()) {
 				CheckMenuItem destination = (CheckMenuItem) destinationItem;
+				boolean first = true;
 				if (destination.isSelected()) {
 					if (first) {
-						query.append(" AND Destination LIKE '%" + destination.getText() + "%'");
+						query.append(" AND Destination = '" + destination.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR Destination = '%" + destination.getText() + "%'");
+						query.append(" OR Destination = '" + destination.getText() + "'");
 					}
 				}
 			}
 		}
 		if (repeatCheck.isSelected()) {
-			query.append(" AND RepeatVisit = 1");
+			query.append(" AND RepeatVisitor = 1");
 		}
 		if (emailCheck.isSelected()) {
-			query.append(" AND Email IS NOT NULL AND Email <> 'null' AND Email <> 'NULL' AND Email <> ''");
+			query.append(" AND Email IS NOT NULL");
 		}
 		query.append(" ORDER BY Visiting_Day");
 
@@ -482,10 +486,8 @@ public class AnalyticsController implements Initializable {
 		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
 		String queryString = query.toString();
 		List<VisitorDetails> stuffReturnedfromQuery = AdminJDBC.getVisitorDetailsFromQuery(queryString);
-		if (stuffReturnedfromQuery != null) {
-			for (VisitorDetails v : stuffReturnedfromQuery) {
-				visitors.add(v);
-			}
+		for (VisitorDetails v : stuffReturnedfromQuery) {
+			visitors.add(v);
 		}
 		return visitors;
 	}
@@ -573,19 +575,19 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (destination.isSelected()) {
 					if (first) {
-						query.append(" AND Destination LIKE '%%" + destination.getText() + "%%'");
+						query.append(" AND Destination = '" + destination.getText() + "'");
 						first = false;
 					} else {
-						query.append(" OR Destination LIKE '%%" + destination.getText() + "%%'");
+						query.append(" OR Destination = '" + destination.getText() + "'");
 					}
 				}
 			}
 		}
 		if (repeatCheck.isSelected()) {
-			query.append(" AND RepeatVisit = 1");
+			query.append(" AND RepeatVisitor = 1");
 		}
 		if (emailCheck.isSelected()) {
-			query.append(" AND Email IS NOT NULL AND Email <> 'null'");
+			query.append(" AND Email IS NOT NULL");
 		}
 		query.append(
 				"AND (Latitude IS NOT NULL AND Latitude != '' AND Latitude != 'null' AND Longitude IS NOT NULL AND Longitude != '' AND Longitude != 'null') ORDER BY Visiting_Day");

@@ -20,21 +20,6 @@
 	
 }
 
-#helpButton:hover {
-	 -fx-background-color:#FFFF00;
-}
-
-#helpButton {
-	
-	-fx-background-color: linear-gradient(#dcca8a, #c7a740);
-    -fx-text-fill: #654b00;
-    -fx-background-radius: 6, 5;
-    -fx-background-insets: 0, 1;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-padding: 10 20 10 20;
-	
-}
 
 #filterCity:focused{
  -fx-faint-focus-color: blue;
@@ -63,44 +48,6 @@
 	
 }
 
-#addButton {
-	
-	-fx-background-color: linear-gradient(#73880a, #73880a);
-    -fx-text-fill: #000000;
-    -fx-background-radius: 6, 5;
-    -fx-background-insets: 0, 1;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-padding: 10 20 10 20;
-		
-}
-
-#deleteButton {
-	
-	-fx-background-color: linear-gradient(#6d0019, #a90329);
-    -fx-text-fill: #000000;
-    -fx-background-radius: 6, 5;
-    -fx-background-insets: 0, 1;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-padding: 10 20 10 20;
-	
-	
-}
-
-#DeleteButton {
-	
-	-fx-background-color: linear-gradient(#a90329, #6d0019);
-    -fx-text-fill: #000000;
-    -fx-background-radius: 6, 5;
-    -fx-background-insets: 0, 1;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-padding: 10 20 10 20;
-	
-	
-}
-
 #importButton {
 	
 	-fx-background-color: linear-gradient(#73880a, #73880a);
@@ -114,7 +61,19 @@
 	
 }
 
-#excelButton {
+#clearButton {
+	
+	-fx-background-color: linear-gradient(#ffaf4b, #ff920a);
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+	
+}
+
+#exportButton {
 	
 	-fx-background-color: linear-gradient(#73880a, #73880a);
     -fx-text-fill: #000000;

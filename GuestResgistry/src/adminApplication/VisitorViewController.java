@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -99,7 +100,6 @@ public class VisitorViewController implements Initializable {
 		endDatePicker.setValue(LocalDate.now());
 		data = getVisitors(startDatePicker.getValue(), endDatePicker.getValue());
 		
-		
 		filterCity.textProperty().addListener(new ChangeListener() {
 			public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 				filterVisitorByCity((String) oldValue, (String) newValue);
@@ -117,7 +117,8 @@ public class VisitorViewController implements Initializable {
 				filterVisitorByState((String) oldValue, (String) newValue);
 			}
 		});
-	
+		
+		
 		
 		refreshTable();
 	}
