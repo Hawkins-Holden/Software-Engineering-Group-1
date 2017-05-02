@@ -57,7 +57,6 @@ html, body {
 	
 	// A function to create the marker and set up the event window function 
 	function createUserMarker(latlng) {
-
 		if(marker != null){
 			marker.setMap(null);
 		}
@@ -70,13 +69,10 @@ html, body {
 			animation : google.maps.Animation.DROP,
 			zIndex : Math.round(latlng.lat() * -100000) << 5
 		});
-
 		google.maps.event.trigger(marker, 'click');
 		nums = latlng;
-
 		//markers[i] = marker;
 		//i = i + 1;
-
 		return marker;
 	}
 	
@@ -169,6 +165,7 @@ html, body {
 		app.callFromJavascript(nums);
 	}
 	/*This is used to drop a pin when a zip code, city, etc is typed in the text box.*/
+	/*This is used to drop a pin when a zip code, city, etc is typed in the text box.*/
 	function geocodeAddress(geocoder, resultsMap) {
 		var address = document.getElementById('address').value;
 		if (address == "" && !marker) {
@@ -179,6 +176,9 @@ html, body {
 						'address' : address
 					},
 					function(results, status) {
+						if(marker != null){
+							marker.setMap(null);
+						}
 						if (status === 'OK') {
 							resultsMap.setCenter(results[0].geometry.location);
 							marker = new google.maps.Marker({
