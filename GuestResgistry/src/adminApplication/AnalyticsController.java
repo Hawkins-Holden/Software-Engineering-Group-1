@@ -430,9 +430,9 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (travelingCheck.isSelected()) {
+			boolean first = true;
 			for (MenuItem reasonItem : travelingMenuButton.getItems()) {
 				CheckMenuItem reason = (CheckMenuItem) reasonItem;
-				boolean first = true;
 				if (reason.isSelected()) {
 					if (first) {
 						query.append(" AND TravelingFor = '" + reason.getText() + "'");
@@ -444,9 +444,9 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (referredCheck.isSelected()) {
+			boolean first = true;
 			for (MenuItem referenceItem : referenceMenuButton.getItems()) {
 				CheckMenuItem reference = (CheckMenuItem) referenceItem;
-				boolean first = true;
 				if (reference.isSelected()) {
 					if (first) {
 						query.append(" AND Heard = '" + reference.getText() + "'");
@@ -461,9 +461,9 @@ public class AnalyticsController implements Initializable {
 			query.append(" AND Hotel = 'Yes'");
 		}
 		if (destinationCheck.isSelected()) {
+			boolean first = true;
 			for (MenuItem destinationItem : destinationMenuButton.getItems()) {
 				CheckMenuItem destination = (CheckMenuItem) destinationItem;
-				boolean first = true;
 				if (destination.isSelected()) {
 					if (first) {
 						query.append(" AND Destination = '" + destination.getText() + "'");
@@ -486,8 +486,10 @@ public class AnalyticsController implements Initializable {
 		ObservableList<VisitorDetails> visitors = FXCollections.observableArrayList();
 		String queryString = query.toString();
 		List<VisitorDetails> stuffReturnedfromQuery = AdminJDBC.getVisitorDetailsFromQuery(queryString);
-		for (VisitorDetails v : stuffReturnedfromQuery) {
-			visitors.add(v);
+		if (stuffReturnedfromQuery != null) {
+			for (VisitorDetails v : stuffReturnedfromQuery) {
+				visitors.add(v);
+			}
 		}
 		return visitors;
 	}
@@ -575,10 +577,10 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (destination.isSelected()) {
 					if (first) {
-						query.append(" AND Destination = '" + destination.getText() + "'");
+						query.append(" AND Destination LIKE '%%" + destination.getText() + "%%'");
 						first = false;
 					} else {
-						query.append(" OR Destination = '" + destination.getText() + "'");
+						query.append(" OR Destination LIKE '%%" + destination.getText() + "%%'");
 					}
 				}
 			}
