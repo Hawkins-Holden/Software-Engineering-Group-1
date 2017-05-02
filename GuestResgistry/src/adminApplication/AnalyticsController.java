@@ -350,10 +350,6 @@ public class AnalyticsController implements Initializable {
 		}
 		travelingMenuButton.getItems().clear();
 		travelingMenuButton.getItems().addAll(reasonItems);
-
-		ObservableList<CheckMenuItem> emailItems = FXCollections.observableArrayList();
-		emailItems.add(new CheckMenuItem("Provided"));
-		emailItems.add(new CheckMenuItem("Not Provided"));
 	}
 
 	public void refreshData() {
@@ -466,19 +462,19 @@ public class AnalyticsController implements Initializable {
 				CheckMenuItem destination = (CheckMenuItem) destinationItem;
 				if (destination.isSelected()) {
 					if (first) {
-						query.append(" AND Destination = '" + destination.getText() + "'");
+						query.append(" AND Destination LIKE '%" + destination.getText() + "%'");
 						first = false;
 					} else {
-						query.append(" OR Destination = '" + destination.getText() + "'");
+						query.append(" OR Destination = '%" + destination.getText() + "%'");
 					}
 				}
 			}
 		}
 		if (repeatCheck.isSelected()) {
-			query.append(" AND RepeatVisitor = 1");
+			query.append(" AND RepeatVisit = 1");
 		}
 		if (emailCheck.isSelected()) {
-			query.append(" AND Email IS NOT NULL");
+			query.append(" AND Email IS NOT NULL AND Email <> 'null' AND Email <> 'NULL' AND Email <> ''");
 		}
 		query.append(" ORDER BY Visiting_Day");
 
@@ -586,10 +582,10 @@ public class AnalyticsController implements Initializable {
 			}
 		}
 		if (repeatCheck.isSelected()) {
-			query.append(" AND RepeatVisitor = 1");
+			query.append(" AND RepeatVisit = 1");
 		}
 		if (emailCheck.isSelected()) {
-			query.append(" AND Email IS NOT NULL");
+			query.append(" AND Email IS NOT NULL AND Email <> 'null'");
 		}
 		query.append(
 				"AND (Latitude IS NOT NULL AND Latitude != '' AND Latitude != 'null' AND Longitude IS NOT NULL AND Longitude != '' AND Longitude != 'null') ORDER BY Visiting_Day");
