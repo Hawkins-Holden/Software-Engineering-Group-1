@@ -209,8 +209,13 @@ public class JExcelDriver {
 		WritableWorkbook myexcel = Workbook.createWorkbook(file);
 		WritableSheet mysheet = myexcel.createSheet("mySheet", 0);
 		try {
-			for (int i = 1; i < data.size() - 1; i++) {
-				mysheet.addCell(formatData(i - 1, 0, data.get(i).getEmail()));
+			int i = 0;
+			for (VisitorDetails datum : data) {
+				if(datum.getEmail() != null && !datum.getEmail().isEmpty())
+				{
+					mysheet.addCell(formatData(i-1, 0, datum.getEmail()));
+					i++;
+				}
 			}
 		} catch (WriteException e) {
 

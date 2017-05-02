@@ -1,12 +1,12 @@
-3327 Research Plaza
-San Antonio
-TX
-USA
-types=[street_address],
- 78235
-
-29.3451275
--98.43761510000002
+null
+null
+null
+null
+null
+null
+null
+24.86650252692691
+118.58642578125
 null
 null
 null
