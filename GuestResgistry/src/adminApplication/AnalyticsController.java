@@ -467,19 +467,19 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (destination.isSelected()) {
 					if (first) {
-						query.append(" AND Destination = '" + destination.getText() + "'");
+						query.append(" AND Destination LIKE '%" + destination.getText() + "%'");
 						first = false;
 					} else {
-						query.append(" OR Destination = '" + destination.getText() + "'");
+						query.append(" AND Destination LIKE '%" + destination.getText() + "%'");
 					}
 				}
 			}
 		}
 		if (repeatCheck.isSelected()) {
-			query.append(" AND RepeatVisitor = 1");
+			query.append(" AND RepeatVisit = 1");
 		}
 		if (emailCheck.isSelected()) {
-			query.append(" AND Email IS NOT NULL");
+			query.append(" AND Email IS NOT NULL AND Email <> 'null' AND Email <> 'NULL' AND Email <> ''");
 		}
 		query.append(" ORDER BY Visiting_Day");
 
@@ -576,19 +576,19 @@ public class AnalyticsController implements Initializable {
 				boolean first = true;
 				if (destination.isSelected()) {
 					if (first) {
-						query.append(" AND Destination = '" + destination.getText() + "'");
+						query.append(" AND Destination LIKE '%" + destination.getText() + "%'");
 						first = false;
 					} else {
-						query.append(" OR Destination = '" + destination.getText() + "'");
+						query.append(" AND Destination LIKE '%" + destination.getText() + "%'");
 					}
 				}
 			}
 		}
 		if (repeatCheck.isSelected()) {
-			query.append(" AND RepeatVisitor = 1");
+			query.append(" AND RepeatVisit = 1");
 		}
 		if (emailCheck.isSelected()) {
-			query.append(" AND Email IS NOT NULL");
+			query.append(" AND Email IS NOT NULL AND Email <> 'null' AND Email <> 'NULL' AND Email <> ''");
 		}
 		query.append(
 				"AND (Latitude IS NOT NULL AND Latitude != '' AND Latitude != 'null' AND Longitude IS NOT NULL AND Longitude != '' AND Longitude != 'null') ORDER BY Visiting_Day");
@@ -661,20 +661,19 @@ public class AnalyticsController implements Initializable {
 		}
 	}
 
-	
 	public void helpButton(ActionEvent event) throws IOException {
-		
-		
-	    // Load the fxml file and create a new stage for the popup
-	    FXMLLoader loader = new FXMLLoader(getClass().getResource("Manual.fxml"));
-	    Parent root = (Parent) loader.load();
-	    Stage stage = new Stage();
-	    stage.initStyle(StageStyle.DECORATED);
-	    stage.setTitle("Help Alert");
-	    stage.setScene(new Scene(root));
-	    stage.show();
 
-}
+		// Load the fxml file and create a new stage for the popup
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Manual.fxml"));
+		Parent root = (Parent) loader.load();
+		Stage stage = new Stage();
+		stage.initStyle(StageStyle.DECORATED);
+		stage.setTitle("Help Alert");
+		stage.setScene(new Scene(root));
+		stage.show();
+
+	}
+
 	public void ImportAction() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Export mailing list to Excel");
@@ -812,6 +811,7 @@ public class AnalyticsController implements Initializable {
 				break;
 			}
 
+			
 			monthString += dateCal.get(Calendar.YEAR);
 			series.getData().add(new XYChart.Data(monthString, count));
 			cal.setTime(date);
